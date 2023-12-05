@@ -98,10 +98,10 @@ export const MainH2 = styled.h2`
   margin-bottom: 30px;
 `;
 
-// export const Maincontent = styled.dev`
-//   width: 100%;
-//   margin: 0 auto;
-// `;
+export const Maincontent = styled.dev`
+  width: 100%;
+  margin: 0 auto;
+`;
 
 //   .search__logo-mob-link {
 //     display: none;
