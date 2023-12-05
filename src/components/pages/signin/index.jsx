@@ -32,6 +32,7 @@ export const Signin = () => {
             <S.Modal__btnSignup id="btnSignUp">
               <a href="signup.html">Зарегистрироваться</a>{" "}
             </S.Modal__btnSignup>
+            </Link>
           </S.Modal__block>
         </S.ContainerEnter>
       </S.Wrapper>
