@@ -2,6 +2,7 @@ import * as S from "./main.style";
 
 export const Main = () => {
   return (
+    <S.StyledMain>
     <S.Wrapper>
       <S.Container>
         <S.Header>
@@ -11,35 +12,33 @@ export const Main = () => {
         </S.Header>
         <main class="main">
           <S.Main_search>
-            <a class="search__logo-link" href="#" target="_blank">
-              <img class="search__logo-img" src="img/logo.png" alt="logo" />
-            </a>
-            <a class="search__logo-mob-link" href="#" target="_blank">
-              <img
-                class="search__logo-mob-img"
+            <S.Search__logoLink href="#" target="_blank">
+              <S.Search__logoImg src="img/logo.png" alt="logo" />
+            </S.Search__logoLink>
+            <S.Search__logoMobLink href="#" target="_blank">
+              <S.Search__logoMobImg
                 src="img/logo-mob.png"
                 alt="logo"
               />
-            </a>
+            </S.Search__logoMobLink>
             <S.Search__form action="#">
               <S.Search__text
                 type="search"
                 placeholder="Поиск по объявлениям"
                 name="search"
               />
-              <input
-                class="search__text-mob"
+              <S.Search__textMob
                 type="search"
                 placeholder="Поиск"
                 name="search-mob"
               />
-              <button class="search__btn btn-hov02">Найти</button>
+              <S.Search__btn>Найти</S.Search__btn>
             </S.Search__form>
           </S.Main_search>
           <S.Maincontainer>
             <S.MainH2>Объявления</S.MainH2>
 
-            <div class="Maincontent">
+            <S.Maincontent>
               <S.Cards>
                 <S.Cards__item>
                   <S.Cards__card>
@@ -48,7 +47,7 @@ export const Main = () => {
                         <S.CardImage src="#" alt="picture" />
                       </a>
                     </S.Card__image>
-                    <div class="card__content">
+                    <div>
                       <a href="" target="_blank">
                         <S.Card__title>
                           Ракетка для большого тенниса Triumph Pro ST
@@ -241,30 +240,31 @@ export const Main = () => {
                   </S.Cards__card>
                 </S.Cards__item>
               </S.Cards>
-            </div>
+            </S.Maincontent>
           </S.Maincontainer>
         </main>
 
         <S.Footer>
-          <div class="footer__container">
-            <div class="footer__img">
+          <S.Footer__container>
+            <S.Footer__Img>
               <a href="" target="_self">
-                <img src="img/icon_01.png" alt="home" />
+                <S.Footer__img src="img/icon_01.png" alt="home" />
               </a>
-            </div>
-            <div class="footer__img">
+            </S.Footer__Img>
+            <S.Footer__Img>
               <a href="" target="_self">
-                <img src="img/icon_02.png" alt="home" />
+                <S.Footer__img src="img/icon_02.png" alt="home" />
               </a>
-            </div>
-            <div class="footer__img">
+            </S.Footer__Img>
+            <S.Footer__Img>
               <a href="" target="_self">
-                <img src="img/icon_03.png" alt="home" />
+                <S.Footer__img src="img/icon_03.png" alt="home" />
               </a>
-            </div>
-          </div>
+            </S.Footer__Img>
+          </S.Footer__container>
         </S.Footer>
       </S.Container>
     </S.Wrapper>
+    </S.StyledMain>
   );
 };
