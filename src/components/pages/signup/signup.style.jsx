@@ -88,7 +88,7 @@ export const Modal__block = styled.div`
 
 export const Modal__formLogin = styled.form`
   width: 366px;
-  height: 439px;
+  height: auto;
   background-color: #ffffff;
   border-radius: 12px;
   display: flex;

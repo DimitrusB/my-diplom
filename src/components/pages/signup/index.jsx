@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import * as S from "./signin.style";
+import * as S from "./signup.style";
 
-export const Signin = () => {
+export const Signup = () => {
   return (
     <S.Wrapper>
       <S.ContainerEnter>
@@ -34,14 +34,36 @@ export const Signin = () => {
               id="formpassword"
               placeholder="Пароль"
             />
+            <S.Modal__input
+              type="confirm password"
+              name="confirm password"
+              id="confirm password"
+              placeholder="Повторите пароль"
+            />
+            <S.Modal__input
+              type="text"
+              name="name"
+              id="formname"
+              placeholder="Имя (необязательно)"
+            />
+            <S.Modal__input
+              type="text"
+              name="lastname"
+              id="formlastname"
+              placeholder="Фамилия (необязательно)"
+            />
+            <S.Modal__input
+              type="text"
+              name="city"
+              id="formcity"
+              placeholder="Город (необязательно)"
+            />
             <S.Modal__btnEnter id="btnEnter">
               <a href="../index.html">Войти</a>{" "}
             </S.Modal__btnEnter>
-            <Link to="/reg">
             <S.Modal__btnSignup id="btnSignUp">
               <a href="signup.html">Зарегистрироваться</a>{" "}
             </S.Modal__btnSignup>
-            </Link>
           </S.Modal__formLogin>
           <S.Footer__container>
             <S.Footer__Img>
