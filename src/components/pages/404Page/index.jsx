@@ -1,9 +1,7 @@
 
-
 export const NotFoundPage = () => {
 
-    return{
-
-
-    }
+  return (
+    <h1>Страница не существует!!!</h1>
+  )
 };

@@ -1,52 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./signup.style";
+import { registerUser } from "../../../api/api";
+
 
 export const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [city, setCity] = useState("");
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    name: '',
-    lastName: '',
-    city: ''
-  });
 
-  // Обработчик изменений в полях формы
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  // Обработчик отправки формы
-  const handleSubmit = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
-
-    // Здесь можно выполнить отправку данных на сервер, используя значения из formData
-    // Например, можно использовать fetch или другие библиотеки для отправки данных на сервер
-    // Например:
-
-    fetch('http://localhost:8090/auth/register', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Результат регистрации:', data);
-        // Обработка успешной регистрации или другие действия после регистрации
-      })
-      .catch(error => {
-        console.error('Ошибка при регистрации:', error);
-        // Обработка ошибки регистрации
-      });
+  
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match");
+      return;
+    }
+  
+    const userData = {
+      password,
+      role: "user",
+      email,
+      name,
+      surname: lastname,
+      phone: "",
+      city,
+    };
+    
+    console.log(userData);
+  
+    try {
+      await registerUser(userData);
+      console.log("Registration successful");
+    } catch (error) {
+      console.error("Error during registration:", error.response?.data || error.message);
+    }
   };
 
   return (
@@ -72,56 +64,50 @@ export const Signup = () => {
             <S.Modal__input
               type="text"
               name="login"
-              id="formlogin"
               placeholder="email"
-              value={formData.email}
-              onChange={handleInputChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <S.Modal__input
               type="password"
               name="password"
-              id="formpassword"
               placeholder="Пароль"
-              value={formData.password}
-              onChange={handleInputChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <S.Modal__input
-              type="confirm password"
+              type="password"
               name="confirm password"
-              id="confirm password"
               placeholder="Повторите пароль"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <S.Modal__input
               type="text"
               name="name"
-              id="formname"
               placeholder="Имя (необязательно)"
-              value={formData.name}
-              onChange={handleInputChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <S.Modal__input
-              type="text"
-              name="lastname"
-              id="formlastname"
-              placeholder="Фамилия (необязательно)"
-              value={formData.lastName}
-              onChange={handleInputChange}
+        type="text"
+        name="lastname"
+        placeholder="Фамилия (необязательно)"
+        value={lastname}
+        onChange={(e) => setLastname(e.target.value)}
             />
             <S.Modal__input
               type="text"
               name="city"
-              id="formcity"
               placeholder="Город (необязательно)"
-              value={formData.city}
-              onChange={handleInputChange}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
             />
             <S.Modal__btnEnter id="btnEnter">
-              <a href="../index.html">Войти</a>{" "}
+              <a href="../index.html">Войти</a>
             </S.Modal__btnEnter>
-            <S.Modal__btnSignup id="btnSignUp">
-              <a href="signup.html">Зарегистрироваться</a>{" "}
+            <S.Modal__btnSignup onClick={handleRegistration}>
+              <a href="#">Зарегистрироваться</a>
             </S.Modal__btnSignup>
           </S.Modal__formLogin>
           <S.Footer__container>

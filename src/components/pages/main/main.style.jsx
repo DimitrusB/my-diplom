@@ -162,7 +162,7 @@ export const Maincontent = styled.div`
   @media screen and (max-width: 590px) {
     width: 100%;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: auto;
     position: fixed;
     right: 0;
     left: 0;
@@ -466,8 +466,8 @@ export const Card__image = styled.div`
 `;
 
 export const CardImage = styled.img`
-  width: 100%;
-  height: 100%;
+width: 270px;
+height: 270px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
