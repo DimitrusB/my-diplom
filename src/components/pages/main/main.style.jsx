@@ -371,7 +371,6 @@ export const Cards = styled.div`
     scrollbar-color: #FFFFFF #2E2E2E;
     scrollbar-width: thin;
     scrollbar-width: 0px;
-    height: 922px;
  
 
   ::-webkit-scrollbar 

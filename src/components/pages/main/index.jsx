@@ -19,7 +19,7 @@ export const Main = () => {
               </S.Mainenter>
             </S.Header__nav>
           </S.Header>
-          <main class="main">
+          <main>
             <S.Main_search>
               <S.Search__logoLink href="#" target="_blank">
                 <S.Search__logoImg src="img/logo.png" alt="logo" />
@@ -73,7 +73,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -93,7 +93,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -113,7 +113,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -133,7 +133,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -153,7 +153,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -173,7 +173,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -193,7 +193,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -213,7 +213,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -233,7 +233,7 @@ export const Main = () => {
                           <S.CardImage src="#" alt="picture" />
                         </a>
                       </S.Card__image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__title>
                             Ракетка для большого тенниса Triumph Pro ST

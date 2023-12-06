@@ -21,7 +21,7 @@ export const ProfilePage = () => {
               <S.Header__BtnLk id="btnlk">Личный кабинет</S.Header__BtnLk>
             </S.Header__nav>
           </S.Header>
-          <main class="main">
+          <main>
             <S.Maincontainer>
               <S.Main__CenterBlock>
                 <S.Main__Menu>
@@ -115,7 +115,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -135,7 +135,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -155,7 +155,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -175,7 +175,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -195,7 +195,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
@@ -215,7 +215,7 @@ export const ProfilePage = () => {
                           <img src="#" alt="picture" />
                         </a>
                       </S.Card__Image>
-                      <div class="card__content">
+                      <div>
                         <a href="" target="_blank">
                           <S.Card__Title>
                             Ракетка для большого тенниса Triumph Pro ST
