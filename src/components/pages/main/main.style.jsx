@@ -486,7 +486,7 @@ export const CardImage = styled.img`
 export const Card__title = styled.h3`
   height: 52px;
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 500px;
   line-height: 26px;
   color: #009ee4;
   margin-bottom: 10px;
