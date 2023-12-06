@@ -7,7 +7,7 @@ export const Signin = () => {
       <S.Wrapper>
         <S.ContainerEnter>
           <S.Modal__block>
-            <S.Modal__formLogin id="formLogIn" action="#" />
+            <S.Modal__formLogin id="formLogIn" action="#">
             <S.Modal__logo>
               <Link to="/">
                 <S.Modal__logoImg src="../img/logo_modal.png" alt="logo" />
@@ -33,6 +33,7 @@ export const Signin = () => {
               <a href="signup.html">Зарегистрироваться</a>{" "}
             </S.Modal__btnSignup>
             </Link>
+            </S.Modal__formLogin>
           </S.Modal__block>
         </S.ContainerEnter>
       </S.Wrapper>
