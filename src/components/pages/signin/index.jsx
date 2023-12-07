@@ -1,7 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
+import { LoginUser } from "../../../api/api";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { saveUserData } from "../../store/actions/actions";
 
 export const Signin = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+ 
+    const userData = {
+      password,
+      email,
+    };
+    
+    console.log(userData);
+  
+    try {
+      await LoginUser(userData);
+      console.log("Login successful");
+      dispatch(saveUserData(userData.email, userData.password));
+      navigate('/profile')
+      console.log(userData.email);
+    } catch (error) {
+      console.error("Error during login:", error.response?.data || error.message);
+    }
+  };
+
   return (
     <body>
       <S.Wrapper>
@@ -16,17 +47,19 @@ export const Signin = () => {
             <S.Modal__input
               type="text"
               name="login"
-              id="formlogin"
               placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <S.Modal__input
               type="password"
               name="password"
-              id="formpassword"
               placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <S.Modal__btnEnter id="btnEnter">
-              <a href="../index.html">Войти</a>{" "}
+            <S.Modal__btnEnter>
+              <a onClick={handleLogin}>Войти</a>{" "}
             </S.Modal__btnEnter>
             <Link to="/reg">
             <S.Modal__btnSignup id="btnSignUp">

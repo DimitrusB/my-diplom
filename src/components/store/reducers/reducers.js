@@ -2,6 +2,8 @@ const initialState = {
   ads: [],
   loading: false,
   error: null,
+  email: '',
+  password: '',
 };
 
 const adsReducer = (state = initialState, action) => {
@@ -22,6 +24,12 @@ const adsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+      case 'SAVE_USER_DATA':
+        return {
+          ...state,
+          email: action.payload.email,
+          password: action.payload.password,
+        };
     default:
       return state;
   }
