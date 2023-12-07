@@ -1,7 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
+import { useSelector } from "react-redux";
+import { GetUserData } from "../../../api/api";
+import { useEffect, useState } from "react";
 
 export const ProfilePage = () => {
+  const navigate = useNavigate();
+  const savedUserData = JSON.parse(localStorage.getItem("userData"));
+  console.log("User data retrieved:", savedUserData);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("userData");
+    navigate("/");
+  };
+
   return (
     <S.StyledMain>
       <S.Wrapper>
@@ -18,7 +30,11 @@ export const ProfilePage = () => {
               <S.Header__BtnputAd id="btputAd">
                 Разместить объявление
               </S.Header__BtnputAd>
-              <S.Header__BtnLk id="btnlk">Личный кабинет</S.Header__BtnLk>
+              {savedUserData ? (
+                <S.Header__BtnLk onClick={handleLogOut}>Выйти</S.Header__BtnLk>
+              ) : (
+                <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
+              )}
             </S.Header__nav>
           </S.Header>
           <main>
@@ -37,7 +53,7 @@ export const ProfilePage = () => {
                   </S.Menu__Form>
                 </S.Main__Menu>
 
-                <S.MainH2>Здравствуйте, Дмитрий!</S.MainH2>
+                <S.MainH2>Здравствуйте, {savedUserData.name}!</S.MainH2>
 
                 <S.Main__Profile>
                   <S.Profile__Content>
@@ -81,7 +97,7 @@ export const ProfilePage = () => {
                               id="settings-city"
                               name="city"
                               type="text"
-                              placeholder="Город"
+                              placeholder={savedUserData.city}
                             />
                           </S.Settings__Div>
 

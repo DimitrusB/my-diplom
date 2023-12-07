@@ -3,7 +3,7 @@ import * as S from "./signin.style";
 import { GetUserData, LoginUser } from "../../../api/api";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveAccessToken, saveUserData } from "../../store/actions/actions";
+import { saveAccessToken } from "../../store/actions/actions";
 
 export const Signin = () => {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export const Signin = () => {
       dispatch(saveAccessToken(access_token));
 
       const userDataResponse = await GetUserData(access_token);
+      localStorage.setItem('userData', JSON.stringify(userDataResponse));
       console.log("User data:", userDataResponse);
 
       navigate('/profile');

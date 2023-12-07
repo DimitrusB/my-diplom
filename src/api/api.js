@@ -88,3 +88,27 @@ export const GetUserData = async (accessToken) => {
     throw error;
   }
 };
+
+export const FetchUserAvatar = async (accessToken, file) => {
+  const url = 'http://localhost:8090/user/avatar';
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log('Success:', data);
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
