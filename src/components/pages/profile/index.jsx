@@ -1,12 +1,34 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
-import { useSelector } from "react-redux";
-import { GetUserData } from "../../../api/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FetchUserAvatar } from "../../../api/api";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const savedUserData = JSON.parse(localStorage.getItem("userData"));
+  const savedUserToken = JSON.parse(localStorage.getItem("accessToken"));
+  const [selectedFile, setSelectedFile] = useState(null);
+  const baseImagePath = "http://127.0.0.1:8090/";
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleUpload = async () => {
+    try {
+      if (selectedFile) {
+        const result = await FetchUserAvatar(savedUserToken, selectedFile);
+        console.log("Avatar uploaded successfully:", result);
+        // Additional logic or state update if needed
+      } else {
+        console.error("No file selected");
+      }
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+    }
+  };
+
   console.log("User data retrieved:", savedUserData);
 
   const handleLogOut = () => {
@@ -61,11 +83,20 @@ export const ProfilePage = () => {
                     <S.Profile__Settings>
                       <S.Settings__Left>
                         <S.Settings__Img>
+                          <div>
+                            <input type="file" onChange={handleFileChange} />
+                          </div>
                           <a href="" target="_self">
-                            <img src="#" alt="" />
+                            <img
+                              src={baseImagePath + savedUserData.avatar}
+                              alt=""
+                            />
                           </a>
                         </S.Settings__Img>
-                        <S.Settings__ChangePhoto href="" target="_self">
+                        <S.Settings__ChangePhoto
+                          type="file"
+                          onClick={handleUpload}
+                        >
                           Заменить
                         </S.Settings__ChangePhoto>
                       </S.Settings__Left>

@@ -22,6 +22,7 @@ export const Signin = () => {
  
     try {
       const { access_token } = await LoginUser(userData);
+      localStorage.setItem('accessToken', JSON.stringify(access_token));
       console.log("Login successful");
 
       dispatch(saveAccessToken(access_token));
