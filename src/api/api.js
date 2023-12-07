@@ -45,8 +45,8 @@ export const registerUser = async (userData) => {
   }
 };
 
-  export const LoginUser = async (userData) => {
-    const url = "http://localhost:8090/auth/login";
+export const LoginUser = async (userData) => {
+  const url = "http://localhost:8090/auth/login";
 
   try {
     const response = await fetch(url, {
@@ -61,9 +61,30 @@ export const registerUser = async (userData) => {
     if (!response.ok) {
       console.error("User login failed with status:", response.status);
     }
+
     const data = await response.json();
     console.log("User login response:", data);
+
+    return data;
   } catch (error) {
     console.error("Error during user login:", error);
+  }
+};
+
+export const GetUserData = async (accessToken) => {
+  const url = 'http://localhost:8090/user';
+  const headers = {
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${accessToken}`,
+  };
+
+  try {
+    const response = await fetch(url, { headers });
+    const userData = await response.json();
+    console.log('Успешный ответ:', userData);
+    return userData;
+  } catch (error) {
+    console.error('Ошибка при запросе:', error.response?.data || error.message);
+    throw error;
   }
 };

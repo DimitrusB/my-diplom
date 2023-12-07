@@ -4,6 +4,7 @@ const initialState = {
   error: null,
   email: '',
   password: '',
+  accessToken: null,
 };
 
 const adsReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const adsReducer = (state = initialState, action) => {
           email: action.payload.email,
           password: action.payload.password,
         };
+        case 'SAVE_ACCESS_TOKEN':
+          return {
+            ...state,
+            accessToken: action.payload,
+          };
     default:
       return state;
   }

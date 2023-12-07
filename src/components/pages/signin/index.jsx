@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
-import { LoginUser } from "../../../api/api";
+import { GetUserData, LoginUser } from "../../../api/api";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveUserData } from "../../store/actions/actions";
+import { saveAccessToken, saveUserData } from "../../store/actions/actions";
 
 export const Signin = () => {
   const dispatch = useDispatch();
@@ -19,15 +19,17 @@ export const Signin = () => {
       password,
       email,
     };
-    
-    console.log(userData);
-  
+ 
     try {
-      await LoginUser(userData);
+      const { access_token } = await LoginUser(userData);
       console.log("Login successful");
-      dispatch(saveUserData(userData.email, userData.password));
-      navigate('/profile')
-      console.log(userData.email);
+
+      dispatch(saveAccessToken(access_token));
+
+      const userDataResponse = await GetUserData(access_token);
+      console.log("User data:", userDataResponse);
+
+      navigate('/profile');
     } catch (error) {
       console.error("Error during login:", error.response?.data || error.message);
     }

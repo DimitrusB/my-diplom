@@ -21,3 +21,8 @@ export const saveUserData = (email, password) => {
     },
   };
 };
+
+export const saveAccessToken = (accessToken) => ({
+  type: 'SAVE_ACCESS_TOKEN',
+  payload: accessToken,
+});
