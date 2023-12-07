@@ -112,3 +112,21 @@ export const FetchUserAvatar = async (accessToken, file) => {
     throw error;
   }
 };
+
+export const GetUserAd = async (accessToken) => {
+  const url = 'http://localhost:8090/ads/me';
+  const headers = {
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${accessToken}`,
+  };
+
+  try {
+    const response = await fetch(url, { headers });
+    const userData = await response.json();
+    console.log('Успешный ответ:', userData);
+    return userData;
+  } catch (error) {
+    console.error('Ошибка при запросе:', error.response?.data || error.message);
+    throw error;
+  }
+};

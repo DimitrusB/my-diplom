@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
-import { useState } from "react";
-import { FetchUserAvatar } from "../../../api/api";
+import { useEffect, useState } from "react";
+import { FetchUserAvatar, GetUserAd } from "../../../api/api";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -9,11 +9,27 @@ export const ProfilePage = () => {
   const savedUserToken = JSON.parse(localStorage.getItem("accessToken"));
   const [selectedFile, setSelectedFile] = useState(null);
   const baseImagePath = "http://127.0.0.1:8090/";
+  const [userAd, setUserAd] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetUserAd(savedUserToken);
+        setUserAd(data);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    fetchData();
+  }, [savedUserToken]);
+  console.log(userAd);
 
   const handleUpload = async () => {
     try {
@@ -155,125 +171,29 @@ export const ProfilePage = () => {
               </S.Main__CenterBlock>
               <S.Main__Content>
                 <S.Main__ContentCards>
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
-
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
-
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
-
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
-
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
-
-                  <S.Cards__Item>
-                    <S.Cards__Card>
-                      <S.Card__Image>
-                        <a href="" target="_blank">
-                          <img src="#" alt="picture" />
-                        </a>
-                      </S.Card__Image>
-                      <div>
-                        <a href="" target="_blank">
-                          <S.Card__Title>
-                            Ракетка для большого тенниса Triumph Pro ST
-                          </S.Card__Title>
-                        </a>
-                        <S.Card__Price>2&nbsp;200&nbsp;₽</S.Card__Price>
-                        <S.Card__Place>Санкт Петербург</S.Card__Place>
-                        <S.Card__Date>Сегодня в&nbsp;10:45</S.Card__Date>
-                      </div>
-                    </S.Cards__Card>
-                  </S.Cards__Item>
+                  {userAd &&
+                    userAd.map((item, index) => (
+                      <S.Cards__Item key={index}>
+                        <S.Cards__Card>
+                          <S.Card__Image>
+                            <a href="" target="_blank">
+                              <img
+                                src={baseImagePath + item.images[0].url}
+                                alt="picture"
+                              />
+                            </a>
+                          </S.Card__Image>
+                          <div>
+                            <a href="" target="_blank">
+                              <S.Card__Title>{item.title}</S.Card__Title>
+                            </a>
+                            <S.Card__Price>{item.price}&nbsp;₽</S.Card__Price>
+                            <S.Card__Place>Город&nbsp;{item.user.city}</S.Card__Place>
+                            <S.Card__Date>{item.created_on}</S.Card__Date>
+                          </div>
+                        </S.Cards__Card>
+                      </S.Cards__Item>
+                    ))}
                 </S.Main__ContentCards>
               </S.Main__Content>
             </S.Maincontainer>
