@@ -1,12 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
 import { useEffect, useState } from "react";
-import { FetchUserAvatar, GetUserAd, GetUserData } from "../../../api/api";
+import {
+  FetchUserAvatar,
+  GetUserAd,
+  GetUserData,
+  refreshToken,
+} from "../../../api/api";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const savedUserData = JSON.parse(localStorage.getItem("userData"));
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const [selectedFile, setSelectedFile] = useState(null);
   const baseImagePath = "http://localhost:8090/";
   const [userAd, setUserAd] = useState(null);
@@ -20,9 +24,9 @@ export const ProfilePage = () => {
   const handleUpload = async () => {
     try {
       if (selectedFile) {
-        const result = await FetchUserAvatar(accessToken, selectedFile);
+        const result = await FetchUserAvatar(selectedFile);
         console.log("Avatar uploaded successfully:", result);
-        const updatedUserData = await GetUserData(accessToken);
+        const updatedUserData = await GetUserData();
         console.log("Updated user data:", updatedUserData);
       } else {
         console.error("No file selected");
@@ -37,15 +41,21 @@ export const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await GetUserAd(accessToken);
+        const data = await GetUserAd();
         setUserAd(data);
       } catch (error) {
         setError(error);
       }
     };
     fetchData();
-  }, [accessToken]);
-  console.log(userAd);
+  }, []);
+
+  useEffect(() => {
+    const tokenRefreshInterval = setInterval(() => {
+      refreshToken();
+    }, 60000);
+    return () => clearInterval(tokenRefreshInterval);
+  }, []);
 
   const handleLogOut = () => {
     localStorage.removeItem("userData");
@@ -59,13 +69,13 @@ export const ProfilePage = () => {
           <S.Header>
             <S.Header__nav>
               <S.Header__Logo>
-                <S.Logo__MobLink href="" target="_blank">
+                <S.Logo__MobLink>
                   <Link to="/">
                     <S.Logo__MobImg src="img/logo-mob.png" alt="logo" />
                   </Link>
                 </S.Logo__MobLink>
               </S.Header__Logo>
-              <S.Header__BtnputAd id="btputAd">
+              <S.Header__BtnputAd>
                 Разместить объявление
               </S.Header__BtnputAd>
               {savedUserData ? (
@@ -85,9 +95,9 @@ export const ProfilePage = () => {
                     </Link>
                   </S.Menu__LogoLink>
                   <S.Menu__Form action="#">
-                    <S.Menu__Btn id="btnGoBack">
-                      Вернуться на&nbsp;главную
-                    </S.Menu__Btn>
+                  <Link to="/">
+                    <S.Menu__Btn>Вернуться на&nbsp;главную</S.Menu__Btn>
+                    </Link>
                   </S.Menu__Form>
                 </S.Main__Menu>
 
@@ -99,15 +109,14 @@ export const ProfilePage = () => {
                     <S.Profile__Settings>
                       <S.Settings__Left>
                         <S.Settings__Img>
-
                           <img
                             src={baseImagePath + savedUserData.avatar}
                             alt=""
                           />
                         </S.Settings__Img>
                         <div>
-                            <input type="file" onChange={handleFileChange} />
-                          </div>
+                          <input type="file" onChange={handleFileChange} />
+                        </div>
                         <S.Settings__ChangePhoto
                           type="file"
                           onClick={handleUpload}
@@ -118,7 +127,7 @@ export const ProfilePage = () => {
                       <S.Settings__Right>
                         <S.Settings__Form action="#">
                           <S.Settings__Div>
-                            <label for="fname">Имя</label>
+                            <label htmlFor="fname">Имя</label>
                             <S.Settings__Fname
                               id="settings-fname"
                               name="fname"
@@ -128,7 +137,7 @@ export const ProfilePage = () => {
                           </S.Settings__Div>
 
                           <S.Settings__Div>
-                            <label for="lname">Фамилия</label>
+                            <label htmlFor="lname">Фамилия</label>
                             <S.Settings__Lname
                               id="settings-lname"
                               name="lname"
@@ -138,7 +147,7 @@ export const ProfilePage = () => {
                           </S.Settings__Div>
 
                           <S.Settings__Div>
-                            <label for="city">Город</label>
+                            <label htmlFor="city">Город</label>
                             <S.Settings__City
                               id="settings-city"
                               name="city"
@@ -148,7 +157,7 @@ export const ProfilePage = () => {
                           </S.Settings__Div>
 
                           <S.Settings__Div>
-                            <label for="phone">Телефон</label>
+                            <label htmlFor="phone">Телефон</label>
                             <S.Settings__Phone
                               id="settings-phone"
                               name="phone"
@@ -175,17 +184,17 @@ export const ProfilePage = () => {
                       <S.Cards__Item key={index}>
                         <S.Cards__Card>
                           <S.Card__Image>
-                            <a href="" target="_blank">
+                          <Link to="#">
                               <img
                                 src={baseImagePath + item.images[0].url}
                                 alt="picture"
                               />
-                            </a>
+                            </Link>
                           </S.Card__Image>
                           <div>
-                            <a href="" target="_blank">
+                            <Link to="#">
                               <S.Card__Title>{item.title}</S.Card__Title>
-                            </a>
+                            </Link>
                             <S.Card__Price>{item.price}&nbsp;₽</S.Card__Price>
                             <S.Card__Place>
                               Город&nbsp;{item.user.city}
@@ -203,19 +212,19 @@ export const ProfilePage = () => {
           <S.Footer>
             <S.Footer__Container>
               <S.Footer__Img>
-                <a href="" target="_self">
+              <Link to="/">
                   <img src="img/icon_01.png" alt="home" />
-                </a>
+                </Link>
               </S.Footer__Img>
               <S.Footer__Img>
-                <a href="" target="_self">
+              <Link to="#">
                   <img src="img/icon_02.png" alt="home" />
-                </a>
+                </Link>
               </S.Footer__Img>
               <S.Footer__Img>
-                <a href="" target="_self">
+              <Link to="#">
                   <img src="img/icon_03.png" alt="home" />
-                </a>
+                </Link>
               </S.Footer__Img>
             </S.Footer__Container>
           </S.Footer>

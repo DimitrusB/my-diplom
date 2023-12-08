@@ -2,14 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
 import { GetUserData, LoginUser } from "../../../api/api";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { saveAccessToken } from "../../store/actions/actions";
+// import { useDispatch } from "react-redux";
+// import { saveAccessToken } from "../../store/actions/actions";
 
 export const Signin = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
+  
 
 
   const handleLogin = async (e) => {
@@ -21,13 +22,14 @@ export const Signin = () => {
     };
  
     try {
-      const { access_token } = await LoginUser(userData);
-      localStorage.setItem('accessToken', JSON.stringify(access_token));
-      console.log("Login successful");
+      // const { access_token } = 
+      await LoginUser(userData);
+      // localStorage.setItem('accessToken', JSON.stringify(access_token));
+      // console.log("Login successful");
 
-      dispatch(saveAccessToken(access_token));
+      // dispatch(saveAccessToken(access_token));
 
-      const userDataResponse = await GetUserData(access_token);
+      const userDataResponse = await GetUserData();
       localStorage.setItem('userData', JSON.stringify(userDataResponse));
       console.log("User data:", userDataResponse);
 
@@ -38,11 +40,10 @@ export const Signin = () => {
   };
 
   return (
-    <body>
-      <S.Wrapper>
-        <S.ContainerEnter>
-          <S.Modal__block>
-            <S.Modal__formLogin id="formLogIn" action="#">
+    <S.Wrapper>
+      <S.ContainerEnter>
+        <S.Modal__block>
+          <S.Modal__formLogin id="formLogIn" action="#">
             <S.Modal__logo>
               <Link to="/">
                 <S.Modal__logoImg src="../img/logo_modal.png" alt="logo" />
@@ -63,17 +64,16 @@ export const Signin = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <S.Modal__btnEnter>
-              <a onClick={handleLogin}>Войти</a>{" "}
+              <a onClick={handleLogin}>Войти</a>
             </S.Modal__btnEnter>
             <Link to="/reg">
-            <S.Modal__btnSignup id="btnSignUp">
-              <a href="signup.html">Зарегистрироваться</a>{" "}
-            </S.Modal__btnSignup>
+              <S.Modal__btnSignup>
+              <div>Зарегистрироваться</div>
+              </S.Modal__btnSignup>
             </Link>
-            </S.Modal__formLogin>
-          </S.Modal__block>
-        </S.ContainerEnter>
-      </S.Wrapper>
-    </body>
+          </S.Modal__formLogin>
+        </S.Modal__block>
+      </S.ContainerEnter>
+    </S.Wrapper>
   );
 };

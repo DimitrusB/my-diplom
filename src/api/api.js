@@ -63,6 +63,8 @@ export const LoginUser = async (userData) => {
     }
 
     const data = await response.json();
+    localStorage.setItem('accessToken', JSON.stringify(data.access_token));
+    localStorage.setItem('refreshToken', JSON.stringify(data.refresh_token));
     console.log("User login response:", data);
 
     return data;
@@ -71,7 +73,41 @@ export const LoginUser = async (userData) => {
   }
 };
 
-export const GetUserData = async (accessToken) => {
+export const refreshToken = async () => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
+  const url = 'http://localhost:8090/auth/login';
+  const data = {
+    access_token: accessToken,
+    refresh_token: refreshToken,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      console.error("Token refresh failed with status:", response.status);
+      return;
+    }
+
+    const newTokens = await response.json();
+    localStorage.setItem('accessToken', JSON.stringify(newTokens.access_token));
+    localStorage.setItem('refreshToken', JSON.stringify(newTokens.refresh_token));
+    // console.log("Token refresh successful. New tokens:", newTokens);
+  } catch (error) {
+    console.error('Error during token refresh:', error);
+  }
+};
+
+export const GetUserData = async () => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const url = 'http://localhost:8090/user';
   const headers = {
     'Accept': 'application/json',
@@ -89,7 +125,8 @@ export const GetUserData = async (accessToken) => {
   }
 };
 
-export const FetchUserAvatar = async (accessToken, file) => {
+export const FetchUserAvatar = async (file) => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const url = 'http://localhost:8090/user/avatar';
 
   const formData = new FormData();
@@ -113,7 +150,8 @@ export const FetchUserAvatar = async (accessToken, file) => {
   }
 };
 
-export const GetUserAd = async (accessToken) => {
+export const GetUserAd = async () => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const url = 'http://localhost:8090/ads/me';
   const headers = {
     'Accept': 'application/json',
@@ -149,26 +187,3 @@ export const ChangeUserData = async (accessToken) => {
   }
 };
 
-export const performLoginUpdate = async (accessToken, refreshToken ) => {
-  const url = 'http://localhost:8090/auth/refresh';
-  const data = {
-    access_token: {accessToken},
-    refresh_token: {refreshToken},
-  };
-  
-  fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => response.json())
-    .then(result => {
-      console.log(result);
-    })
-    .catch(error => {
-      console.error('Ошибка при выполнении запроса:', error);
-    });
-}
