@@ -9,7 +9,17 @@ export const EditUserData = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [city, setCity] = useState("");
-  console.log(UserData);
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    const areAllFieldsFilled =
+      name.trim() !== "" ||
+      surname.trim() !== "" ||
+      city.trim() !== "" ||
+      phone.trim() !== "";
+
+    setIsSaveButtonDisabled(!areAllFieldsFilled);
+  }, [name, surname, city, phone]);
 
   const handleEditUser = async (e) => {
     e.preventDefault();
@@ -84,7 +94,7 @@ export const EditUserData = () => {
           />
         </S.Settings__Div>
 
-        <S.Settings__Btn onClick={handleEditUser}>Сохранить</S.Settings__Btn>
+        <S.Settings__Btn onClick={handleEditUser} disabled={isSaveButtonDisabled}>Сохранить</S.Settings__Btn>
       </S.Settings__Form>
     </S.Settings__Right>
   );

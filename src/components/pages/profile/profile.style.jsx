@@ -708,12 +708,13 @@ export const Settings__Btn = styled.button`
   width: 154px;
   height: 50px;
   margin: 10px 7px 0;
-  background-color: #009ee4;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${props => (props.disabled ? '#cccccc' : '#009ee4')};
   border-radius: 6px;
-  border: 1px solid #009ee4;
+  border: 1px solid ${props => (props.disabled ? '#cccccc' : '#009ee4')};
 
   &:hover {
-    background-color: #0080c1;
+    background-color: ${props => (props.disabled ? '#cccccc' : '#0080c1')};
   }
 
   @media screen and (max-width: 620px) {
