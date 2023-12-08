@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
 import { useEffect, useState } from "react";
-import { FetchUserAvatar, GetUserAd } from "../../../api/api";
+import { FetchUserAvatar, GetUserAd, GetUserData } from "../../../api/api";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const savedUserData = JSON.parse(localStorage.getItem("userData"));
-  const savedUserToken = JSON.parse(localStorage.getItem("accessToken"));
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const [selectedFile, setSelectedFile] = useState(null);
-  const baseImagePath = "http://127.0.0.1:8090/";
+  const baseImagePath = "http://localhost:8090/";
   const [userAd, setUserAd] = useState(null);
   const [error, setError] = useState(null);
 
@@ -17,26 +17,14 @@ export const ProfilePage = () => {
     setSelectedFile(file);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await GetUserAd(savedUserToken);
-        setUserAd(data);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
-    fetchData();
-  }, [savedUserToken]);
-  console.log(userAd);
 
   const handleUpload = async () => {
     try {
       if (selectedFile) {
-        const result = await FetchUserAvatar(savedUserToken, selectedFile);
+        const result = await FetchUserAvatar(accessToken, selectedFile);
         console.log("Avatar uploaded successfully:", result);
-        // Additional logic or state update if needed
+        const updatedUserData = await GetUserData(accessToken);
+        console.log("Updated user data:", updatedUserData);
       } else {
         console.error("No file selected");
       }
@@ -46,6 +34,21 @@ export const ProfilePage = () => {
   };
 
   console.log("User data retrieved:", savedUserData);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetUserAd(accessToken);
+        setUserAd(data);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchData();
+  }, [accessToken]);
+  console.log(userAd);
+
 
   const handleLogOut = () => {
     localStorage.removeItem("userData");

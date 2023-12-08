@@ -130,3 +130,45 @@ export const GetUserAd = async (accessToken) => {
     throw error;
   }
 };
+
+export const ChangeUserData = async (accessToken) => {
+  const url = 'http://localhost:8090/ads/me';
+  const headers = {
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${accessToken}`,
+  };
+
+  try {
+    const response = await fetch(url, { headers });
+    const userData = await response.json();
+    console.log('Успешный ответ:', userData);
+    return userData;
+  } catch (error) {
+    console.error('Ошибка при запросе:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const performLoginUpdate = async (accessToken, refreshToken ) => {
+  const url = 'http://localhost:8090/auth/refresh';
+  const data = {
+    access_token: {accessToken},
+    refresh_token: {refreshToken},
+  };
+  
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    })
+    .catch(error => {
+      console.error('Ошибка при выполнении запроса:', error);
+    });
+}
