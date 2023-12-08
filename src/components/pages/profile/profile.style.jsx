@@ -338,10 +338,11 @@ export const Settings__Img = styled.div`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
+    border-radius: 50%;
   }
   @media screen and (max-width: 620px) {
     width: 132px;

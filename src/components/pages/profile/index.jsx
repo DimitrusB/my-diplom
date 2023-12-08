@@ -17,7 +17,6 @@ export const ProfilePage = () => {
     setSelectedFile(file);
   };
 
-
   const handleUpload = async () => {
     try {
       if (selectedFile) {
@@ -35,7 +34,6 @@ export const ProfilePage = () => {
 
   console.log("User data retrieved:", savedUserData);
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,7 +46,6 @@ export const ProfilePage = () => {
     fetchData();
   }, [accessToken]);
   console.log(userAd);
-
 
   const handleLogOut = () => {
     localStorage.removeItem("userData");
@@ -102,16 +99,15 @@ export const ProfilePage = () => {
                     <S.Profile__Settings>
                       <S.Settings__Left>
                         <S.Settings__Img>
-                          <div>
+
+                          <img
+                            src={baseImagePath + savedUserData.avatar}
+                            alt=""
+                          />
+                        </S.Settings__Img>
+                        <div>
                             <input type="file" onChange={handleFileChange} />
                           </div>
-                          <a href="" target="_self">
-                            <img
-                              src={baseImagePath + savedUserData.avatar}
-                              alt=""
-                            />
-                          </a>
-                        </S.Settings__Img>
                         <S.Settings__ChangePhoto
                           type="file"
                           onClick={handleUpload}
@@ -191,7 +187,9 @@ export const ProfilePage = () => {
                               <S.Card__Title>{item.title}</S.Card__Title>
                             </a>
                             <S.Card__Price>{item.price}&nbsp;₽</S.Card__Price>
-                            <S.Card__Place>Город&nbsp;{item.user.city}</S.Card__Place>
+                            <S.Card__Place>
+                              Город&nbsp;{item.user.city}
+                            </S.Card__Place>
                             <S.Card__Date>{item.created_on}</S.Card__Date>
                           </div>
                         </S.Cards__Card>
