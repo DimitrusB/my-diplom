@@ -63,8 +63,8 @@ export const LoginUser = async (userData) => {
     }
 
     const data = await response.json();
-    localStorage.setItem('accessToken', JSON.stringify(data.access_token));
-    localStorage.setItem('refreshToken', JSON.stringify(data.refresh_token));
+    localStorage.setItem("accessToken", JSON.stringify(data.access_token));
+    localStorage.setItem("refreshToken", JSON.stringify(data.refresh_token));
     console.log("User login response:", data);
 
     return data;
@@ -76,7 +76,7 @@ export const LoginUser = async (userData) => {
 export const refreshToken = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
-  const url = 'http://localhost:8090/auth/login';
+  const url = "http://localhost:8090/auth/login";
   const data = {
     access_token: accessToken,
     refresh_token: refreshToken,
@@ -84,12 +84,12 @@ export const refreshToken = async () => {
 
   try {
     const response = await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -98,92 +98,102 @@ export const refreshToken = async () => {
     }
 
     const newTokens = await response.json();
-    localStorage.setItem('accessToken', JSON.stringify(newTokens.access_token));
-    localStorage.setItem('refreshToken', JSON.stringify(newTokens.refresh_token));
-    // console.log("Token refresh successful. New tokens:", newTokens);
+    localStorage.setItem("accessToken", JSON.stringify(newTokens.access_token));
+    localStorage.setItem(
+      "refreshToken",
+      JSON.stringify(newTokens.refresh_token)
+    );
   } catch (error) {
-    console.error('Error during token refresh:', error);
+    console.error("Error during token refresh:", error);
   }
 };
 
 export const GetUserData = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = 'http://localhost:8090/user';
+  const url = "http://localhost:8090/user";
   const headers = {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
+    Accept: "application/json",
+    Authorization: `Bearer ${accessToken}`,
   };
 
   try {
     const response = await fetch(url, { headers });
     const userData = await response.json();
-    console.log('Успешный ответ:', userData);
+    console.log("Успешный ответ:", userData);
     return userData;
   } catch (error) {
-    console.error('Ошибка при запросе:', error.response?.data || error.message);
+    console.error("Ошибка при запросе:", error.response?.data || error.message);
     throw error;
   }
 };
 
 export const FetchUserAvatar = async (file) => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = 'http://localhost:8090/user/avatar';
+  const url = "http://localhost:8090/user/avatar";
 
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append("file", file);
 
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: formData,
     });
 
     const data = await response.json();
-    console.log('Success:', data);
+    console.log("Success:", data);
     return data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     throw error;
   }
 };
 
 export const GetUserAd = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = 'http://localhost:8090/ads/me';
+  const url = "http://localhost:8090/ads/me";
   const headers = {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
+    Accept: "application/json",
+    Authorization: `Bearer ${accessToken}`,
   };
 
   try {
     const response = await fetch(url, { headers });
     const userData = await response.json();
-    console.log('Успешный ответ:', userData);
+    console.log("Успешный ответ:", userData);
     return userData;
   } catch (error) {
-    console.error('Ошибка при запросе:', error.response?.data || error.message);
+    console.error("Ошибка при запросе:", error.response?.data || error.message);
     throw error;
   }
 };
 
-export const ChangeUserData = async (accessToken) => {
-  const url = 'http://localhost:8090/ads/me';
-  const headers = {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
-  };
-
+export const ChangeUserData = async (userData) => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const url = "http://localhost:8090/user";
   try {
-    const response = await fetch(url, { headers });
-    const userData = await response.json();
-    console.log('Успешный ответ:', userData);
-    return userData;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const responseData = await response.json();
+    console.log("User data updated successfully:", responseData);
+
+
   } catch (error) {
-    console.error('Ошибка при запросе:', error.response?.data || error.message);
-    throw error;
+    console.error("Error updating user data:", error);
+
   }
 };
-

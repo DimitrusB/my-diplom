@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import * as S from "./signup.style";
 import { registerUser } from "../../../api/api";
 
-
 export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,15 +11,14 @@ export const Signup = () => {
   const [lastname, setLastname] = useState("");
   const [city, setCity] = useState("");
 
-
   const handleRegistration = async (e) => {
     e.preventDefault();
-  
+
     if (password !== confirmPassword) {
       console.error("Passwords do not match");
       return;
     }
-  
+
     const userData = {
       password,
       role: "user",
@@ -30,14 +28,17 @@ export const Signup = () => {
       phone: "",
       city,
     };
-    
+
     console.log(userData);
-  
+
     try {
       await registerUser(userData);
       console.log("Registration successful");
     } catch (error) {
-      console.error("Error during registration:", error.response?.data || error.message);
+      console.error(
+        "Error during registration:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -90,11 +91,11 @@ export const Signup = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <S.Modal__input
-        type="text"
-        name="lastname"
-        placeholder="Фамилия (необязательно)"
-        value={lastname}
-        onChange={(e) => setLastname(e.target.value)}
+              type="text"
+              name="lastname"
+              placeholder="Фамилия (необязательно)"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
             />
             <S.Modal__input
               type="text"

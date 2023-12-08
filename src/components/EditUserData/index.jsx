@@ -1,54 +1,91 @@
-import * as S from "../pages/profile/profile.style"
+import { useEffect, useState } from "react";
+import * as S from "../pages/profile/profile.style";
+import { ChangeUserData, GetUserData } from "../../api/api";
 
-export const EditUserData = () =>{
-    const savedUserData = JSON.parse(localStorage.getItem("userData"));
-return(
-<S.Settings__Right>
-<S.Settings__Form action="#">
-  <S.Settings__Div>
-    <label htmlFor="fname">Имя</label>
-    <S.Settings__Fname
-      id="settings-fname"
-      name="fname"
-      type="text"
-      placeholder="Имя"
-    />
-  </S.Settings__Div>
+export const EditUserData = () => {
+  const UserData = JSON.parse(localStorage.getItem("userData"));
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [city, setCity] = useState("");
+  console.log(UserData);
 
-  <S.Settings__Div>
-    <label htmlFor="lname">Фамилия</label>
-    <S.Settings__Lname
-      id="settings-lname"
-      name="lname"
-      type="text"
-      placeholder="Фамилия"
-    />
-  </S.Settings__Div>
+  const handleEditUser = async (e) => {
+    e.preventDefault();
 
-  <S.Settings__Div>
-    <label htmlFor="city">Город</label>
-    <S.Settings__City
-      id="settings-city"
-      name="city"
-      type="text"
-      placeholder={savedUserData.city}
-    />
-  </S.Settings__Div>
+    const newUserData = {
+      email: UserData.email,
+      name,
+      surname,
+      phone,
+      city,
+    };
 
-  <S.Settings__Div>
-    <label htmlFor="phone">Телефон</label>
-    <S.Settings__Phone
-      id="settings-phone"
-      name="phone"
-      type="tel"
-      placeholder="Номер телефона"
-    />
-  </S.Settings__Div>
+    console.log(newUserData);
 
-  <S.Settings__Btn id="settings-btn">
-    Сохранить
-  </S.Settings__Btn>
-</S.Settings__Form>
-</S.Settings__Right>
-)
-}
+    try {
+      await ChangeUserData(newUserData);
+      localStorage.setItem('userData', JSON.stringify(newUserData));
+      window.location.reload();
+      console.log("User data updated successfully");
+    } catch (error) {
+      console.error(
+        "Error updating user data:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  return (
+    <S.Settings__Right>
+      <S.Settings__Form action="#">
+        <S.Settings__Div>
+          <label htmlFor="fname">Имя</label>
+          <S.Settings__Fname
+            name="name"
+            type="text"
+            placeholder={UserData.name}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </S.Settings__Div>
+
+        <S.Settings__Div>
+          <label htmlFor="lname">Фамилия</label>
+          <S.Settings__Lname
+            name="surname"
+            type="text"
+            placeholder={UserData.surname}
+            value={surname}
+            onChange={(e) => setSurname(e.target.value)}
+          />
+        </S.Settings__Div>
+
+        <S.Settings__Div>
+          <label htmlFor="city">Город</label>
+          <S.Settings__City
+            name="city"
+            type="text"
+            placeholder={UserData.city}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+        </S.Settings__Div>
+
+        <S.Settings__Div>
+          <label htmlFor="phone">Телефон</label>
+          <S.Settings__Phone
+            name="phone"
+            type="tel"
+            placeholder={UserData.phone}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </S.Settings__Div>
+
+        <S.Settings__Btn onClick={handleEditUser}>Сохранить</S.Settings__Btn>
+      </S.Settings__Form>
+    </S.Settings__Right>
+  );
+};
