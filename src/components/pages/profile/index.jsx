@@ -7,6 +7,7 @@ import {
   GetUserData,
   refreshToken,
 } from "../../../api/api";
+import { EditUserData } from "../../EditUserData";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -35,8 +36,6 @@ export const ProfilePage = () => {
       console.error("Error uploading avatar:", error);
     }
   };
-
-  console.log("User data retrieved:", savedUserData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,53 +123,7 @@ export const ProfilePage = () => {
                           Заменить
                         </S.Settings__ChangePhoto>
                       </S.Settings__Left>
-                      <S.Settings__Right>
-                        <S.Settings__Form action="#">
-                          <S.Settings__Div>
-                            <label htmlFor="fname">Имя</label>
-                            <S.Settings__Fname
-                              id="settings-fname"
-                              name="fname"
-                              type="text"
-                              placeholder="Имя"
-                            />
-                          </S.Settings__Div>
-
-                          <S.Settings__Div>
-                            <label htmlFor="lname">Фамилия</label>
-                            <S.Settings__Lname
-                              id="settings-lname"
-                              name="lname"
-                              type="text"
-                              placeholder="Фамилия"
-                            />
-                          </S.Settings__Div>
-
-                          <S.Settings__Div>
-                            <label htmlFor="city">Город</label>
-                            <S.Settings__City
-                              id="settings-city"
-                              name="city"
-                              type="text"
-                              placeholder={savedUserData.city}
-                            />
-                          </S.Settings__Div>
-
-                          <S.Settings__Div>
-                            <label htmlFor="phone">Телефон</label>
-                            <S.Settings__Phone
-                              id="settings-phone"
-                              name="phone"
-                              type="tel"
-                              placeholder="Номер телефона"
-                            />
-                          </S.Settings__Div>
-
-                          <S.Settings__Btn id="settings-btn">
-                            Сохранить
-                          </S.Settings__Btn>
-                        </S.Settings__Form>
-                      </S.Settings__Right>
+                  <EditUserData/>
                     </S.Profile__Settings>
                   </S.Profile__Content>
                 </S.Main__Profile>

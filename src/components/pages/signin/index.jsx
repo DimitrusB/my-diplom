@@ -2,11 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
 import { GetUserData, LoginUser } from "../../../api/api";
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { saveAccessToken } from "../../store/actions/actions";
 
 export const Signin = () => {
-  // const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
@@ -22,13 +19,7 @@ export const Signin = () => {
     };
  
     try {
-      // const { access_token } = 
       await LoginUser(userData);
-      // localStorage.setItem('accessToken', JSON.stringify(access_token));
-      // console.log("Login successful");
-
-      // dispatch(saveAccessToken(access_token));
-
       const userDataResponse = await GetUserData();
       localStorage.setItem('userData', JSON.stringify(userDataResponse));
       console.log("User data:", userDataResponse);
@@ -43,7 +34,7 @@ export const Signin = () => {
     <S.Wrapper>
       <S.ContainerEnter>
         <S.Modal__block>
-          <S.Modal__formLogin id="formLogIn" action="#">
+          <S.Modal__formLogin onSubmit={handleLogin}>
             <S.Modal__logo>
               <Link to="/">
                 <S.Modal__logoImg src="../img/logo_modal.png" alt="logo" />

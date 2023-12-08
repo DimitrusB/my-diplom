@@ -132,7 +132,7 @@ export const Header__BtnputAd = styled.button`
   }
 `;
 
-export const Logo__MobLink = styled.a`
+export const Logo__MobLink = styled.div`
   @media screen and (max-width: 620px) {
     display: block;
     width: 32px;
@@ -246,7 +246,7 @@ export const Main__Content = styled.div`
     margin: 0 auto;
   }
 `;
-export const Menu__LogoLink = styled.a`
+export const Menu__LogoLink = styled.div`
   width: 54;
   height: 50px;
 `;
