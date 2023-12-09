@@ -69,6 +69,7 @@ export const ProfilePage = () => {
 
   return (
     <S.StyledMain>
+      {isModalVisible && <AddNewAt onClose={() => setModalVisible(false)} />}
       <S.Wrapper>
         <S.Container>
           <S.Header>
@@ -84,10 +85,8 @@ export const ProfilePage = () => {
                 <S.Header__BtnputAd onClick={handleButtonClick}>
                   Разместить объявление
                 </S.Header__BtnputAd>
-                {isModalVisible && (
-                  <AddNewAt onClose={() => setModalVisible(false)} />
-                )}
               </>
+
               {savedUserData ? (
                 <S.Header__BtnLk onClick={handleLogOut}>Выйти</S.Header__BtnLk>
               ) : (
@@ -95,6 +94,7 @@ export const ProfilePage = () => {
               )}
             </S.Header__nav>
           </S.Header>
+
           <main>
             <S.Maincontainer>
               <S.Main__CenterBlock>
@@ -181,7 +181,7 @@ export const ProfilePage = () => {
                 </Link>
               </S.Footer__Img>
               <S.Footer__Img onClick={handleButtonClick}>
-                  <img src="img/icon_02.png" alt="home" />
+                <img src="img/icon_02.png" alt="home" />
               </S.Footer__Img>
               <S.Footer__Img>
                 <Link to="#">

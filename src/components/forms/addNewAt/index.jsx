@@ -6,7 +6,7 @@ export const AddNewAt = ({ onClose }) => {
       <S.Container__bg>
         <S.Modal__block>
           <S.Modal__content>
-            <S.Modal__title>Новое объявление</S.Modal__title>
+            <S.Modal__title onClick={onClose}>Новое объявление</S.Modal__title>
             <S.Modal__btn_close>
               <S.Modal__btn_close_line onClick={onClose}>
                 <svg
