@@ -7,7 +7,8 @@ import {
   GetUserData,
   refreshToken,
 } from "../../../api/api";
-import { EditUserData } from "../../EditUserData";
+import { EditUserData } from "../../forms/EditUserData";
+import { AddNewAt } from "../../forms/addNewAt";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -16,7 +17,11 @@ export const ProfilePage = () => {
   const baseImagePath = "http://localhost:8090/";
   const [userAd, setUserAd] = useState(null);
   const [error, setError] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  const handleButtonClick = () => {
+    setModalVisible(true);
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -28,6 +33,7 @@ export const ProfilePage = () => {
         const result = await FetchUserAvatar(selectedFile);
         console.log("Avatar uploaded successfully:", result);
         const updatedUserData = await GetUserData();
+
         console.log("Updated user data:", updatedUserData);
       } else {
         console.error("No file selected");
@@ -74,9 +80,14 @@ export const ProfilePage = () => {
                   </Link>
                 </S.Logo__MobLink>
               </S.Header__Logo>
-              <S.Header__BtnputAd>
-                Разместить объявление
-              </S.Header__BtnputAd>
+              <>
+                <S.Header__BtnputAd onClick={handleButtonClick}>
+                  Разместить объявление
+                </S.Header__BtnputAd>
+                {isModalVisible && (
+                  <AddNewAt onClose={() => setModalVisible(false)} />
+                )}
+              </>
               {savedUserData ? (
                 <S.Header__BtnLk onClick={handleLogOut}>Выйти</S.Header__BtnLk>
               ) : (
@@ -94,8 +105,8 @@ export const ProfilePage = () => {
                     </Link>
                   </S.Menu__LogoLink>
                   <S.Menu__Form action="#">
-                  <Link to="/">
-                    <S.Menu__Btn>Вернуться на&nbsp;главную</S.Menu__Btn>
+                    <Link to="/">
+                      <S.Menu__Btn>Вернуться на&nbsp;главную</S.Menu__Btn>
                     </Link>
                   </S.Menu__Form>
                 </S.Main__Menu>
@@ -123,7 +134,7 @@ export const ProfilePage = () => {
                           Заменить
                         </S.Settings__ChangePhoto>
                       </S.Settings__Left>
-                  <EditUserData/>
+                      <EditUserData />
                     </S.Profile__Settings>
                   </S.Profile__Content>
                 </S.Main__Profile>
@@ -137,7 +148,7 @@ export const ProfilePage = () => {
                       <S.Cards__Item key={index}>
                         <S.Cards__Card>
                           <S.Card__Image>
-                          <Link to="#">
+                            <Link to="#">
                               <img
                                 src={baseImagePath + item.images[0].url}
                                 alt="picture"
@@ -165,17 +176,15 @@ export const ProfilePage = () => {
           <S.Footer>
             <S.Footer__Container>
               <S.Footer__Img>
-              <Link to="/">
+                <Link to="/">
                   <img src="img/icon_01.png" alt="home" />
                 </Link>
               </S.Footer__Img>
-              <S.Footer__Img>
-              <Link to="#">
+              <S.Footer__Img onClick={handleButtonClick}>
                   <img src="img/icon_02.png" alt="home" />
-                </Link>
               </S.Footer__Img>
               <S.Footer__Img>
-              <Link to="#">
+                <Link to="#">
                   <img src="img/icon_03.png" alt="home" />
                 </Link>
               </S.Footer__Img>

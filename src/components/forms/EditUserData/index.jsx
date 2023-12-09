@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import * as S from "../pages/profile/profile.style";
-import { ChangeUserData, GetUserData } from "../../api/api";
+import * as S from "../../pages/profile/profile.style";
+import { ChangeUserData, GetUserData } from "../../../api/api";
 
 export const EditUserData = () => {
   const UserData = JSON.parse(localStorage.getItem("userData"));
@@ -36,7 +36,7 @@ export const EditUserData = () => {
 
     try {
       await ChangeUserData(newUserData);
-      localStorage.setItem('userData', JSON.stringify(newUserData));
+      localStorage.setItem("userData", JSON.stringify(newUserData));
       window.location.reload();
       console.log("User data updated successfully");
     } catch (error) {
@@ -94,7 +94,12 @@ export const EditUserData = () => {
           />
         </S.Settings__Div>
 
-        <S.Settings__Btn onClick={handleEditUser} disabled={isSaveButtonDisabled}>Сохранить</S.Settings__Btn>
+        <S.Settings__Btn
+          onClick={handleEditUser}
+          disabled={isSaveButtonDisabled}
+        >
+          Сохранить
+        </S.Settings__Btn>
       </S.Settings__Form>
     </S.Settings__Right>
   );
