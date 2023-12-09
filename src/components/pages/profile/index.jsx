@@ -8,7 +8,7 @@ import {
   refreshToken,
 } from "../../../api/api";
 import { EditUserData } from "../../forms/EditUserData";
-import { AddNewAt } from "../../forms/addNewAt";
+import { AddNewAd } from "../../forms/addNewAt";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export const ProfilePage = () => {
   const handleButtonClick = () => {
     setModalVisible(true);
   };
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -31,6 +32,7 @@ export const ProfilePage = () => {
     try {
       if (selectedFile) {
         const result = await FetchUserAvatar(selectedFile);
+
         console.log("Avatar uploaded successfully:", result);
         const updatedUserData = await GetUserData();
 
@@ -69,7 +71,7 @@ export const ProfilePage = () => {
 
   return (
     <S.StyledMain>
-      {isModalVisible && <AddNewAt onClose={() => setModalVisible(false)} />}
+      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
       <S.Wrapper>
         <S.Container>
           <S.Header>
@@ -150,8 +152,12 @@ export const ProfilePage = () => {
                           <S.Card__Image>
                             <Link to="#">
                               <img
-                                src={baseImagePath + item.images[0].url}
-                                alt="picture"
+                                src={
+                                  item.images[0]
+                                    ? baseImagePath + item.images[0].url
+                                    : ""
+                                }
+                                alt={`Фото ${item.title}`}
                               />
                             </Link>
                           </S.Card__Image>

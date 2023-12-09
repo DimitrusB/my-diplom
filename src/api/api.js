@@ -197,3 +197,61 @@ export const ChangeUserData = async (userData) => {
 
   }
 };
+
+export const addNewAd = async (newData) => {
+  const url = "http://localhost:8090/adstext";
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    });
+
+    if (!response.ok) {
+      console.error("Add new at :", response.status);
+    }
+    const data = await response.json();
+    console.log("User registration response:", data);
+  } catch (error) {
+    console.error("Error during user registration:", error);
+  }
+};
+
+export const addNewAdwithPhoto = async (newData) => {
+  const { title, description, price, files } = newData;
+  const url = `http://localhost:8090/ads?title=${title}&description=${description}&price=${price}`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('description', description);
+  formData.append('price', price);
+  formData.append('files', files);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      console.error("Error adding new ad:", response.status);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Response from server:", data);
+  } catch (error) {
+    console.error("Error during adding new ad:", error);
+  }
+};
