@@ -234,6 +234,8 @@ export const addNewAdwithPhoto = async (newData) => {
   formData.append('price', price);
   formData.append('files', files);
 
+  
+
   try {
     const response = await fetch(url, {
       method: "POST",

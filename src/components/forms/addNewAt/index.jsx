@@ -6,8 +6,8 @@ export const AddNewAd = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [errorprice, setErrorPrice] = useState(false);
+  const [selectedFile, setSelectedFile] = useState([]);
+  const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
 
@@ -19,23 +19,28 @@ export const AddNewAd = ({ onClose }) => {
   const handleAddNewAd = async (e) => {
     e.preventDefault();
 
-    if (isNaN(price)) {
-      setPrice(price);
+    if (isNaN(price) || price === "") {
       setErrorPrice(true);
+      return;
     } else {
       setErrorPrice(false);
+      setPrice(price);
     }
 
     if (title === "") {
       setErrorData(true);
+      return;
     } else {
       setErrorData(false);
+      setTitle(title);
     }
 
     if (description === "") {
       setErrorDataDesk(true);
+      return;
     } else {
       setErrorDataDesk(false);
+      setDescription(description);
     }
 
     const newAd = {
@@ -53,7 +58,7 @@ export const AddNewAd = ({ onClose }) => {
       } else {
         await addNewAd(newAd);
       }
-      //   window.location.reload();
+      window.location.reload();
       console.log("User data updated successfully");
     } catch (error) {
       console.error(
@@ -132,26 +137,38 @@ export const AddNewAd = ({ onClose }) => {
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                  <S.Form__newArt_img>
+                  <S.Form__newArt_img >
                     <div>
-                      <input type="file" onChange={handleFileChange} />
+                      <input type="file"  onChange={handleFileChange} />
                     </div>
                     <img src="" alt="" />
                     <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                   </S.Form__newArt_img>
                   <S.Form__newArt_img>
+                  <div>
+                      <input type="file"  onChange={handleFileChange} />
+                    </div>
                     <img src="" alt="" />
                     <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                   </S.Form__newArt_img>
                   <S.Form__newArt_img>
+                  <div>
+                      <input type="file"  onChange={handleFileChange} />
+                    </div>
                     <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     <img src="" alt="" />
                   </S.Form__newArt_img>
                   <S.Form__newArt_img>
+                  <div>
+                      <input type="file"  onChange={handleFileChange} />
+                    </div>
                     <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     <img src="" alt="" />
                   </S.Form__newArt_img>
                   <S.Form__newArt_img>
+                  <div>
+                      <input type="file"  onChange={handleFileChange} />
+                    </div>
                     <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     <img src="" alt="" />
                   </S.Form__newArt_img>
@@ -168,7 +185,7 @@ export const AddNewAd = ({ onClose }) => {
                 />
                 <S.Form__newArt__input_price_cover></S.Form__newArt__input_price_cover>
                 <p style={{ color: "red" }}>
-                  {errorprice ? "Должно быть число" : ""}
+                  {errorPrice ? "Должно быть число" : ""}
                 </p>
               </S.Form__NewArt_block_price>
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
