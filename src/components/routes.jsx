@@ -5,6 +5,7 @@ import { NotFoundPage } from "./pages/404Page";
 import { Signin } from "./pages/signin";
 import { Signup } from "./pages/signup";
 import { ProfilePage } from "./pages/profile";
+import { AdPage } from "./pages/adPage";
 
 export const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ export const AppRoutes = () => {
         <Route path="/auth" element={<Signin />} />
         <Route path="/reg" element={<Signup />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/adpage" element={<AdPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

@@ -67,8 +67,6 @@ export const AddNewAd = ({ onClose }) => {
       files: selectedFiles,
     };
 
-    console.log(newAd);
-
     try {
       if (selectedFiles) {
         await addNewAdwithPhoto(newAd);
@@ -84,7 +82,7 @@ export const AddNewAd = ({ onClose }) => {
       );
     }
   };
-  console.log(inputRefs);
+
   const handleBlur = () => {
     setErrorPrice(false);
     setErrorData(false);
