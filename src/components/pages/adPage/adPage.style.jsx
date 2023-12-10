@@ -250,7 +250,7 @@ export const Artic__content = styled.div`
   align-items: top;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: start;
 
   @media screen and (max-width: 768px) {
     display: -webkit-box;

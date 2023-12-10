@@ -15,7 +15,7 @@ export const AppRoutes = () => {
         <Route path="/auth" element={<Signin />} />
         <Route path="/reg" element={<Signup />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/adpage" element={<AdPage />} />
+        <Route path="/adpage/:itemId" element={<AdPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

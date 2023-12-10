@@ -10,6 +10,19 @@ export const GetAllAds = async () => {
   }
 };
 
+export const GetAdsByID = async (id) => {
+  try {
+    const result = await fetch(`http://localhost:8090/ads/${id}`);
+    const data = await result.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
+
 export const GetAllImages = async () => {
   try {
     const result = await fetch("http://localhost:8090/images");

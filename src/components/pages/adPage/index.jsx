@@ -1,7 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
+import { GetAdsByID } from "../../../api/api";
+import { useEffect, useState } from "react";
 
 export const AdPage = () => {
+  const { itemId } = useParams();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const navigate = useNavigate();
+  const [values, setValues] = useState([]);
+  const baseImagePath = "http://127.0.0.1:8090/";
+
+  useEffect(() => {
+    GetAdsByID(itemId)
+      .then((data) => {
+        setValues(data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении данных:", error);
+      });
+  }, []);
+
+  console.log(values);
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -9,28 +29,32 @@ export const AdPage = () => {
           <S.Header__nav>
             <S.Header__Logo>
               <S.Logo__MobLink href="" target="_blank">
-                <S.Logo__MobImg src="img/logo-mob.png" alt="logo" />
+                <S.Logo__MobImg
+                  src={`${process.env.PUBLIC_URL}/img/logo-mob.png`}
+                  alt="logo"
+                />
               </S.Logo__MobLink>
             </S.Header__Logo>
-            <S.Header__BtnputAd>
-              Разместить объявление
-            </S.Header__BtnputAd>
-            <S.Header__BtnLk id="btnlk">
-              Личный кабинет
-            </S.Header__BtnLk>
+            <S.Header__BtnputAd>Разместить объявление</S.Header__BtnputAd>
+            <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
           </S.Header__nav>
         </S.Header>
 
-        <main class="main">
+        <main>
           <S.Maincontainer>
             <S.Main__Menu>
-              <S.Menu__LogoLink href="" target="_blank">
-                <S.Menu__LogoImg src="img/logo.png" alt="logo" />
+              <S.Menu__LogoLink>
+                <Link to="/">
+                  <S.Menu__LogoImg
+                    src={`${process.env.PUBLIC_URL}/img/logo.png`}
+                    alt="logo"
+                  />
+                </Link>
               </S.Menu__LogoLink>
-              <S.Menu__Form action="#">
-                <S.Menu__Btn id="btnGoBack">
-                  Вернуться на главную
-                </S.Menu__Btn>
+              <S.Menu__Form>
+                <Link to="/">
+                  <S.Menu__Btn>Вернуться на главную</S.Menu__Btn>
+                </Link>
               </S.Menu__Form>
             </S.Main__Menu>
           </S.Maincontainer>
@@ -73,9 +97,7 @@ export const AdPage = () => {
               </S.Article__left>
               <S.Article__right>
                 <S.Article__block>
-                  <S.Article__title>
-                    Ракетка для большого тенниса Triumph Pro STС Б/У
-                  </S.Article__title>
+                  <S.Article__title>{values.title}</S.Article__title>
                   <S.Article__info>
                     <S.Article__date>Сегодня в 10:45</S.Article__date>
                     <S.Article__city>Санкт-Петербург</S.Article__city>
@@ -83,7 +105,7 @@ export const AdPage = () => {
                       23 отзыва
                     </S.Article__link>
                   </S.Article__info>
-                  <S.Article__price>2 200 ₽</S.Article__price>
+                  <S.Article__price>{values.price} ₽</S.Article__price>
                   <S.Article__btn>
                     Показать&nbsp;телефон
                     <span>8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ</span>
@@ -94,7 +116,9 @@ export const AdPage = () => {
                     </S.Author__img>
                     <S.Author__cont>
                       <S.Author__name>Кирилл</S.Author__name>
-                      <S.Author__about>Продает товары с августа 2021</S.Author__about>
+                      <S.Author__about>
+                        Продает товары с августа 2021
+                      </S.Author__about>
                     </S.Author__cont>
                   </S.Article__author>
                 </S.Article__block>
@@ -105,15 +129,7 @@ export const AdPage = () => {
           <S.Maincontainer>
             <S.Main__title>Описание товара</S.Main__title>
             <S.Main__content>
-              <S.Main__text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </S.Main__text>
+              <S.Main__text>{values.description}</S.Main__text>
             </S.Main__content>
           </S.Maincontainer>
         </main>
@@ -122,15 +138,26 @@ export const AdPage = () => {
           <S.Footer__Container>
             <S.Footer__Img>
               <Link to="/">
-                <img src="img/icon_01.png" alt="home" />
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
+                  alt="home"
+                />
               </Link>
             </S.Footer__Img>
             <S.Footer__Img>
-              <img src="img/icon_02.png" alt="home" />
+            <Link to={userData ? "/" : "#"}>
+              <img
+                src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
+                alt="add"
+              />
+              </Link>
             </S.Footer__Img>
             <S.Footer__Img>
               <Link to="#">
-                <img src="img/icon_03.png" alt="home" />
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
+                  alt="home"
+                />
               </Link>
             </S.Footer__Img>
           </S.Footer__Container>

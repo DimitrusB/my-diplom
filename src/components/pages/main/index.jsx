@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds } from "../../../api/api";
 import * as S from "./main.style";
 
@@ -8,6 +8,7 @@ export const Main = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
   const baseImagePath = "http://127.0.0.1:8090/";
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   useEffect(() => {
     GetAllAds()
@@ -65,6 +66,7 @@ export const Main = () => {
                     {values &&
                       values.map((item, index) => (
                         <S.Cards__item key={index}>
+                           <Link to={`/adpage/${item.id}`}>
                           <S.Cards__card>
                             <S.Card__image>
                               <a href="#" target="_blank">
@@ -89,6 +91,7 @@ export const Main = () => {
                               <S.Card__date>{item.created_on}</S.Card__date>
                             </div>
                           </S.Cards__card>
+                          </Link>
                         </S.Cards__item>
                       ))}
                   </S.Cards>
