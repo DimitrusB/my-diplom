@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FetchUserAvatar,
   GetUserAd,
@@ -18,30 +18,30 @@ export const ProfilePage = () => {
   const [userAd, setUserAd] = useState(null);
   const [error, setError] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const inputRef = useRef(null);
 
   const handleButtonClick = () => {
     setModalVisible(true);
   };
-  
-  const handleFileChange = (event) => {
+
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-  };
 
-  const handleUpload = async () => {
     try {
-      if (selectedFile) {
-        const result = await FetchUserAvatar(selectedFile);
-
-        console.log("Avatar uploaded successfully:", result);
+      if (file) {
+        const result = await FetchUserAvatar(file);
+        console.log("Аватар успешно загружен:", result);
         const updatedUserData = await GetUserData();
-
-        console.log("Updated user data:", updatedUserData);
+        console.log("Обновленные данные пользователя:", updatedUserData);
+        savedUserData.avatar = updatedUserData.avatar;
+        localStorage.setItem("userData", JSON.stringify(savedUserData));
+        window.location.reload();
       } else {
-        console.error("No file selected");
+        console.error("Файл не выбран");
       }
     } catch (error) {
-      console.error("Error uploading avatar:", error);
+      console.error("Ошибка при загрузке аватара:", error);
     }
   };
 
@@ -127,11 +127,16 @@ export const ProfilePage = () => {
                           />
                         </S.Settings__Img>
                         <div>
-                          <input type="file" onChange={handleFileChange} />
+                          <input
+                            type="file"
+                            ref={inputRef}
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                          />
                         </div>
                         <S.Settings__ChangePhoto
                           type="file"
-                          onClick={handleUpload}
+                          onClick={() => inputRef.current.click()}
                         >
                           Заменить
                         </S.Settings__ChangePhoto>

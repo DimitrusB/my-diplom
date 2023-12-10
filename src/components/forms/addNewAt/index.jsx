@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { addNewAd, addNewAdwithPhoto } from "../../../api/api";
 import * as S from "./addNewat.style";
 
@@ -6,16 +6,33 @@ export const AddNewAd = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [selectedFile, setSelectedFile] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState("");
   const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+  const inputRefs = [
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+  ];
+
+  const handleFileChange = (event, buttonIndex) => {
+    const files = event.target.files;
+    const newFiles = Array.from(files).slice(0, 5);
+
+    if (selectedFiles.length + newFiles.length <= 5) {
+      setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    } else {
+      console.log("Превышено максимальное количество файлов (5).");
+    }
   };
-  console.log(selectedFile);
+
+  
+
+  console.log(selectedFiles);
   const handleAddNewAd = async (e) => {
     e.preventDefault();
 
@@ -47,13 +64,13 @@ export const AddNewAd = ({ onClose }) => {
       title,
       description,
       price,
-      files: selectedFile,
+      files: selectedFiles,
     };
 
     console.log(newAd);
 
     try {
-      if (selectedFile) {
+      if (selectedFiles) {
         await addNewAdwithPhoto(newAd);
       } else {
         await addNewAd(newAd);
@@ -67,7 +84,7 @@ export const AddNewAd = ({ onClose }) => {
       );
     }
   };
-
+  console.log(inputRefs);
   const handleBlur = () => {
     setErrorPrice(false);
     setErrorData(false);
@@ -137,41 +154,26 @@ export const AddNewAd = ({ onClose }) => {
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                  <S.Form__newArt_img >
-                    <div>
-                      <input type="file"  onChange={handleFileChange} />
-                    </div>
-                    <img src="" alt="" />
-                    <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
-                  </S.Form__newArt_img>
-                  <S.Form__newArt_img>
-                  <div>
-                      <input type="file"  onChange={handleFileChange} />
-                    </div>
-                    <img src="" alt="" />
-                    <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
-                  </S.Form__newArt_img>
-                  <S.Form__newArt_img>
-                  <div>
-                      <input type="file"  onChange={handleFileChange} />
-                    </div>
-                    <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
-                    <img src="" alt="" />
-                  </S.Form__newArt_img>
-                  <S.Form__newArt_img>
-                  <div>
-                      <input type="file"  onChange={handleFileChange} />
-                    </div>
-                    <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
-                    <img src="" alt="" />
-                  </S.Form__newArt_img>
-                  <S.Form__newArt_img>
-                  <div>
-                      <input type="file"  onChange={handleFileChange} />
-                    </div>
-                    <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
-                    <img src="" alt="" />
-                  </S.Form__newArt_img>
+                  {[0,1, 2, 3, 4].map((index) => (
+                    <S.Form__newArt_img
+                      key={index}
+                      onClick={() => inputRefs[index].current.click()}
+                    >
+                      <div>
+                        <input
+                          type="file"
+                          ref={inputRefs[index]}
+                          style={{ display: "none" }}
+                          onChange={(event) => handleFileChange(event, index)}
+                        />
+                        {selectedFiles && selectedFiles[index] && (
+                          <p>{selectedFiles[index].name}</p>
+                        )}
+                      </div>
+                      <img src="" alt="" />
+                      <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
+                    </S.Form__newArt_img>
+                  ))}
                 </S.Form__newArt__bar_img>
               </S.Form__NewArt_block>
               <S.Form__NewArt_block_price>

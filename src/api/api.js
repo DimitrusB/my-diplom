@@ -232,7 +232,9 @@ export const addNewAdwithPhoto = async (newData) => {
   formData.append('title', title);
   formData.append('description', description);
   formData.append('price', price);
-  formData.append('files', files);
+  files.forEach((file) => {
+    formData.append('files', file, file.name);
+  });
 
   
 
