@@ -232,6 +232,32 @@ export const addNewAd = async (newData) => {
   }
 };
 
+export const deleteAd = async (id) => {
+
+  const url = `http://localhost:8090/ads/${id}`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(id),
+    });
+
+    if (!response.ok) {
+      console.error("Add new at :", response.status);
+    }
+    const data = await response.json();
+    console.log("User registration response:", data);
+  } catch (error) {
+    console.error("Error during user registration:", error);
+  }
+};
+
 export const addNewAdwithPhoto = async (newData) => {
   const { title, description, price, files } = newData;
   const url = `http://localhost:8090/ads?title=${title}&description=${description}&price=${price}`;

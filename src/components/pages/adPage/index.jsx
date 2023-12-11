@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
-import { GetAdsByID, refreshToken } from "../../../api/api";
+import { deleteAd, GetAdsByID, refreshToken } from "../../../api/api";
 import { useEffect, useState } from "react";
 
 export const AdPage = () => {
@@ -35,6 +35,11 @@ export const AdPage = () => {
         console.error("Ошибка при получении данных:", error);
       });
   }, []);
+
+  const handleDeleteAd = () => {
+    deleteAd(itemId);
+    navigate("/profile");
+  }
 
   const handleImageClick = (url) => {
     setSelectedImage(url); // Update the selectedImage when an image is clicked
@@ -154,7 +159,7 @@ export const AdPage = () => {
                         <S.Article__btn>
                           <span>Редактировать</span>
                         </S.Article__btn>
-                        <S.Article__btn>
+                        <S.Article__btn onClick={handleDeleteAd}>
                           <span>Снять с публикации</span>
                         </S.Article__btn>
                       </S.Article__btnDiv>
