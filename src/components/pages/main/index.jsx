@@ -66,31 +66,31 @@ export const Main = () => {
                     {values &&
                       values.map((item, index) => (
                         <S.Cards__item key={index}>
-                           <Link to={`/adpage/${item.id}`}>
-                          <S.Cards__card>
-                            <S.Card__image>
-                              <a href="#" target="_blank">
-                                {item.images.length > 0 && (
-                                  <S.CardImage
-                                    key={0}
-                                    src={baseImagePath + item.images[0].url}
-                                    alt={`Image ${item.title}`}
-                                  />
-                                )}
-                              </a>
-                            </S.Card__image>
+                          <Link to={`/adpage/${item.id}`}>
+                            <S.Cards__card>
+                              <S.Card__image>
+                                <a href="#" target="_blank">
+                                  {item.images.length > 0 && (
+                                    <S.CardImage
+                                      key={0}
+                                      src={baseImagePath + item.images[0].url}
+                                      alt={`Image ${item.title}`}
+                                    />
+                                  )}
+                                </a>
+                              </S.Card__image>
 
-                            <div>
-                              <a href="" target="_blank">
-                                <S.Card__title>{item.title}</S.Card__title>
-                              </a>
-                              <S.Card__price>{item.price} ₽</S.Card__price>
-                              <S.Card__place key={index}>
-                                {item.user.city}
-                              </S.Card__place>
-                              <S.Card__date>{item.created_on}</S.Card__date>
-                            </div>
-                          </S.Cards__card>
+                              <div>
+                                <a href="" target="_blank">
+                                  <S.Card__title>{item.title}</S.Card__title>
+                                </a>
+                                <S.Card__price>{item.price} ₽</S.Card__price>
+                                <S.Card__place key={index}>
+                                  {item.user.city}
+                                </S.Card__place>
+                                <S.Card__date>{item.created_on}</S.Card__date>
+                              </div>
+                            </S.Cards__card>
                           </Link>
                         </S.Cards__item>
                       ))}

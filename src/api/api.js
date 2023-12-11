@@ -22,7 +22,6 @@ export const GetAdsByID = async (id) => {
   }
 };
 
-
 export const GetAllImages = async () => {
   try {
     const result = await fetch("http://localhost:8090/images");
@@ -203,11 +202,8 @@ export const ChangeUserData = async (userData) => {
     }
     const responseData = await response.json();
     console.log("User data updated successfully:", responseData);
-
-
   } catch (error) {
     console.error("Error updating user data:", error);
-
   }
 };
 
@@ -242,14 +238,12 @@ export const addNewAdwithPhoto = async (newData) => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
   const formData = new FormData();
-  formData.append('title', title);
-  formData.append('description', description);
-  formData.append('price', price);
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("price", price);
   files.forEach((file) => {
-    formData.append('files', file, file.name);
+    formData.append("files", file, file.name);
   });
-
-  
 
   try {
     const response = await fetch(url, {

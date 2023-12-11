@@ -6,27 +6,28 @@ import { useState } from "react";
 export const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
-  
-
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
- 
+
     const userData = {
       password,
       email,
     };
- 
+
     try {
       await LoginUser(userData);
       const userDataResponse = await GetUserData();
-      localStorage.setItem('userData', JSON.stringify(userDataResponse));
+      localStorage.setItem("userData", JSON.stringify(userDataResponse));
       console.log("User data:", userDataResponse);
 
-      navigate('/profile');
+      navigate("/profile");
     } catch (error) {
-      console.error("Error during login:", error.response?.data || error.message);
+      console.error(
+        "Error during login:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -59,7 +60,7 @@ export const Signin = () => {
             </S.Modal__btnEnter>
             <Link to="/reg">
               <S.Modal__btnSignup>
-              <div>Зарегистрироваться</div>
+                <div>Зарегистрироваться</div>
               </S.Modal__btnSignup>
             </Link>
           </S.Modal__formLogin>

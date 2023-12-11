@@ -353,8 +353,8 @@ export const Article__img = styled.div`
   margin: 0 5px;
 
   img {
-    width: 100%;
-    height: auto;
+    width: 480px;
+    height: 480px;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
@@ -419,10 +419,10 @@ export const Article__imgBarDiv = styled.div`
   background-color: #f0f0f0;
   border: 2px solid #f0f0f0;
   margin: 0 5px;
-
+  cursor: pointer;
   img {
-    width: 100%;
-    height: auto;
+    width: 88px;
+    height: 88px;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
@@ -518,6 +518,14 @@ export const Article__price = styled.p`
     margin-bottom: 20px;
   }
 `;
+export const Article__btnDiv = styled.div`
+  display: flex;
+  gap: 10px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
 
 export const Article__btn = styled.button`
   background-color: #009ee4;
@@ -536,9 +544,11 @@ export const Article__btn = styled.button`
   }
 
   span {
-    display: block;
-    font-size: 14px;
+    color: #fff;
+    font-size: 16px;
+    font-style: normal;
     font-weight: 400;
+    line-height: 150%; /* 24px */
   }
 
   @media screen and (max-width: 768px) {
@@ -602,10 +612,11 @@ export const Author__img = styled.div`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
+    border-radius: 50%;
   }
 `;
 
