@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
-import { GetAdsByID } from "../../../api/api";
+import { GetAdsByID, refreshToken } from "../../../api/api";
 import { useEffect, useState } from "react";
 
 export const AdPage = () => {
@@ -11,6 +11,14 @@ export const AdPage = () => {
   const baseImagePath = "http://127.0.0.1:8090/";
   const [selectedImage, setSelectedImage] = useState("");
   const [myAdPage, setMyAdPage] = useState(false);
+
+
+  useEffect(() => {
+    const tokenRefreshInterval = setInterval(() => {
+      refreshToken();
+    }, 60000);
+    return () => clearInterval(tokenRefreshInterval);
+  }, []);
 
   useEffect(() => {
     GetAdsByID(itemId)
@@ -36,6 +44,15 @@ export const AdPage = () => {
     return <h1>Loading...</h1>;
   }
 
+  const ClickEnterAuth = () => {
+
+    if (!userData) {
+      navigate("/auth"); 
+    } else {
+      navigate("/profile");
+  };
+}
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -50,7 +67,7 @@ export const AdPage = () => {
               </S.Logo__MobLink>
             </S.Header__Logo>
             <S.Header__BtnputAd>Разместить объявление</S.Header__BtnputAd>
-            <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
+            <S.Header__BtnLk onClick={ClickEnterAuth}>Личный кабинет</S.Header__BtnLk>
           </S.Header__nav>
         </S.Header>
 

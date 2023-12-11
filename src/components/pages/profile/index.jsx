@@ -153,6 +153,7 @@ export const ProfilePage = () => {
                   {userAd &&
                     userAd.map((item, index) => (
                       <S.Cards__Item key={index}>
+                        <Link to={`/adpage/${item.id}`}>
                         <S.Cards__Card>
                           <S.Card__Image>
                             <Link to="#">
@@ -177,6 +178,7 @@ export const ProfilePage = () => {
                             <S.Card__Date>{item.created_on}</S.Card__Date>
                           </div>
                         </S.Cards__Card>
+                        </Link>
                       </S.Cards__Item>
                     ))}
                 </S.Main__ContentCards>

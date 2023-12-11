@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { GetAllAds } from "../../../api/api";
+import { GetAllAds, refreshToken } from "../../../api/api";
 import * as S from "./main.style";
 
 export const Main = () => {
@@ -20,9 +20,21 @@ export const Main = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const tokenRefreshInterval = setInterval(() => {
+      refreshToken();
+    }, 60000);
+    return () => clearInterval(tokenRefreshInterval);
+  }, []);
+
   const ClickEnterAuth = () => {
-    navigate("/auth");
+
+    if (!userData) {
+      navigate("/auth"); 
+    } else {
+      navigate("/profile");
   };
+}
 
   return (
     <S.StyledMain>
