@@ -15,6 +15,11 @@ export const SellersProfilePage = () => {
   const baseImagePath = "http://localhost:8090/";
   const [error, setError] = useState(null);
   const [userAds, setUserAds] = useState([]);
+  const avatarUrl = userAds.length > 0 ? userAds[0].user.avatar : null;
+  const city = userAds.length > 0 ? userAds[0].user.city : null;
+  const name = userAds.length > 0 ? userAds[0].user.name : null;
+  const sells_from = userAds.length > 0 ? userAds[0].user.sells_from : null;
+  
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -40,7 +45,7 @@ export const SellersProfilePage = () => {
       });
   }, [itemUser]);
 
-  const avatarUrl = userAds.length > 0 ? userAds[0].user.avatar : null;
+  
 
   return (
     <S.StyledMain>
@@ -98,6 +103,11 @@ export const SellersProfilePage = () => {
                           <img src={baseImagePath + avatarUrl} alt="" />
                         </S.Settings__Img>
                       </S.Settings__Left>
+                      <S.Settings__Right>
+<p>{name}</p>
+<p>{city}</p>
+<p>{sells_from}</p>
+                      </S.Settings__Right>
                     </S.Profile__Settings>
                   </S.Profile__Content>
                 </S.Main__Profile>
