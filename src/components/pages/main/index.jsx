@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds, refreshToken } from "../../../api/api";
-import { UsersAdComp } from "../UsersAd";
 import * as S from "./main.style";
+import { UsersAdComp } from "../../forms/UsersAd";
 
 export const Main = () => {
   const navigate = useNavigate();
@@ -35,13 +34,12 @@ export const Main = () => {
   }, []);
 
   const ClickEnterAuth = () => {
-
     if (!userData) {
-      navigate("/auth"); 
+      navigate("/auth");
     } else {
       navigate("/profile");
+    }
   };
-}
 
   return (
     <S.StyledMain>

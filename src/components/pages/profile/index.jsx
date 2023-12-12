@@ -9,8 +9,7 @@ import {
 } from "../../../api/api";
 import { EditUserData } from "../../forms/EditUserData";
 import { AddNewAd } from "../../forms/addNewAt";
-import { UsersAdComp } from "../UsersAd";
-
+import { UsersAdComp } from "../../forms/UsersAd";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ export const ProfilePage = () => {
   const inputRef = useRef(null);
   const [userAdEmpty, setUserAdEmpty] = useState();
   const [avatarUrl, setAvatarUrl] = useState(savedUserData.avatar);
-
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -39,7 +37,7 @@ export const ProfilePage = () => {
         console.log("Аватар успешно загружен:", result);
         const updatedUserData = await GetUserData();
         console.log("Обновленные данные пользователя:", updatedUserData);
-        savedUserData.avatar = updatedUserData.avatar
+        savedUserData.avatar = updatedUserData.avatar;
         localStorage.setItem("userData", JSON.stringify(savedUserData));
         setAvatarUrl(updatedUserData.avatar);
       } else {
@@ -53,7 +51,6 @@ export const ProfilePage = () => {
   useEffect(() => {
     // refreshToken()
   }, [avatarUrl]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,16 +85,18 @@ export const ProfilePage = () => {
 
   return (
     <S.StyledMain>
-      
       <S.Wrapper>
-      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
+        {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
         <S.Container>
           <S.Header>
             <S.Header__nav>
               <S.Header__Logo>
                 <S.Logo__MobLink>
                   <Link to="/">
-                    <S.Logo__MobImg src="img/logo-mob.png" alt="logo" />
+                    <S.Logo__MobImg
+                      src={`${process.env.PUBLIC_URL}/img/logo-mob.png`}
+                      alt="logo"
+                    />
                   </Link>
                 </S.Logo__MobLink>
               </S.Header__Logo>
@@ -121,7 +120,10 @@ export const ProfilePage = () => {
                 <S.Main__Menu>
                   <S.Menu__LogoLink>
                     <Link to="/">
-                      <S.Menu__LogoImg src="img/logo.png" alt="logo" />
+                      <S.Menu__LogoImg
+                        src={`${process.env.PUBLIC_URL}/img/logo.png`}
+                        alt="logo"
+                      />
                     </Link>
                   </S.Menu__LogoLink>
                   <S.Menu__Form action="#">
@@ -178,15 +180,24 @@ export const ProfilePage = () => {
             <S.Footer__Container>
               <S.Footer__Img>
                 <Link to="/">
-                  <img src="img/icon_01.png" alt="home" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
+                    alt="home"
+                  />
                 </Link>
               </S.Footer__Img>
               <S.Footer__Img onClick={handleButtonClick}>
-                <img src="img/icon_02.png" alt="home" />
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
+                  alt="add"
+                />
               </S.Footer__Img>
               <S.Footer__Img>
                 <Link to="#">
-                  <img src="img/icon_03.png" alt="home" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
+                    alt="home"
+                  />
                 </Link>
               </S.Footer__Img>
             </S.Footer__Container>

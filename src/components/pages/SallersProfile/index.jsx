@@ -4,7 +4,7 @@ import { GetAllAds } from "../../../api/api";
 import { AddNewAd } from "../../forms/addNewAt";
 
 import * as S from "../profile/profile.style";
-import { UsersAdComp } from "../UsersAd";
+import { UsersAdComp } from "../../forms/UsersAd";
 
 export const SellersProfilePage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -22,6 +22,7 @@ export const SellersProfilePage = () => {
   const phone = userAds.length > 0 ? userAds[0].user.phone : null;
   const sells_from = userAds.length > 0 ? userAds[0].user.sells_from : null;
   const [numberUser, setNumberUser] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleButtonViewPhone = () => {
     setNumberUser(false);
@@ -32,6 +33,7 @@ export const SellersProfilePage = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     GetAllAds()
       .then((data) => {
         setValues(data);
@@ -48,8 +50,13 @@ export const SellersProfilePage = () => {
       .catch((error) => {
         console.error("Ошибка при получении данных:", error);
         setError(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [itemUser]);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   const ClickEnterAuth = () => {
     if (!userData) {

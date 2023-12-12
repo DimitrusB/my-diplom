@@ -9,17 +9,16 @@ export const AdPage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
-  const baseImagePath = "http://127.0.0.1:8090/";
+  const baseImagePath = "http://localhost:8090/";
   const [selectedImage, setSelectedImage] = useState("");
   const [myAdPage, setMyAdPage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [numberUser, setNumberUser] = useState(true);
   const [phone, SetPhone] = useState();
+  const [loading, setLoading] = useState(true);
 
-console.log(phone);
   const handleButtonViewPhone = () => {
     setNumberUser(false);
-
   };
 
   const handleButtonClick = () => {
@@ -34,10 +33,11 @@ console.log(phone);
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     GetAdsByID(itemId)
       .then((data) => {
         setValues(data);
-        SetPhone(data.user.phone)
+        SetPhone(data.user.phone);
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0].url);
         }
@@ -47,35 +47,38 @@ console.log(phone);
       })
       .catch((error) => {
         console.error("Ошибка при получении данных:", error);
-      });
-  }, []);
+      })
+      .finally(() => setLoading(false));
+  }, [itemId]);
 
   const handleDeleteAd = () => {
     deleteAd(itemId);
     navigate("/profile");
-  }
+  };
 
   const handleImageClick = (url) => {
-    setSelectedImage(url); // Update the selectedImage when an image is clicked
+    setSelectedImage(url);
   };
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   if (!values) {
     return <h1>Loading...</h1>;
   }
 
   const ClickEnterAuth = () => {
-
     if (!userData) {
-      navigate("/auth"); 
+      navigate("/auth");
     } else {
       navigate("/profile");
+    }
   };
-}
 
   return (
-
     <S.Wrapper>
-        {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
+      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
       <S.Container>
         <S.Header>
           <S.Header__nav>
@@ -87,8 +90,12 @@ console.log(phone);
                 />
               </S.Logo__MobLink>
             </S.Header__Logo>
-            <S.Header__BtnputAd onClick={handleButtonClick}>Разместить объявление</S.Header__BtnputAd>
-            <S.Header__BtnLk onClick={ClickEnterAuth}>Личный кабинет</S.Header__BtnLk>
+            <S.Header__BtnputAd onClick={handleButtonClick}>
+              Разместить объявление
+            </S.Header__BtnputAd>
+            <S.Header__BtnLk onClick={ClickEnterAuth}>
+              Личный кабинет
+            </S.Header__BtnLk>
           </S.Header__nav>
         </S.Header>
 
@@ -117,11 +124,7 @@ console.log(phone);
                 <S.Article__fillImg>
                   <S.Article__img>
                     <img
-                      src={
-                        selectedImage
-                          ? baseImagePath + selectedImage
-                          : ""
-                      }
+                      src={selectedImage ? baseImagePath + selectedImage : ""}
                       alt="Selected ad"
                     />{" "}
                   </S.Article__img>
@@ -167,12 +170,12 @@ console.log(phone);
                     <S.Article__price>{values.price} ₽</S.Article__price>
                     {!myAdPage ? (
                       <S.Article__btn onClick={handleButtonViewPhone}>
-                          <div>Показать телефон</div>
-                          <span>
-                            {numberUser
-                              ? (phone?.slice(0, -7) ?? "") + "ХХХ ХХ ХХ"
-                              : phone}
-                          </span>
+                        <div>Показать телефон</div>
+                        <span>
+                          {numberUser
+                            ? (phone?.slice(0, -7) ?? "") + "ХХХ ХХ ХХ"
+                            : phone}
+                        </span>
                       </S.Article__btn>
                     ) : (
                       <S.Article__btnDiv>
@@ -189,8 +192,8 @@ console.log(phone);
                         <img src={baseImagePath + values.user?.avatar} alt="" />
                       </S.Author__img>
                       <S.Author__cont>
-                      <Link to={`/profileSellers/${values.user?.id}`}>
-                        <S.Author__name>{values.user?.name}</S.Author__name>
+                        <Link to={`/profileSellers/${values.user?.id}`}>
+                          <S.Author__name>{values.user?.name}</S.Author__name>
                         </Link>
                         <S.Author__about>
                           Продает товары с{" "}
