@@ -104,7 +104,7 @@ export const AdPage = () => {
                       src={
                         selectedImage
                           ? baseImagePath + selectedImage
-                          : "path/to/placeholder.png"
+                          : ""
                       }
                       alt="Selected ad"
                     />{" "}

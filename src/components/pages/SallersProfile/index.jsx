@@ -19,7 +19,6 @@ export const SellersProfilePage = () => {
   const city = userAds.length > 0 ? userAds[0].user.city : null;
   const name = userAds.length > 0 ? userAds[0].user.name : null;
   const sells_from = userAds.length > 0 ? userAds[0].user.sells_from : null;
-  
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -44,8 +43,6 @@ export const SellersProfilePage = () => {
         setError(error);
       });
   }, [itemUser]);
-
-  
 
   return (
     <S.StyledMain>
@@ -104,9 +101,9 @@ export const SellersProfilePage = () => {
                         </S.Settings__Img>
                       </S.Settings__Left>
                       <S.Settings__Right>
-<p>{name}</p>
-<p>{city}</p>
-<p>{sells_from}</p>
+                        <p>{name}</p>
+                        <p>{city}</p>
+                        <p>{sells_from}</p>
                       </S.Settings__Right>
                     </S.Profile__Settings>
                   </S.Profile__Content>
@@ -126,15 +123,24 @@ export const SellersProfilePage = () => {
             <S.Footer__Container>
               <S.Footer__Img>
                 <Link to="/">
-                  <img src="img/icon_01.png" alt="home" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
+                    alt="home"
+                  />
                 </Link>
               </S.Footer__Img>
               <S.Footer__Img onClick={handleButtonClick}>
-                <img src="img/icon_02.png" alt="home" />
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
+                  alt="add"
+                />
               </S.Footer__Img>
               <S.Footer__Img>
                 <Link to="#">
-                  <img src="img/icon_03.png" alt="home" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
+                    alt="home"
+                  />
                 </Link>
               </S.Footer__Img>
             </S.Footer__Container>
