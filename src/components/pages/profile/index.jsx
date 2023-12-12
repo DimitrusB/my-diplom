@@ -9,6 +9,7 @@ import {
 } from "../../../api/api";
 import { EditUserData } from "../../forms/EditUserData";
 import { AddNewAd } from "../../forms/addNewAt";
+import { UsersAdComp } from "../../UsersAd";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ export const ProfilePage = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const inputRef = useRef(null);
   const [userAdEmpty, setUserAdEmpty] = useState();
+  const [avatarUrl, setAvatarUrl] = useState(savedUserData.avatar);
+
+
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -34,9 +38,9 @@ export const ProfilePage = () => {
         console.log("Аватар успешно загружен:", result);
         const updatedUserData = await GetUserData();
         console.log("Обновленные данные пользователя:", updatedUserData);
-        savedUserData.avatar = updatedUserData.avatar;
+        savedUserData.avatar = updatedUserData.avatar
         localStorage.setItem("userData", JSON.stringify(savedUserData));
-        // window.location.reload();
+        setAvatarUrl(updatedUserData.avatar);
       } else {
         console.error("Файл не выбран");
       }
@@ -46,8 +50,8 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
-    FetchUserAvatar();
-  }, []);
+  }, [avatarUrl]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +72,6 @@ export const ProfilePage = () => {
     fetchData();
   }, []);
 
-  
   useEffect(() => {
     const tokenRefreshInterval = setInterval(() => {
       refreshToken();
@@ -160,44 +163,11 @@ export const ProfilePage = () => {
 
                 <S.Main__Title>Мои товары</S.Main__Title>
               </S.Main__CenterBlock>
-              {userAdEmpty ? (
-                <p>Объявлений нет</p>
-              ) : (
-                <S.Main__Content>
-                  <S.Main__ContentCards>
-                    {userAd &&
-                      userAd.map((item, index) => (
-                        <S.Cards__Item key={index}>
-                          <Link to={`/adpage/${item.id}`}>
-                            <S.Cards__Card>
-                              <S.Card__Image>
-                                <img
-                                  src={
-                                    item.images[0]
-                                      ? baseImagePath + item.images[0].url
-                                      : ""
-                                  }
-                                  alt={`Фото ${item.title}`}
-                                />
-                              </S.Card__Image>
-                              <div>
-                                <S.Card__Title>{item.title}</S.Card__Title>
-
-                                <S.Card__Price>
-                                  {item.price}&nbsp;₽
-                                </S.Card__Price>
-                                <S.Card__Place>
-                                  Город&nbsp;{item.user.city}
-                                </S.Card__Place>
-                                <S.Card__Date>{item.created_on}</S.Card__Date>
-                              </div>
-                            </S.Cards__Card>
-                          </Link>
-                        </S.Cards__Item>
-                      ))}
-                  </S.Main__ContentCards>
-                </S.Main__Content>
-              )}
+              <UsersAdComp
+                userAdEmpty={userAdEmpty}
+                baseImagePath={baseImagePath}
+                userAd={userAd}
+              />
             </S.Maincontainer>
           </main>
 

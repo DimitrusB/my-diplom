@@ -130,9 +130,13 @@ export const GetUserData = async () => {
 
   try {
     const response = await fetch(url, { headers });
-    const userData = await response.json();
-    console.log("Успешный ответ:", userData);
-    return userData;
+    if (response.status === 401) {
+      refreshToken();
+    } else {
+      const userData = await response.json();
+      console.log("Успешный ответ:", userData);
+      return userData;
+    }
   } catch (error) {
     console.error("Ошибка при запросе:", error.response?.data || error.message);
     throw error;
@@ -152,12 +156,16 @@ export const FetchUserAvatar = async (file) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+
       body: formData,
     });
-
-    const data = await response.json();
-    console.log("Success:", data);
-    return data;
+    if (response.status === 401) {
+      await refreshToken();
+    } else {
+      const data = await response.json();
+      console.log("Success:", data);
+      return data;
+    }
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -175,11 +183,12 @@ export const GetUserAd = async () => {
   try {
     const response = await fetch(url, { headers });
     if (response.status === 401) {
-    refreshToken()
-    }else{
-    const userData = await response.json();
-    console.log("Успешный ответ:", userData);
-    return userData}
+      refreshToken();
+    } else {
+      const userData = await response.json();
+      console.log("Успешный ответ:", userData);
+      return userData;
+    }
   } catch (error) {
     console.error("Ошибка при запросе:", error.response?.data || error.message);
     throw error;
@@ -236,7 +245,6 @@ export const addNewAd = async (newData) => {
 };
 
 export const deleteAd = async (id) => {
-
   const url = `http://localhost:8090/ads/${id}`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 

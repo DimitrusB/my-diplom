@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds, refreshToken } from "../../../api/api";
+import { UsersAdComp } from "../../UsersAd";
 import * as S from "./main.style";
 
 export const Main = () => {
@@ -9,11 +10,17 @@ export const Main = () => {
   const [values, setValues] = useState([]);
   const baseImagePath = "http://127.0.0.1:8090/";
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const [userAdEmpty, setUserAdEmpty] = useState();
 
   useEffect(() => {
     GetAllAds()
       .then((data) => {
         setValues(data);
+        if (data.length === 0) {
+          setUserAdEmpty(true);
+        } else {
+          setUserAdEmpty(false);
+        }
       })
       .catch((error) => {
         console.error("Ошибка при получении данных:", error);
@@ -71,44 +78,11 @@ export const Main = () => {
             </S.Main_search>
             <S.Maincontainer>
               <S.MainH2>Объявления</S.MainH2>
-
-              <S.Maincontent>
-                {values && values.length > 0 && (
-                  <S.Cards>
-                    {values &&
-                      values.map((item, index) => (
-                        <S.Cards__item key={index}>
-                          <Link to={`/adpage/${item.id}`}>
-                            <S.Cards__card>
-                              <S.Card__image>
-                                <a href="#" target="_blank">
-                                  {item.images.length > 0 && (
-                                    <S.CardImage
-                                      key={0}
-                                      src={baseImagePath + item.images[0].url}
-                                      alt={`Image ${item.title}`}
-                                    />
-                                  )}
-                                </a>
-                              </S.Card__image>
-
-                              <div>
-                                <a href="" target="_blank">
-                                  <S.Card__title>{item.title}</S.Card__title>
-                                </a>
-                                <S.Card__price>{item.price} ₽</S.Card__price>
-                                <S.Card__place key={index}>
-                                  {item.user.city}
-                                </S.Card__place>
-                                <S.Card__date>{item.created_on}</S.Card__date>
-                              </div>
-                            </S.Cards__card>
-                          </Link>
-                        </S.Cards__item>
-                      ))}
-                  </S.Cards>
-                )}
-              </S.Maincontent>
+              <UsersAdComp
+                userAdEmpty={userAdEmpty}
+                baseImagePath={baseImagePath}
+                userAd={values}
+              />
             </S.Maincontainer>
           </main>
 
