@@ -15,11 +15,11 @@ export const ProfilePage = () => {
   const savedUserData = JSON.parse(localStorage.getItem("userData"));
   const [selectedFile, setSelectedFile] = useState(null);
   const baseImagePath = "http://localhost:8090/";
-  const [userAd, setUserAd] = useState(null);
+  const [userAd, setUserAd] = useState();
   const [error, setError] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const inputRef = useRef(null);
-
+  const [userAdEmpty, setUserAdEmpty] = useState();
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -36,7 +36,7 @@ export const ProfilePage = () => {
         console.log("Обновленные данные пользователя:", updatedUserData);
         savedUserData.avatar = updatedUserData.avatar;
         localStorage.setItem("userData", JSON.stringify(savedUserData));
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.error("Файл не выбран");
       }
@@ -46,17 +46,29 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
+    FetchUserAvatar();
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await GetUserAd();
         setUserAd(data);
+
+        if (data.length === 0) {
+          setUserAdEmpty(true);
+        } else {
+          setUserAdEmpty(false);
+        }
       } catch (error) {
         setError(error);
       }
     };
+
     fetchData();
   }, []);
 
+  
   useEffect(() => {
     const tokenRefreshInterval = setInterval(() => {
       refreshToken();
@@ -148,41 +160,44 @@ export const ProfilePage = () => {
 
                 <S.Main__Title>Мои товары</S.Main__Title>
               </S.Main__CenterBlock>
-              <S.Main__Content>
-                <S.Main__ContentCards>
-                  {userAd &&
-                    userAd.map((item, index) => (
-                      <S.Cards__Item key={index}>
-                        <Link to={`/adpage/${item.id}`}>
-                        <S.Cards__Card>
-                          <S.Card__Image>
-                            <Link to="#">
-                              <img
-                                src={
-                                  item.images[0]
-                                    ? baseImagePath + item.images[0].url
-                                    : ""
-                                }
-                                alt={`Фото ${item.title}`}
-                              />
-                            </Link>
-                          </S.Card__Image>
-                          <div>
-                            <Link to="#">
-                              <S.Card__Title>{item.title}</S.Card__Title>
-                            </Link>
-                            <S.Card__Price>{item.price}&nbsp;₽</S.Card__Price>
-                            <S.Card__Place>
-                              Город&nbsp;{item.user.city}
-                            </S.Card__Place>
-                            <S.Card__Date>{item.created_on}</S.Card__Date>
-                          </div>
-                        </S.Cards__Card>
-                        </Link>
-                      </S.Cards__Item>
-                    ))}
-                </S.Main__ContentCards>
-              </S.Main__Content>
+              {userAdEmpty ? (
+                <p>Объявлений нет</p>
+              ) : (
+                <S.Main__Content>
+                  <S.Main__ContentCards>
+                    {userAd &&
+                      userAd.map((item, index) => (
+                        <S.Cards__Item key={index}>
+                          <Link to={`/adpage/${item.id}`}>
+                            <S.Cards__Card>
+                              <S.Card__Image>
+                                <img
+                                  src={
+                                    item.images[0]
+                                      ? baseImagePath + item.images[0].url
+                                      : ""
+                                  }
+                                  alt={`Фото ${item.title}`}
+                                />
+                              </S.Card__Image>
+                              <div>
+                                <S.Card__Title>{item.title}</S.Card__Title>
+
+                                <S.Card__Price>
+                                  {item.price}&nbsp;₽
+                                </S.Card__Price>
+                                <S.Card__Place>
+                                  Город&nbsp;{item.user.city}
+                                </S.Card__Place>
+                                <S.Card__Date>{item.created_on}</S.Card__Date>
+                              </div>
+                            </S.Cards__Card>
+                          </Link>
+                        </S.Cards__Item>
+                      ))}
+                  </S.Main__ContentCards>
+                </S.Main__Content>
+              )}
             </S.Maincontainer>
           </main>
 

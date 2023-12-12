@@ -174,9 +174,12 @@ export const GetUserAd = async () => {
 
   try {
     const response = await fetch(url, { headers });
+    if (response.status === 401) {
+    refreshToken()
+    }else{
     const userData = await response.json();
     console.log("Успешный ответ:", userData);
-    return userData;
+    return userData}
   } catch (error) {
     console.error("Ошибка при запросе:", error.response?.data || error.message);
     throw error;
