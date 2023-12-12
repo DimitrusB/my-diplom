@@ -51,6 +51,7 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
+    GetUserData()
   }, [avatarUrl]);
 
 

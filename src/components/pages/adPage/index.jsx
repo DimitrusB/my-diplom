@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
 import { deleteAd, GetAdsByID, refreshToken } from "../../../api/api";
 import { useEffect, useState } from "react";
+import { AddNewAd } from "../../forms/addNewAt";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -11,7 +12,11 @@ export const AdPage = () => {
   const baseImagePath = "http://127.0.0.1:8090/";
   const [selectedImage, setSelectedImage] = useState("");
   const [myAdPage, setMyAdPage] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  const handleButtonClick = () => {
+    setModalVisible(true);
+  };
 
   useEffect(() => {
     const tokenRefreshInterval = setInterval(() => {
@@ -59,7 +64,9 @@ export const AdPage = () => {
 }
 
   return (
+
     <S.Wrapper>
+        {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
       <S.Container>
         <S.Header>
           <S.Header__nav>
@@ -71,7 +78,7 @@ export const AdPage = () => {
                 />
               </S.Logo__MobLink>
             </S.Header__Logo>
-            <S.Header__BtnputAd>Разместить объявление</S.Header__BtnputAd>
+            <S.Header__BtnputAd onClick={handleButtonClick}>Разместить объявление</S.Header__BtnputAd>
             <S.Header__BtnLk onClick={ClickEnterAuth}>Личный кабинет</S.Header__BtnLk>
           </S.Header__nav>
         </S.Header>

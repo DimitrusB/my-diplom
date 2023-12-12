@@ -7,6 +7,7 @@ import * as S from "../profile/profile.style";
 import { UsersAdComp } from "../UsersAd";
 
 export const SellersProfilePage = () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const { itemUser } = useParams();
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
@@ -44,6 +45,15 @@ export const SellersProfilePage = () => {
       });
   }, [itemUser]);
 
+  const ClickEnterAuth = () => {
+
+    if (!userData) {
+      navigate("/auth"); 
+    } else {
+      navigate("/profile");
+  };
+}
+
   return (
     <S.StyledMain>
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
@@ -66,7 +76,7 @@ export const SellersProfilePage = () => {
                   Разместить объявление
                 </S.Header__BtnputAd>
               </>
-              <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
+              <S.Header__BtnLk onClick={ClickEnterAuth}>Личный кабинет</S.Header__BtnLk>
             </S.Header__nav>
           </S.Header>
 
