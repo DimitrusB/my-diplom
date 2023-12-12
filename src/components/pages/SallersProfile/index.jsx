@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { GetAdsByID, GetAllAds, GetUserAd } from "../../../api/api";
+import { GetAllAds } from "../../../api/api";
 import { AddNewAd } from "../../forms/addNewAt";
 
 import * as S from "../profile/profile.style";
@@ -19,7 +19,13 @@ export const SellersProfilePage = () => {
   const avatarUrl = userAds.length > 0 ? userAds[0].user.avatar : null;
   const city = userAds.length > 0 ? userAds[0].user.city : null;
   const name = userAds.length > 0 ? userAds[0].user.name : null;
+  const phone = userAds.length > 0 ? userAds[0].user.phone : null;
   const sells_from = userAds.length > 0 ? userAds[0].user.sells_from : null;
+  const [numberUser, setNumberUser] = useState(true);
+
+  const handleButtonViewPhone = () => {
+    setNumberUser(false);
+  };
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -46,13 +52,12 @@ export const SellersProfilePage = () => {
   }, [itemUser]);
 
   const ClickEnterAuth = () => {
-
     if (!userData) {
-      navigate("/auth"); 
+      navigate("/auth");
     } else {
       navigate("/profile");
+    }
   };
-}
 
   return (
     <S.StyledMain>
@@ -76,7 +81,9 @@ export const SellersProfilePage = () => {
                   Разместить объявление
                 </S.Header__BtnputAd>
               </>
-              <S.Header__BtnLk onClick={ClickEnterAuth}>Личный кабинет</S.Header__BtnLk>
+              <S.Header__BtnLk onClick={ClickEnterAuth}>
+                Личный кабинет
+              </S.Header__BtnLk>
             </S.Header__nav>
           </S.Header>
 
@@ -92,7 +99,7 @@ export const SellersProfilePage = () => {
                       />
                     </Link>
                   </S.Menu__LogoLink>
-                  <S.Menu__Form action="#">
+                  <S.Menu__Form>
                     <Link to="/">
                       <S.Menu__Btn>Вернуться на&nbsp;главную</S.Menu__Btn>
                     </Link>
@@ -111,9 +118,21 @@ export const SellersProfilePage = () => {
                         </S.Settings__Img>
                       </S.Settings__Left>
                       <S.Settings__Right>
-                        <p>{name}</p>
-                        <p>{city}</p>
-                        <p>{sells_from}</p>
+                        <S.Settings__FnameSeller>
+                          {name}
+                        </S.Settings__FnameSeller>
+                        <S.Settings__CitySeller>{city}</S.Settings__CitySeller>
+                        <S.Settings__InfSeller>
+                          Продает товары с {sells_from}
+                        </S.Settings__InfSeller>
+                        <S.Article__btn onClick={handleButtonViewPhone}>
+                          <div>Показать телефон</div>
+                          <span>
+                            {numberUser
+                              ? (phone?.slice(0, -7) ?? "") + "ХХХ ХХ ХХ"
+                              : phone}
+                          </span>
+                        </S.Article__btn>
                       </S.Settings__Right>
                     </S.Profile__Settings>
                   </S.Profile__Content>
@@ -145,13 +164,8 @@ export const SellersProfilePage = () => {
                   alt="add"
                 />
               </S.Footer__Img>
-              <S.Footer__Img>
-                <Link to="#">
-                  <img
-                    src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
-                    alt="home"
-                  />
-                </Link>
+              <S.Footer__Img onClick={ClickEnterAuth}>
+                <img src={`${process.env.PUBLIC_URL}/img/icon_03.png`} alt="" />
               </S.Footer__Img>
             </S.Footer__Container>
           </S.Footer>

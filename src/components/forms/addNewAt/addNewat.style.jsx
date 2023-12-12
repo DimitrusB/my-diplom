@@ -34,6 +34,7 @@ export const Modal__block = styled.div`
     width: 100%;
   }
 `;
+
 export const Modal__content = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
@@ -75,11 +76,11 @@ export const Modal__title = styled.h3`
   font-weight: 500;
   color: #000000;
 
-    // &:hover,
-    // ::before {
-    //   border-top: 2px solid #0080C1;
-    //   border-left: 2px solid #0080C1;
-    // }
+  // &:hover,
+  // ::before {
+  //   border-top: 2px solid #0080C1;
+  //   border-left: 2px solid #0080C1;
+  // }
   @media screen and (max-width: 600px) {
     font-size: 24px;
     line-height: 29px;

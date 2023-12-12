@@ -51,7 +51,7 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
-    GetUserData()
+    // refreshToken()
   }, [avatarUrl]);
 
 
@@ -88,8 +88,9 @@ export const ProfilePage = () => {
 
   return (
     <S.StyledMain>
-      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
+      
       <S.Wrapper>
+      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
         <S.Container>
           <S.Header>
             <S.Header__nav>

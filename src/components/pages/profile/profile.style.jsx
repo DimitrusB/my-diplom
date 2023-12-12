@@ -478,7 +478,13 @@ export const Settings__Fname = styled.input`
     }
   }
 `;
-
+export const Settings__FnameSeller = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 40px;
+  color: #000000;
+  margin-bottom: 0px;
+`;
 export const Settings__Lname = styled.input`
   width: 300px;
 
@@ -545,6 +551,59 @@ export const Settings__Lname = styled.input`
       line-height: 21px;
     }
   }
+`;
+
+export const Article__btn = styled.button`
+  background-color: #009ee4;
+  border-radius: 6px;
+  border: 1px solid #009ee4;
+  width: 214px;
+  height: 62px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+
+  &:hover {
+    background-color: #0080c1;
+  }
+
+  span {
+    color: #fff;
+
+    text-align: center;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 22.4px */
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 57px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffffff;
+
+    span {
+      font-size: 12px;
+    }
+  }
+`;
+
+export const Settings__CitySeller = styled.p`
+  font-size: 16px;
+  line-height: 21px;
+  color: #5f5f5f;
+  margin-bottom: 10px;
+`;
+export const Settings__InfSeller = styled.p`
+  font-size: 16px;
+  line-height: 21px;
+  color: #5f5f5f;
+  margin-bottom: 10px;
 `;
 
 export const Settings__City = styled.input`
@@ -708,13 +767,13 @@ export const Settings__Btn = styled.button`
   width: 154px;
   height: 50px;
   margin: 10px 7px 0;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  background-color: ${props => (props.disabled ? '#cccccc' : '#009ee4')};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  background-color: ${(props) => (props.disabled ? "#cccccc" : "#009ee4")};
   border-radius: 6px;
-  border: 1px solid ${props => (props.disabled ? '#cccccc' : '#009ee4')};
+  border: 1px solid ${(props) => (props.disabled ? "#cccccc" : "#009ee4")};
 
   &:hover {
-    background-color: ${props => (props.disabled ? '#cccccc' : '#0080c1')};
+    background-color: ${(props) => (props.disabled ? "#cccccc" : "#0080c1")};
   }
 
   @media screen and (max-width: 620px) {

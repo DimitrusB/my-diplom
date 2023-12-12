@@ -184,6 +184,7 @@ export const GetUserAd = async () => {
     const response = await fetch(url, { headers });
     if (response.status === 401) {
       refreshToken();
+      return GetUserAd();
     } else {
       const userData = await response.json();
       console.log("Успешный ответ:", userData);

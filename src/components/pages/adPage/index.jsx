@@ -13,6 +13,14 @@ export const AdPage = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [myAdPage, setMyAdPage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [numberUser, setNumberUser] = useState(true);
+  const [phone, SetPhone] = useState();
+
+console.log(phone);
+  const handleButtonViewPhone = () => {
+    setNumberUser(false);
+
+  };
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -29,6 +37,7 @@ export const AdPage = () => {
     GetAdsByID(itemId)
       .then((data) => {
         setValues(data);
+        SetPhone(data.user.phone)
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0].url);
         }
@@ -157,9 +166,13 @@ export const AdPage = () => {
                     </S.Article__info>
                     <S.Article__price>{values.price} ₽</S.Article__price>
                     {!myAdPage ? (
-                      <S.Article__btn>
-                        Показать&nbsp;телефон
-                        <span>8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ</span>
+                      <S.Article__btn onClick={handleButtonViewPhone}>
+                          <div>Показать телефон</div>
+                          <span>
+                            {numberUser
+                              ? (phone?.slice(0, -7) ?? "") + "ХХХ ХХ ХХ"
+                              : phone}
+                          </span>
                       </S.Article__btn>
                     ) : (
                       <S.Article__btnDiv>
