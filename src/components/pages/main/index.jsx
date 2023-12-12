@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds, refreshToken } from "../../../api/api";
-import { UsersAdComp } from "../../UsersAd";
+import { UsersAdComp } from "../UsersAd";
 import * as S from "./main.style";
 
 export const Main = () => {

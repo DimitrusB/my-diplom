@@ -169,7 +169,9 @@ export const AdPage = () => {
                         <img src={baseImagePath + values.user?.avatar} alt="" />
                       </S.Author__img>
                       <S.Author__cont>
+                      <Link to={`/profileSellers/${values.user?.id}`}>
                         <S.Author__name>{values.user?.name}</S.Author__name>
+                        </Link>
                         <S.Author__about>
                           Продает товары с{" "}
                           {values.user?.sells_from.split("T")[0]}

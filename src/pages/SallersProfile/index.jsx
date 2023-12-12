@@ -1,89 +1,39 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as S from "./profile.style";
-import { useEffect, useRef, useState } from "react";
-import {
-  FetchUserAvatar,
-  GetUserAd,
-  GetUserData,
-  refreshToken,
-} from "../../../api/api";
-import { EditUserData } from "../../forms/EditUserData";
+import { GetAllAds } from "../../../api/api";
 import { AddNewAd } from "../../forms/addNewAt";
-import { UsersAdComp } from "../UsersAd";
+import { UsersAdComp } from "../../UsersAd";
+import * as S from "../";
 
-
-export const ProfilePage = () => {
+export const SellersProfilePage = () => {
   const navigate = useNavigate();
-  const savedUserData = JSON.parse(localStorage.getItem("userData"));
-  const [selectedFile, setSelectedFile] = useState(null);
-  const baseImagePath = "http://localhost:8090/";
-  const [userAd, setUserAd] = useState();
-  const [error, setError] = useState(null);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const inputRef = useRef(null);
+  const [values, setValues] = useState([]);
   const [userAdEmpty, setUserAdEmpty] = useState();
-  const [avatarUrl, setAvatarUrl] = useState(savedUserData.avatar);
-
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleButtonClick = () => {
     setModalVisible(true);
   };
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-
-    try {
-      if (file) {
-        const result = await FetchUserAvatar(file);
-        console.log("Аватар успешно загружен:", result);
-        const updatedUserData = await GetUserData();
-        console.log("Обновленные данные пользователя:", updatedUserData);
-        savedUserData.avatar = updatedUserData.avatar
-        localStorage.setItem("userData", JSON.stringify(savedUserData));
-        setAvatarUrl(updatedUserData.avatar);
-      } else {
-        console.error("Файл не выбран");
-      }
-    } catch (error) {
-      console.error("Ошибка при загрузке аватара:", error);
-    }
+  const handleLogOut = () => {
+    localStorage.removeItem("userData");
+    navigate("/");
   };
 
   useEffect(() => {
-  }, [avatarUrl]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await GetUserAd();
-        setUserAd(data);
-
+    GetAllAds()
+      .then((data) => {
+        setValues(data);
         if (data.length === 0) {
           setUserAdEmpty(true);
         } else {
           setUserAdEmpty(false);
         }
-      } catch (error) {
-        setError(error);
-      }
-    };
-
-    fetchData();
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении данных:", error);
+      });
   }, []);
-
-  useEffect(() => {
-    const tokenRefreshInterval = setInterval(() => {
-      refreshToken();
-    }, 60000);
-    return () => clearInterval(tokenRefreshInterval);
-  }, []);
-
-  const handleLogOut = () => {
-    localStorage.removeItem("userData");
-    navigate("/");
-  };
 
   return (
     <S.StyledMain>
@@ -104,12 +54,7 @@ export const ProfilePage = () => {
                   Разместить объявление
                 </S.Header__BtnputAd>
               </>
-
-              {savedUserData ? (
-                <S.Header__BtnLk onClick={handleLogOut}>Выйти</S.Header__BtnLk>
-              ) : (
-                <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
-              )}
+              <S.Header__BtnLk>Личный кабинет</S.Header__BtnLk>
             </S.Header__nav>
           </S.Header>
 
@@ -164,11 +109,7 @@ export const ProfilePage = () => {
 
                 <S.Main__Title>Мои товары</S.Main__Title>
               </S.Main__CenterBlock>
-              <UsersAdComp
-                userAdEmpty={userAdEmpty}
-                baseImagePath={baseImagePath}
-                userAd={userAd}
-              />
+              <UsersAdComp />
             </S.Maincontainer>
           </main>
 
