@@ -1,6 +1,8 @@
+const reqUrl = 'http://localhost:8090/'
+
 export const GetAllAds = async () => {
   try {
-    const result = await fetch("http://localhost:8090/ads");
+    const result = await fetch(`${reqUrl}ads`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -10,9 +12,22 @@ export const GetAllAds = async () => {
   }
 };
 
+export const GetAllComments = async (idAd) => {
+  try {
+    const result = await fetch(`${reqUrl}ads/${idAd}/comments`);
+    const data = await result.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
+
 export const GetAdsByID = async (id) => {
   try {
-    const result = await fetch(`http://localhost:8090/ads/${id}`);
+    const result = await fetch(`${reqUrl}ads/${id}`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -24,7 +39,7 @@ export const GetAdsByID = async (id) => {
 
 export const GetAllImages = async () => {
   try {
-    const result = await fetch("http://localhost:8090/images");
+    const result = await fetch(`${reqUrl}images`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -35,7 +50,7 @@ export const GetAllImages = async () => {
 };
 
 export const registerUser = async (userData) => {
-  const url = "http://localhost:8090/auth/register";
+  const url = `${reqUrl}auth/register`;
 
   try {
     const response = await fetch(url, {
@@ -58,7 +73,7 @@ export const registerUser = async (userData) => {
 };
 
 export const LoginUser = async (userData) => {
-  const url = "http://localhost:8090/auth/login";
+  const url = `${reqUrl}auth/login`;
 
   try {
     const response = await fetch(url, {

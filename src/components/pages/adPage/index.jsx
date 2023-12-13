@@ -1,7 +1,12 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
 import * as A from "../../assets/style";
-import { deleteAd, GetAdsByID, refreshToken } from "../../../api/api";
+import {
+  deleteAd,
+  GetAdsByID,
+  GetAllComments,
+  refreshToken,
+} from "../../../api/api";
 import { useEffect, useState } from "react";
 import { AddNewAd } from "../../forms/addNewAt";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
@@ -19,16 +24,18 @@ export const AdPage = () => {
   const [numberUser, setNumberUser] = useState(true);
   const [phone, SetPhone] = useState();
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState(true);
 
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
 
   const handleButtonClick = () => {
-    if(userData){
-    setModalVisible(true);
-    }else{
-    navigate('/auth')}
+    if (userData) {
+      setModalVisible(true);
+    } else {
+      navigate("/auth");
+    }
   };
 
   useEffect(() => {
@@ -66,6 +73,12 @@ export const AdPage = () => {
     setSelectedImage(url);
   };
 
+  useEffect(() => {
+    GetAllComments(itemId).then((data) => {
+      setComments(data);
+    });
+  }, []);
+
   if (loading) {
     return (
       <A.animSet>
@@ -81,6 +94,19 @@ export const AdPage = () => {
       navigate("/profile");
     }
   };
+
+  const commentCount = comments.length;
+  let commentString = "";
+
+  if (commentCount === 1) {
+    commentString = `${commentCount} отзыв`;
+  } else if (commentCount >= 2 && commentCount <= 4) {
+    commentString = `${commentCount} отзыва`;
+  } else if (commentCount === 0) {
+    commentString = "Нет отзывов";
+  } else {
+    commentString = `${commentCount} отзывов`;
+  }
 
   return (
     <S.Wrapper>
@@ -170,7 +196,7 @@ export const AdPage = () => {
                       </S.Article__date>
                       <S.Article__city>{values.user?.city}</S.Article__city>
                       <S.Article__link href="" target="_blank" rel="">
-                        23 отзыва
+                        {commentString}
                       </S.Article__link>
                     </S.Article__info>
                     <S.Article__price>{values.price} ₽</S.Article__price>
@@ -221,7 +247,7 @@ export const AdPage = () => {
           </S.Maincontainer>
         </main>
 
-<FooterComp ButtonClick={handleButtonClick} />
+        <FooterComp ButtonClick={handleButtonClick} />
       </S.Container>
     </S.Wrapper>
   );

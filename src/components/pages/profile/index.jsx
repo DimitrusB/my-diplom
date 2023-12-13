@@ -52,8 +52,10 @@ export const ProfilePage = () => {
     }
   };
 
+ 
+
   useEffect(() => {
-    // refreshToken()
+
   }, [avatarUrl]);
 
   useEffect(() => {
