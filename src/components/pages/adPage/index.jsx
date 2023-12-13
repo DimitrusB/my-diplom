@@ -103,10 +103,7 @@ export const AdPage = () => {
       navigate("/profile");
     }
   };
-
-  const avatar = baseImagePath + comments?.author?.avatar;
-
-  console.log(avatar);
+  
   const commentCount = comments.length;
   let commentString = "";
 

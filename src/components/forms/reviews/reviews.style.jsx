@@ -139,6 +139,9 @@ export const Modal__btn_close_line = styled.div`
       stroke: #009ee4;
     }
   }
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 export const Modal__scroll = styled.div`
@@ -180,6 +183,10 @@ export const Modal__form_newArt = styled.form`
   -ms-flex-direction: column;
   flex-direction: column;
   width: 100%;
+
+  @media screen and (max-width: 600px) {
+    margin-top: 22px;
+  }
 `;
 
 export const Modal__review = styled.div`
@@ -254,6 +261,56 @@ export const Form__newArt__block = styled.div`
       color: #0000004d;
     }
   }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 16px;
+
+    label {
+      display: none;
+    }
+
+    textarea {
+      font-family: "Roboto", sans-serif;
+      width: 100%;
+      max-height: 107px;
+      padding: 9px 17px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 30px;
+      font-size: 16px;
+      line-height: 1;
+
+      &::-webkit-input-placeholder {
+        font-size: 14px;
+        line-height: 21px;
+        color: #c4c4c4;
+      }
+
+      &:-ms-input-placeholder {
+        font-size: 14px;
+        line-height: 21px;
+        color: #c4c4c4;
+      }
+      &::-ms-input-placeholder {
+        font-size: 14px;
+        line-height: 21px;
+        color: #c4c4c4;
+      }
+      &::placeholder {
+        font-size: 14px;
+        line-height: 21px;
+        color: #c4c4c4;
+      }
+    }
+  }
 `;
 
 export const Form__newArt__btn_pub = styled.button`
@@ -268,6 +325,13 @@ export const Form__newArt__btn_pub = styled.button`
 
   &:hover {
     background-color: #0080c1;
+  }
+
+  @media screen and (max-width: 600px) {
+    margin-top: 0px;
+    width: 100%;
+    height: 46px;
+    background-color: #009ee4;
   }
 `;
 
@@ -334,6 +398,12 @@ export const Review__name = styled.p`
     margin-left: 10px;
     color: #5f5f5f;
   }
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+    line-height: 28px;
+    color: #000000;
+  }
 `;
 
 export const Review__title = styled.h5`
@@ -341,6 +411,12 @@ export const Review__title = styled.h5`
   font-size: 16px;
   line-height: 32px;
   color: #000000;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+    line-height: 28px;
+    color: #000000;
+  }
 `;
 
 export const Review__text = styled.p`
@@ -349,4 +425,10 @@ export const Review__text = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+    line-height: 28px;
+    color: #000000;
+  }
 `;
