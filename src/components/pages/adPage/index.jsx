@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { AddNewAd } from "../../forms/addNewAt";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
 import { FooterComp } from "../../forms/footer";
+import { ReviewsComp } from "../../forms/reviews";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -25,7 +26,7 @@ export const AdPage = () => {
   const [phone, SetPhone] = useState();
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState(true);
-
+  const [isModalReview, setModalReview] = useState(false);
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
@@ -33,6 +34,14 @@ export const AdPage = () => {
   const handleButtonClick = () => {
     if (userData) {
       setModalVisible(true);
+    } else {
+      navigate("/auth");
+    }
+  };
+
+  const handleButtonReview = () => {
+    if (userData) {
+      setModalReview(true);
     } else {
       navigate("/auth");
     }
@@ -95,6 +104,9 @@ export const AdPage = () => {
     }
   };
 
+  const avatar = baseImagePath + comments?.author?.avatar;
+
+  console.log(avatar);
   const commentCount = comments.length;
   let commentString = "";
 
@@ -111,6 +123,18 @@ export const AdPage = () => {
   return (
     <S.Wrapper>
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
+      {isModalReview &&
+        comments &&
+        comments.map((item, index) => (
+          <ReviewsComp
+            key={index}
+            onClose={() => setModalReview(false)}
+            userName={item.author.name}
+            created={item.created_on.split("T")[0]}
+            review={item.text}
+            userAvatar={baseImagePath + item.author.avatar}
+          />
+        ))}
       <S.Container>
         <S.Header>
           <S.Header__nav>
@@ -195,7 +219,7 @@ export const AdPage = () => {
                         {values.created_on?.split("T")[0]}
                       </S.Article__date>
                       <S.Article__city>{values.user?.city}</S.Article__city>
-                      <S.Article__link href="" target="_blank" rel="">
+                      <S.Article__link onClick={handleButtonReview}>
                         {commentString}
                       </S.Article__link>
                     </S.Article__info>
