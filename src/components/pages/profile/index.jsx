@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
+import * as A from "../../assets/style";
 import { useEffect, useRef, useState } from "react";
 import {
   FetchUserAvatar,
@@ -10,6 +11,7 @@ import {
 import { EditUserData } from "../../forms/EditUserData";
 import { AddNewAd } from "../../forms/addNewAt";
 import { UsersAdComp } from "../../forms/UsersAd";
+import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ export const ProfilePage = () => {
   const inputRef = useRef(null);
   const [userAdEmpty, setUserAdEmpty] = useState();
   const [avatarUrl, setAvatarUrl] = useState(savedUserData.avatar);
+  const [loading, setLoading] = useState(true);
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -53,6 +56,7 @@ export const ProfilePage = () => {
   }, [avatarUrl]);
 
   useEffect(() => {
+    setLoading(true);   
     const fetchData = async () => {
       try {
         const data = await GetUserAd();
@@ -68,7 +72,8 @@ export const ProfilePage = () => {
       }
     };
 
-    fetchData();
+    fetchData()
+    .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -82,6 +87,14 @@ export const ProfilePage = () => {
     localStorage.removeItem("userData");
     navigate("/");
   };
+  
+  if (loading) {
+    return (
+      <A.animSet>
+        <SpinAnimation />
+      </A.animSet>
+    );
+  }
 
   return (
     <S.StyledMain>

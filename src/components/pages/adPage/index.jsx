@@ -1,8 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
+import * as A from "../../assets/style";
 import { deleteAd, GetAdsByID, refreshToken } from "../../../api/api";
 import { useEffect, useState } from "react";
 import { AddNewAd } from "../../forms/addNewAt";
+import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -61,11 +63,11 @@ export const AdPage = () => {
   };
 
   if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (!values) {
-    return <h1>Loading...</h1>;
+    return (
+      <A.animSet>
+        <SpinAnimation />
+      </A.animSet>
+    );
   }
 
   const ClickEnterAuth = () => {

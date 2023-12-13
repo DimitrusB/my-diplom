@@ -3,8 +3,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { GetAllAds } from "../../../api/api";
 import { AddNewAd } from "../../forms/addNewAt";
 
+import * as A from "../../assets/style";
 import * as S from "../profile/profile.style";
 import { UsersAdComp } from "../../forms/UsersAd";
+import { ReactComponent as SpinAnimation } from '../../assets/Spin-0.9s-301px.svg';
 
 export const SellersProfilePage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -23,6 +25,7 @@ export const SellersProfilePage = () => {
   const sells_from = userAds.length > 0 ? userAds[0].user.sells_from : null;
   const [numberUser, setNumberUser] = useState(true);
   const [loading, setLoading] = useState(true);
+
 
   const handleButtonViewPhone = () => {
     setNumberUser(false);
@@ -55,7 +58,11 @@ export const SellersProfilePage = () => {
   }, [itemUser]);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return( 
+      <A.animSet>
+      <SpinAnimation />
+    </A.animSet>
+    )
   }
 
   const ClickEnterAuth = () => {

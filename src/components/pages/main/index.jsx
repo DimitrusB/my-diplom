@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds, refreshToken } from "../../../api/api";
 import * as S from "./main.style";
+import * as A from "../../assets/style";
 import { UsersAdComp } from "../../forms/UsersAd";
+import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
 
 export const Main = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
-  const baseImagePath = "http://127.0.0.1:8090/";
+  const baseImagePath = "http://localhost:8090/";
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [userAdEmpty, setUserAdEmpty] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     GetAllAds()
       .then((data) => {
         setValues(data);
@@ -23,8 +27,11 @@ export const Main = () => {
       })
       .catch((error) => {
         console.error("Ошибка при получении данных:", error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
+
+  
 
   useEffect(() => {
     const tokenRefreshInterval = setInterval(() => {
@@ -40,6 +47,14 @@ export const Main = () => {
       navigate("/profile");
     }
   };
+
+  if (loading) {
+    return (
+      <A.animSet>
+        <SpinAnimation />
+      </A.animSet>
+    );
+  }
 
   return (
     <S.StyledMain>
