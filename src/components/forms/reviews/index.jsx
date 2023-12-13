@@ -1,6 +1,6 @@
 import * as S from "./reviews.style";
 
-export const ReviewsComp = ({ onClose, userName, created, review, userAvatar }) => {
+export const ReviewsComp = ({ onClose, reviews, baseImagePath }) => {
   return (
     <S.Wrapper>
       <S.Container__bg>
@@ -32,9 +32,8 @@ export const ReviewsComp = ({ onClose, userName, created, review, userAvatar }) 
             <S.Modal__scroll>
               <S.Modal__form_newArt>
                 <S.Form__newArt__block>
-                  <label for="text">Добавить отзыв</label>
+                  <label htmlFor="text">Добавить отзыв</label>
                   <textarea
-                    class="form-newArt__area"
                     name="text"
                     id="formArea"
                     cols="auto"
@@ -44,24 +43,23 @@ export const ReviewsComp = ({ onClose, userName, created, review, userAvatar }) 
                 </S.Form__newArt__block>
                 <S.Form__newArt__btn_pub>Опубликовать</S.Form__newArt__btn_pub>
               </S.Modal__form_newArt>
-
               <S.Modal__review>
-                <S.Reviews__review>
-                  <S.Review__item>
+                {reviews.map((review) => (
+                  <S.Review__item key={review.itemid}>
                     <S.Review__left>
                       <S.Review__img>
-                        <img src={userAvatar} alt="" />
+                        <img src={baseImagePath + review.userAvatar} alt="" />
                       </S.Review__img>
                     </S.Review__left>
                     <S.Review__right>
                       <S.Review__name>
-                        {userName} <span>{created}</span>
+                        {review.userName} <span>{review.created}</span>
                       </S.Review__name>
                       <S.Review__title>Комментарий</S.Review__title>
-                      <S.Review__text>{review}</S.Review__text>
+                      <S.Review__text>{review.review}</S.Review__text>
                     </S.Review__right>
                   </S.Review__item>
-                </S.Reviews__review>
+                ))}
               </S.Modal__review>
             </S.Modal__scroll>
           </S.Modal__content>

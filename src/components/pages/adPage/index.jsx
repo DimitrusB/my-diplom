@@ -103,7 +103,7 @@ export const AdPage = () => {
       navigate("/profile");
     }
   };
-  
+
   const commentCount = comments.length;
   let commentString = "";
 
@@ -120,18 +120,22 @@ export const AdPage = () => {
   return (
     <S.Wrapper>
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
-      {isModalReview &&
-        comments &&
-        comments.map((item, index) => (
-          <ReviewsComp
-            key={index}
-            onClose={() => setModalReview(false)}
-            userName={item.author.name}
-            created={item.created_on.split("T")[0]}
-            review={item.text}
-            userAvatar={baseImagePath + item.author.avatar}
-          />
-        ))}
+      {isModalReview && (
+        <ReviewsComp
+          onClose={() => setModalReview(false)}
+          reviews={
+            comments &&
+            comments.map((comment) => ({
+              itemid: comment.id,
+              userName: comment.author.name,
+              created: comment.created_on.split("T")[0],
+              review: comment.text,
+              userAvatar: comment.author.avatar,
+            }))
+          }
+          baseImagePath={baseImagePath}
+        />
+      )}
       <S.Container>
         <S.Header>
           <S.Header__nav>
@@ -151,7 +155,6 @@ export const AdPage = () => {
             </S.Header__BtnLk>
           </S.Header__nav>
         </S.Header>
-
         <main>
           <S.Maincontainer>
             <S.Main__Menu>
@@ -217,7 +220,7 @@ export const AdPage = () => {
                       </S.Article__date>
                       <S.Article__city>{values.user?.city}</S.Article__city>
                       <S.Article__link onClick={handleButtonReview}>
-                        {commentString}
+                        {userData ? commentString : ""}
                       </S.Article__link>
                     </S.Article__info>
                     <S.Article__price>{values.price} ₽</S.Article__price>
