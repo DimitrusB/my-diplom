@@ -3,6 +3,7 @@ import { addNewAd, addNewAdwithPhoto } from "../../../api/api";
 import * as S from "./addNewat.style";
 
 export const AddNewAd = ({ onClose }) => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -11,6 +12,7 @@ export const AddNewAd = ({ onClose }) => {
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
 
+  
   const inputRefs = [
     useRef(null),
     useRef(null),

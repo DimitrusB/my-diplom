@@ -5,6 +5,7 @@ import * as S from "./main.style";
 import * as A from "../../assets/style";
 import { UsersAdComp } from "../../forms/UsersAd";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../forms/footer";
 
 export const Main = () => {
   const navigate = useNavigate();
@@ -99,25 +100,7 @@ export const Main = () => {
             </S.Maincontainer>
           </main>
 
-          <S.Footer>
-            <S.Footer__container>
-              <S.Footer__Img>
-                <a href="" target="_self">
-                  <S.Footer__img src="img/icon_01.png" alt="home" />
-                </a>
-              </S.Footer__Img>
-              <S.Footer__Img>
-                <a href="" target="_self">
-                  <S.Footer__img src="img/icon_02.png" alt="home" />
-                </a>
-              </S.Footer__Img>
-              <S.Footer__Img>
-                <a href="" target="_self">
-                  <S.Footer__img src="img/icon_03.png" alt="home" />
-                </a>
-              </S.Footer__Img>
-            </S.Footer__container>
-          </S.Footer>
+<FooterComp/>
         </S.Container>
       </S.Wrapper>
     </S.StyledMain>

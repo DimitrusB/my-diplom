@@ -5,6 +5,7 @@ import { deleteAd, GetAdsByID, refreshToken } from "../../../api/api";
 import { useEffect, useState } from "react";
 import { AddNewAd } from "../../forms/addNewAt";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../forms/footer";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -24,7 +25,10 @@ export const AdPage = () => {
   };
 
   const handleButtonClick = () => {
+    if(userData){
     setModalVisible(true);
+    }else{
+    navigate('/auth')}
   };
 
   useEffect(() => {
@@ -217,34 +221,7 @@ export const AdPage = () => {
           </S.Maincontainer>
         </main>
 
-        <S.Footer>
-          <S.Footer__Container>
-            <S.Footer__Img>
-              <Link to="/">
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
-                  alt="home"
-                />
-              </Link>
-            </S.Footer__Img>
-            <S.Footer__Img>
-              <Link to={userData ? "/" : "#"}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
-                  alt="add"
-                />
-              </Link>
-            </S.Footer__Img>
-            <S.Footer__Img>
-              <Link to="#">
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
-                  alt="home"
-                />
-              </Link>
-            </S.Footer__Img>
-          </S.Footer__Container>
-        </S.Footer>
+<FooterComp ButtonClick={handleButtonClick} />
       </S.Container>
     </S.Wrapper>
   );

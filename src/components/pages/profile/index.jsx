@@ -12,6 +12,7 @@ import { EditUserData } from "../../forms/EditUserData";
 import { AddNewAd } from "../../forms/addNewAt";
 import { UsersAdComp } from "../../forms/UsersAd";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../forms/footer";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export const ProfilePage = () => {
   }, [avatarUrl]);
 
   useEffect(() => {
-    setLoading(true);   
+    setLoading(true);
     const fetchData = async () => {
       try {
         const data = await GetUserAd();
@@ -72,8 +73,7 @@ export const ProfilePage = () => {
       }
     };
 
-    fetchData()
-    .finally(() => setLoading(false));
+    fetchData().finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const ProfilePage = () => {
     localStorage.removeItem("userData");
     navigate("/");
   };
-  
+
   if (loading) {
     return (
       <A.animSet>
@@ -188,33 +188,7 @@ export const ProfilePage = () => {
               />
             </S.Maincontainer>
           </main>
-
-          <S.Footer>
-            <S.Footer__Container>
-              <S.Footer__Img>
-                <Link to="/">
-                  <img
-                    src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
-                    alt="home"
-                  />
-                </Link>
-              </S.Footer__Img>
-              <S.Footer__Img onClick={handleButtonClick}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
-                  alt="add"
-                />
-              </S.Footer__Img>
-              <S.Footer__Img>
-                <Link to="#">
-                  <img
-                    src={`${process.env.PUBLIC_URL}/img/icon_03.png`}
-                    alt="home"
-                  />
-                </Link>
-              </S.Footer__Img>
-            </S.Footer__Container>
-          </S.Footer>
+          <FooterComp ButtonClick={handleButtonClick} />
         </S.Container>
       </S.Wrapper>
     </S.StyledMain>

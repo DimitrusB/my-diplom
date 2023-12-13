@@ -7,6 +7,7 @@ import * as A from "../../assets/style";
 import * as S from "../profile/profile.style";
 import { UsersAdComp } from "../../forms/UsersAd";
 import { ReactComponent as SpinAnimation } from '../../assets/Spin-0.9s-301px.svg';
+import { FooterComp } from "../../forms/footer";
 
 export const SellersProfilePage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -32,7 +33,10 @@ export const SellersProfilePage = () => {
   };
 
   const handleButtonClick = () => {
+    if(userData){
     setModalVisible(true);
+    }else{
+    navigate('/auth')}
   };
 
   useEffect(() => {
@@ -162,27 +166,7 @@ export const SellersProfilePage = () => {
             </S.Maincontainer>
           </main>
 
-          <S.Footer>
-            <S.Footer__Container>
-              <S.Footer__Img>
-                <Link to="/">
-                  <img
-                    src={`${process.env.PUBLIC_URL}/img/icon_01.png`}
-                    alt="home"
-                  />
-                </Link>
-              </S.Footer__Img>
-              <S.Footer__Img onClick={handleButtonClick}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/icon_02.png`}
-                  alt="add"
-                />
-              </S.Footer__Img>
-              <S.Footer__Img onClick={ClickEnterAuth}>
-                <img src={`${process.env.PUBLIC_URL}/img/icon_03.png`} alt="" />
-              </S.Footer__Img>
-            </S.Footer__Container>
-          </S.Footer>
+<FooterComp ButtonClick={handleButtonClick} />
         </S.Container>
       </S.Wrapper>
     </S.StyledMain>
