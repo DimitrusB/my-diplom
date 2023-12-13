@@ -9,7 +9,7 @@ export const StyledMain = styled.div`
   a,
   a:visited {
     text-decoration: none;
-    font-family: "StratosSkyeng", sans-serif;
+    // font-family: "StratosSkyeng", sans-serif;
     cursor: pointer;
   }
 `;
