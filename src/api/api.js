@@ -334,13 +334,17 @@ export const addNewReview = async (idReview, newReview) => {
       body: JSON.stringify({ text: newReview }),
     });
 
-    if (!response.ok) {
-      console.error("Add new review :", response.status);
+    if (response.status === 401) {
+      await refreshToken();
+      return addNewReview(idReview, newReview);
     }
-    const data = await response.json();
-    console.log("User registration response:", data);
+
+    if (!response.ok) {
+      console.error("Error adding new review:", response.status);
+      return null;
+    }
   } catch (error) {
-    console.error("Error during user registration:", error);
+    console.error("Error during adding new review:", error);
   }
 };
 
@@ -349,32 +353,32 @@ export const editAds = async (newData, itemID) => {
   const url = `${reqUrl}/ads/${itemID}`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("description", description);
-  formData.append("price", price);
-
   try {
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
       },
-      body: formData,
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        price: price,
+      }),
     });
     if (response.status === 401) {
-      refreshToken();
-      return editAds();
+      await refreshToken();
+      return editAds(newData, itemID);
     }
     if (!response.ok) {
-      console.error("Error adding new ad:", response.status);
-      return;
+      const errorData = await response.json();
+      console.error("Error response data:", errorData); // Здесь могут быть детали проблемы
+      throw new Error(`Request failed with status ${response.status}`);
     }
-
     const data = await response.json();
     console.log("Response from server:", data);
   } catch (error) {
-    console.error("Error during adding new ad:", error);
+    console.error("Error during editing ad:", error);
   }
 };

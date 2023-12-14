@@ -415,8 +415,9 @@ export const Form__newArt_img = styled.div`
 
   img {
     display: block;
-    width: 100%;
-    height: auto;
+    width: 90px;
+    min-width: 90px;
+    height: 90px;
     -o-object-fit: cover;
     object-fit: cover;
     z-index: 2;
@@ -432,8 +433,9 @@ export const Form__newArt_img = styled.div`
 
     img {
       display: block;
-      width: 100%;
-      height: auto;
+      width: 90px;
+      min-width: 90px;
+      height: 90px;
       -o-object-fit: cover;
       object-fit: cover;
     }

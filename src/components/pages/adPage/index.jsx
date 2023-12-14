@@ -4,9 +4,7 @@ import * as A from "../../assets/style";
 import {
   deleteAd,
   GetAdsByID,
-
   GetAllReview,
-
   refreshToken,
 } from "../../../api/api";
 import { useEffect, useState } from "react";
@@ -129,10 +127,12 @@ export const AdPage = () => {
     <S.Wrapper>
       {isModalEditVisible && 
       <EditMyAds onClose={() => setModalEditVisible(false)} 
-      descAd={values.description}
       titleAd={values.title}
+      descAd={values.description}
       priceAd={values.price}
       itemId={itemId}
+      editmap={values.images}
+      baseImagePath={baseImagePath}
       />}
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)}/>}
       {isModalReview && (

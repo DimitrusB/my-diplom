@@ -23,7 +23,8 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
       setNewReviewEmpty("Комментарий не может быть пустым");
       console.log("Review content is empty");
     }
-  };
+  }
+
 
   return (
     <S.Wrapper>
