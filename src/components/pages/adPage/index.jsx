@@ -132,6 +132,7 @@ export const AdPage = () => {
       descAd={values.description}
       titleAd={values.title}
       priceAd={values.price}
+      itemId={itemId}
       />}
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)}/>}
       {isModalReview && (

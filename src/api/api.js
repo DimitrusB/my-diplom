@@ -1,4 +1,4 @@
-const reqUrl = 'http://localhost:8090'
+const reqUrl = "http://localhost:8090";
 
 export const GetAllAds = async () => {
   try {
@@ -23,7 +23,6 @@ export const GetAllReview = async (idAd) => {
     throw error;
   }
 };
-
 
 export const GetAdsByID = async (id) => {
   try {
@@ -320,7 +319,6 @@ export const addNewAdwithPhoto = async (newData) => {
   }
 };
 
-
 export const addNewReview = async (idReview, newReview) => {
   const url = `${reqUrl}/ads/${idReview}/comments`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
@@ -333,7 +331,7 @@ export const addNewReview = async (idReview, newReview) => {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({text: newReview}),
+      body: JSON.stringify({ text: newReview }),
     });
 
     if (!response.ok) {
@@ -343,5 +341,40 @@ export const addNewReview = async (idReview, newReview) => {
     console.log("User registration response:", data);
   } catch (error) {
     console.error("Error during user registration:", error);
+  }
+};
+
+export const editAds = async (newData, itemID) => {
+  const { title, description, price } = newData;
+  const url = `${reqUrl}/ads/${itemID}`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("price", price);
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+    if (response.status === 401) {
+      refreshToken();
+      return editAds();
+    }
+    if (!response.ok) {
+      console.error("Error adding new ad:", response.status);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Response from server:", data);
+  } catch (error) {
+    console.error("Error during adding new ad:", error);
   }
 };

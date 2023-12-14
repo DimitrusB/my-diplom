@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { addNewAd, addNewAdwithPhoto } from "../../../api/api";
+import { addNewAd, addNewAdwithPhoto, editAds } from "../../../api/api";
 import * as S from "./editMyAds.style";
 
-export const EditMyAds = ({ onClose, descAd, titleAd,priceAd }) =>{
+export const EditMyAds = ({ onClose, descAd, titleAd,priceAd, itemID }) =>{
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -73,9 +73,9 @@ export const EditMyAds = ({ onClose, descAd, titleAd,priceAd }) =>{
         if (selectedFiles) {
           await addNewAdwithPhoto(newAd);
         } else {
-          await addNewAd(newAd);
+          await editAds(newAd, itemID);
         }
-        window.location.reload();
+        // window.location.reload();
         console.log("User data updated successfully");
       } catch (error) {
         console.error(
@@ -130,7 +130,7 @@ export const EditMyAds = ({ onClose, descAd, titleAd,priceAd }) =>{
                   placeholder="Введите название"
                   onChange={(e) => setTitle(e.target.value)}
                   onBlur={handleBlur}
-                  value={titleAd}
+                  // value={titleAd}
                 />
                 <p style={{ color: "red" }}>
                   {errorData ? "Необходимо заполнить" : ""}
@@ -186,7 +186,7 @@ export const EditMyAds = ({ onClose, descAd, titleAd,priceAd }) =>{
                   id="formName"
                   onChange={(e) => setPrice(e.target.value)}
                   onBlur={handleBlur}
-                  value={priceAd}
+                  // value={priceAd}
                 />
                 <S.Form__newArt__input_price_cover></S.Form__newArt__input_price_cover>
                 <p style={{ color: "red" }}>

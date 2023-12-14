@@ -120,6 +120,7 @@ export const AddNewAd = ({ onClose }) => {
               <S.Form__NewArt_block>
                 <label htmlFor="name">Название</label>
                 <S.Form__newArt_input
+                autoFocus
                   type="text"
                   name="name"
                   id="formName"
