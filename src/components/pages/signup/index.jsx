@@ -104,11 +104,13 @@ export const Signup = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
-            <S.Modal__btnEnter id="btnEnter">
-              <a href="../index.html">Войти</a>
+             <Link to="/auth">
+            <S.Modal__btnEnter>
+              <a>Войти</a>
             </S.Modal__btnEnter>
+            </Link>
             <S.Modal__btnSignup onClick={handleRegistration}>
-              <a href="#">Зарегистрироваться</a>
+              <a>Зарегистрироваться</a>
             </S.Modal__btnSignup>
           </S.Modal__formLogin>
           <S.Footer__container>

@@ -12,7 +12,7 @@ export const GetAllAds = async () => {
   }
 };
 
-export const GetAllComments = async (idAd) => {
+export const GetAllReview = async (idAd) => {
   try {
     const result = await fetch(`${reqUrl}/ads/${idAd}/comments`);
     const data = await result.json();
@@ -317,5 +317,31 @@ export const addNewAdwithPhoto = async (newData) => {
     console.log("Response from server:", data);
   } catch (error) {
     console.error("Error during adding new ad:", error);
+  }
+};
+
+
+export const addNewReview = async (idReview, newReview) => {
+  const url = `${reqUrl}/ads/${idReview}/comments`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({text: newReview}),
+    });
+
+    if (!response.ok) {
+      console.error("Add new review :", response.status);
+    }
+    const data = await response.json();
+    console.log("User registration response:", data);
+  } catch (error) {
+    console.error("Error during user registration:", error);
   }
 };

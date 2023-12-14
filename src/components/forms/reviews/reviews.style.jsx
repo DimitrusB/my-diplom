@@ -191,7 +191,10 @@ export const Modal__form_newArt = styled.form`
 
 export const Modal__review = styled.div`
   width: 100%;
+  display: flex;
   height: 495px;
+  flex-direction: column;
+  gap: 30px;
 `;
 
 export const Form__newArt__block = styled.div`

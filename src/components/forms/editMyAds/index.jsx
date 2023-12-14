@@ -1,99 +1,103 @@
 import { useRef, useState } from "react";
 import { addNewAd, addNewAdwithPhoto } from "../../../api/api";
-import * as S from "./addNewat.style";
+import * as S from "./editMyAds.style";
 
-export const AddNewAd = ({ onClose }) => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState("");
-  const [errorPrice, setErrorPrice] = useState(false);
-  const [errorData, setErrorData] = useState(false);
-  const [errorDataDesk, setErrorDataDesk] = useState(false);
-
+export const EditMyAds = ({ onClose, descAd, titleAd,priceAd }) =>{
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+    const [selectedFiles, setSelectedFiles] = useState("");
+    const [errorPrice, setErrorPrice] = useState(false);
+    const [errorData, setErrorData] = useState(false);
+    const [errorDataDesk, setErrorDataDesk] = useState(false);
   
-  const inputRefs = [
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-  ];
-
-  const handleFileChange = (event, buttonIndex) => {
-    const files = event.target.files;
-    const newFiles = Array.from(files).slice(0, 5);
-
-    if (selectedFiles.length + newFiles.length <= 5) {
-      setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    } else {
-      console.log("Превышено максимальное количество файлов (5).");
-    }
-  };
-
-  const handleAddNewAd = async (e) => {
-    e.preventDefault();
-
-    if (isNaN(price) || price === "") {
-      setErrorPrice(true);
-      return;
-    } else {
+    
+    const inputRefs = [
+      useRef(null),
+      useRef(null),
+      useRef(null),
+      useRef(null),
+      useRef(null),
+    ];
+  
+    const handleFileChange = (event, buttonIndex) => {
+      const files = event.target.files;
+      const newFiles = Array.from(files).slice(0, 5);
+  
+      if (selectedFiles.length + newFiles.length <= 5) {
+        setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+      } else {
+        console.log("Превышено максимальное количество файлов (5).");
+      }
+    };
+  
+    
+  
+    console.log(selectedFiles);
+    const handleAddNewAd = async (e) => {
+      e.preventDefault();
+  
+      if (isNaN(price) || price === "") {
+        setErrorPrice(true);
+        return;
+      } else {
+        setErrorPrice(false);
+        setPrice(price);
+      }
+  
+      if (title === "") {
+        setErrorData(true);
+        return;
+      } else {
+        setErrorData(false);
+        setTitle(title);
+      }
+  
+      if (description === "") {
+        setErrorDataDesk(true);
+        return;
+      } else {
+        setErrorDataDesk(false);
+        setDescription(description);
+      }
+  
+      const newAd = {
+        title,
+        description,
+        price,
+        files: selectedFiles,
+      };
+  
+      try {
+        if (selectedFiles) {
+          await addNewAdwithPhoto(newAd);
+        } else {
+          await addNewAd(newAd);
+        }
+        window.location.reload();
+        console.log("User data updated successfully");
+      } catch (error) {
+        console.error(
+          "Error updating user data:",
+          error.response?.data || error.message
+        );
+      }
+    };
+  
+    const handleBlur = () => {
       setErrorPrice(false);
-      setPrice(price);
-    }
-
-    if (title === "") {
-      setErrorData(true);
-      return;
-    } else {
       setErrorData(false);
-      setTitle(title);
-    }
-
-    if (description === "") {
-      setErrorDataDesk(true);
-      return;
-    } else {
       setErrorDataDesk(false);
-      setDescription(description);
-    }
-
-    const newAd = {
-      title,
-      description,
-      price,
-      files: selectedFiles,
     };
 
-    try {
-      if (selectedFiles) {
-        await addNewAdwithPhoto(newAd);
-      } else {
-        await addNewAd(newAd);
-      }
-      window.location.reload();
-      console.log("User data updated successfully");
-    } catch (error) {
-      console.error(
-        "Error updating user data:",
-        error.response?.data || error.message
-      );
-    }
-  };
 
-  const handleBlur = () => {
-    setErrorPrice(false);
-    setErrorData(false);
-    setErrorDataDesk(false);
-  };
-
-  return (
-    <S.Wrapper>
+    return(
+            <S.Wrapper>
       <S.Container__bg>
         <S.Modal__block>
           <S.Modal__content>
-            <S.Modal__title onClick={onClose}>Новое объявление</S.Modal__title>
+            <S.Modal__title onClick={onClose}>Редактировать объявление</S.Modal__title>
             <S.Modal__btn_close>
               <S.Modal__btn_close_line onClick={onClose}>
                 <svg
@@ -126,6 +130,7 @@ export const AddNewAd = ({ onClose }) => {
                   placeholder="Введите название"
                   onChange={(e) => setTitle(e.target.value)}
                   onBlur={handleBlur}
+                  value={titleAd}
                 />
                 <p style={{ color: "red" }}>
                   {errorData ? "Необходимо заполнить" : ""}
@@ -141,7 +146,7 @@ export const AddNewAd = ({ onClose }) => {
                   placeholder="Введите описание"
                   onChange={(e) => setDescription(e.target.value)}
                   onBlur={handleBlur}
-                ></S.Form__newArt_Area>
+                >{descAd}</S.Form__newArt_Area>
                 <p style={{ color: "red" }}>
                   {errorDataDesk ? "Необходимо заполнить" : ""}
                 </p>
@@ -181,6 +186,7 @@ export const AddNewAd = ({ onClose }) => {
                   id="formName"
                   onChange={(e) => setPrice(e.target.value)}
                   onBlur={handleBlur}
+                  value={priceAd}
                 />
                 <S.Form__newArt__input_price_cover></S.Form__newArt__input_price_cover>
                 <p style={{ color: "red" }}>
@@ -188,12 +194,12 @@ export const AddNewAd = ({ onClose }) => {
                 </p>
               </S.Form__NewArt_block_price>
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
-                Опубликовать
+                Сохранить
               </S.Form__newArt__btn_pub>
             </S.Modal__form_newArt>
           </S.Modal__content>
         </S.Modal__block>
       </S.Container__bg>
     </S.Wrapper>
-  );
-};
+    )
+}

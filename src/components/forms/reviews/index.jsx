@@ -1,6 +1,30 @@
+import { useState } from "react";
+import { addNewReview } from "../../../api/api";
 import * as S from "./reviews.style";
 
-export const ReviewsComp = ({ onClose, reviews, baseImagePath }) => {
+export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const [newReview, setNewReview] = useState("");
+  const [newReviewEmpty, setNewReviewEmpty] = useState("");
+
+  const handleNewReview = (event) => {
+    setNewReview(event.target.value);
+  };
+
+  const handleAddReview = async () => {
+    if (newReview) {
+      try {
+        await addNewReview(itemId, newReview);
+        setNewReview("");
+      } catch (error) {
+        console.error("Ошибка при добавлении отзыва:", error);
+      }
+    } else if (!newReview) {
+      setNewReviewEmpty("Комментарий не может быть пустым");
+      console.log("Review content is empty");
+    }
+  };
+
   return (
     <S.Wrapper>
       <S.Container__bg>
@@ -30,19 +54,28 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath }) => {
               </S.Modal__btn_close_line>
             </S.Modal__btn_close>
             <S.Modal__scroll>
-              <S.Modal__form_newArt>
-                <S.Form__newArt__block>
-                  <label htmlFor="text">Добавить отзыв</label>
-                  <textarea
-                    name="text"
-                    id="formArea"
-                    cols="auto"
-                    rows="5"
-                    placeholder="Введите описание"
-                  ></textarea>
-                </S.Form__newArt__block>
-                <S.Form__newArt__btn_pub>Опубликовать</S.Form__newArt__btn_pub>
-              </S.Modal__form_newArt>
+              {userData ? (
+                <S.Modal__form_newArt>
+                  <S.Form__newArt__block>
+                    <label htmlFor="text">Добавить отзыв</label>
+                    <textarea
+                      autoFocus
+                      name="text"
+                      id="formArea"
+                      cols="auto"
+                      rows="5"
+                      placeholder="Введите описание"
+                      onChange={handleNewReview}
+                    ></textarea>
+                    <p>{newReviewEmpty}</p>
+                  </S.Form__newArt__block>
+                  <S.Form__newArt__btn_pub onClick={handleAddReview}>
+                    Опубликовать
+                  </S.Form__newArt__btn_pub>
+                </S.Modal__form_newArt>
+              ) : (
+                ""
+              )}
               <S.Modal__review>
                 {reviews.map((review) => (
                   <S.Review__item key={review.itemid}>

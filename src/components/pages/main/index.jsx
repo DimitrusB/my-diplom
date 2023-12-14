@@ -14,12 +14,12 @@ export const Main = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [userAdEmpty, setUserAdEmpty] = useState();
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
-  const filteredAds = values.filter(ad =>
+  const filteredAds = values.filter((ad) =>
     ad.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const handleSearchSubmit = (event) => {
@@ -42,8 +42,6 @@ export const Main = () => {
       })
       .finally(() => setLoading(false));
   }, []);
-
-  
 
   useEffect(() => {
     const tokenRefreshInterval = setInterval(() => {
@@ -113,7 +111,7 @@ export const Main = () => {
             </S.Maincontainer>
           </main>
 
-<FooterComp/>
+          <FooterComp />
         </S.Container>
       </S.Wrapper>
     </S.StyledMain>

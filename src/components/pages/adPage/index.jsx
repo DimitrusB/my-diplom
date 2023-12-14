@@ -4,7 +4,9 @@ import * as A from "../../assets/style";
 import {
   deleteAd,
   GetAdsByID,
-  GetAllComments,
+
+  GetAllReview,
+
   refreshToken,
 } from "../../../api/api";
 import { useEffect, useState } from "react";
@@ -12,6 +14,7 @@ import { AddNewAd } from "../../forms/addNewAt";
 import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
 import { FooterComp } from "../../forms/footer";
 import { ReviewsComp } from "../../forms/reviews";
+import { EditMyAds } from "../../forms/editMyAds";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -27,6 +30,7 @@ export const AdPage = () => {
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState(true);
   const [isModalReview, setModalReview] = useState(false);
+  const [isModalEditVisible, setModalEditVisible] = useState(false);
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
@@ -39,12 +43,16 @@ export const AdPage = () => {
     }
   };
 
-  const handleButtonReview = () => {
+  const handleButtonClickEdit = () => {
     if (userData) {
-      setModalReview(true);
+      setModalEditVisible(true);
     } else {
       navigate("/auth");
     }
+  };
+
+  const handleButtonReview = () => {
+      setModalReview(true);
   };
 
   useEffect(() => {
@@ -83,7 +91,7 @@ export const AdPage = () => {
   };
 
   useEffect(() => {
-    GetAllComments(itemId).then((data) => {
+    GetAllReview(itemId).then((data) => {
       setComments(data);
     });
   }, []);
@@ -119,7 +127,13 @@ export const AdPage = () => {
 
   return (
     <S.Wrapper>
-      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
+      {isModalEditVisible && 
+      <EditMyAds onClose={() => setModalEditVisible(false)} 
+      descAd={values.description}
+      titleAd={values.title}
+      priceAd={values.price}
+      />}
+      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)}/>}
       {isModalReview && (
         <ReviewsComp
           onClose={() => setModalReview(false)}
@@ -134,6 +148,7 @@ export const AdPage = () => {
             }))
           }
           baseImagePath={baseImagePath}
+          itemId={itemId}
         />
       )}
       <S.Container>
@@ -220,7 +235,7 @@ export const AdPage = () => {
                       </S.Article__date>
                       <S.Article__city>{values.user?.city}</S.Article__city>
                       <S.Article__link onClick={handleButtonReview}>
-                        {userData ? commentString : ""}
+                        {commentString}
                       </S.Article__link>
                     </S.Article__info>
                     <S.Article__price>{values.price} ₽</S.Article__price>
@@ -235,7 +250,7 @@ export const AdPage = () => {
                       </S.Article__btn>
                     ) : (
                       <S.Article__btnDiv>
-                        <S.Article__btn>
+                        <S.Article__btn onClick={handleButtonClickEdit}>
                           <span>Редактировать</span>
                         </S.Article__btn>
                         <S.Article__btn onClick={handleDeleteAd}>
