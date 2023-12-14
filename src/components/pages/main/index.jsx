@@ -14,6 +14,17 @@ export const Main = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [userAdEmpty, setUserAdEmpty] = useState();
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  const filteredAds = values.filter(ad =>
+    ad.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -76,16 +87,18 @@ export const Main = () => {
               <S.Search__logoMobLink href="#" target="_blank">
                 <S.Search__logoMobImg src="img/logo-mob.png" alt="logo" />
               </S.Search__logoMobLink>
-              <S.Search__form action="#">
+              <S.Search__form onSubmit={handleSearchSubmit}>
                 <S.Search__text
                   type="search"
                   placeholder="Поиск по объявлениям"
                   name="search"
+                  onChange={handleSearch}
                 />
                 <S.Search__textMob
                   type="search"
                   placeholder="Поиск"
                   name="search-mob"
+                  onChange={handleSearch}
                 />
                 <S.Search__btn>Найти</S.Search__btn>
               </S.Search__form>
@@ -95,7 +108,7 @@ export const Main = () => {
               <UsersAdComp
                 userAdEmpty={userAdEmpty}
                 baseImagePath={baseImagePath}
-                userAd={values}
+                userAd={filteredAds}
               />
             </S.Maincontainer>
           </main>

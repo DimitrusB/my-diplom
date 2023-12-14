@@ -1,8 +1,8 @@
-const reqUrl = 'http://localhost:8090/'
+const reqUrl = 'http://localhost:8090'
 
 export const GetAllAds = async () => {
   try {
-    const result = await fetch(`${reqUrl}ads`);
+    const result = await fetch(`${reqUrl}/ads`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -14,7 +14,7 @@ export const GetAllAds = async () => {
 
 export const GetAllComments = async (idAd) => {
   try {
-    const result = await fetch(`${reqUrl}ads/${idAd}/comments`);
+    const result = await fetch(`${reqUrl}/ads/${idAd}/comments`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -27,7 +27,7 @@ export const GetAllComments = async (idAd) => {
 
 export const GetAdsByID = async (id) => {
   try {
-    const result = await fetch(`${reqUrl}ads/${id}`);
+    const result = await fetch(`${reqUrl}/ads/${id}`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -39,7 +39,7 @@ export const GetAdsByID = async (id) => {
 
 export const GetAllImages = async () => {
   try {
-    const result = await fetch(`${reqUrl}images`);
+    const result = await fetch(`${reqUrl}/images`);
     const data = await result.json();
     console.log(data);
     return data;
@@ -50,7 +50,7 @@ export const GetAllImages = async () => {
 };
 
 export const registerUser = async (userData) => {
-  const url = `${reqUrl}auth/register`;
+  const url = `${reqUrl}/auth/register`;
 
   try {
     const response = await fetch(url, {
@@ -73,7 +73,7 @@ export const registerUser = async (userData) => {
 };
 
 export const LoginUser = async (userData) => {
-  const url = `${reqUrl}auth/login`;
+  const url = `${reqUrl}/auth/login`;
 
   try {
     const response = await fetch(url, {
@@ -103,7 +103,7 @@ export const LoginUser = async (userData) => {
 export const refreshToken = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
-  const url = "http://localhost:8090/auth/login";
+  const url = `${reqUrl}/auth/login`;
   const data = {
     access_token: accessToken,
     refresh_token: refreshToken,
@@ -137,7 +137,7 @@ export const refreshToken = async () => {
 
 export const GetUserData = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = "http://localhost:8090/user";
+  const url = `${reqUrl}/user`;
   const headers = {
     Accept: "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -160,7 +160,7 @@ export const GetUserData = async () => {
 
 export const FetchUserAvatar = async (file) => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = "http://localhost:8090/user/avatar";
+  const url = `${reqUrl}/user/avatar`;
 
   const formData = new FormData();
   formData.append("file", file);
@@ -189,7 +189,7 @@ export const FetchUserAvatar = async (file) => {
 
 export const GetUserAd = async () => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = "http://localhost:8090/ads/me";
+  const url = `${reqUrl}/ads/me`;
   const headers = {
     Accept: "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -213,7 +213,7 @@ export const GetUserAd = async () => {
 
 export const ChangeUserData = async (userData) => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const url = "http://localhost:8090/user";
+  const url = `${reqUrl}/user`;
   try {
     const response = await fetch(url, {
       method: "PATCH",
@@ -236,7 +236,7 @@ export const ChangeUserData = async (userData) => {
 };
 
 export const addNewAd = async (newData) => {
-  const url = "http://localhost:8090/adstext";
+  const url = `${reqUrl}/adstext`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
   try {
@@ -261,7 +261,7 @@ export const addNewAd = async (newData) => {
 };
 
 export const deleteAd = async (id) => {
-  const url = `http://localhost:8090/ads/${id}`;
+  const url = `${reqUrl}/ads/${id}`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
   try {
@@ -287,7 +287,7 @@ export const deleteAd = async (id) => {
 
 export const addNewAdwithPhoto = async (newData) => {
   const { title, description, price, files } = newData;
-  const url = `http://localhost:8090/ads?title=${title}&description=${description}&price=${price}`;
+  const url = `${reqUrl}/ads?title=${title}&description=${description}&price=${price}`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
   const formData = new FormData();
