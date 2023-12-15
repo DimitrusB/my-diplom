@@ -88,7 +88,7 @@ export const Modal__block = styled.div`
 
 export const Modal__formLogin = styled.form`
   width: 366px;
-  height: 439px;
+  height: auto;
   background-color: #ffffff;
   border-radius: 12px;
   display: flex;
@@ -268,10 +268,12 @@ export const Modal__btnEnter = styled.button`
 
   :hover {
     background-color: #0080c1;
+    border-radius: 6px;
   }
 
   :active {
     background-color: #0080c1;
+    border-radius: 6px;
   }
 
   @media screen and (max-width: 768px) {

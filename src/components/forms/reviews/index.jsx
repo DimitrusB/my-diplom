@@ -24,8 +24,6 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
       console.log("Review content is empty");
     }
   }
-
-
   return (
     <S.Wrapper>
       <S.Container__bg>

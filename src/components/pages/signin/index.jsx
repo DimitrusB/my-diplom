@@ -7,6 +7,7 @@ export const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [errorData, setErrorData] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,13 +22,14 @@ export const Signin = () => {
       const userDataResponse = await GetUserData();
       localStorage.setItem("userData", JSON.stringify(userDataResponse));
       console.log("User data:", userDataResponse);
-
+      setErrorData(false);
       navigate("/profile");
     } catch (error) {
       console.error(
         "Error during login:",
         error.response?.data || error.message
       );
+      setErrorData(true);
     }
   };
 
@@ -55,6 +57,11 @@ export const Signin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {errorData ? (
+              <p style={{ color: "red" }}>Не верный логин или пароль</p>
+            ) : (
+              ""
+            )}
             <S.Modal__btnEnter>
               <a onClick={handleLogin}>Войти</a>
             </S.Modal__btnEnter>

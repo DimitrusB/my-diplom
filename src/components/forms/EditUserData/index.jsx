@@ -25,6 +25,7 @@ export const EditUserData = () => {
     e.preventDefault();
 
     const newUserData = {
+      avatar: UserData.avatar,
       email: UserData.email,
       name,
       surname,

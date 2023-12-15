@@ -344,7 +344,8 @@ export const addNewReview = async (idReview, newReview) => {
       return null;
     }
   } catch (error) {
-    console.error("Error during adding new review:", error);
+    console.error("Error during adding new review:", error.message);
+    throw error;
   }
 };
 

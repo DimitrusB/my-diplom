@@ -29,6 +29,8 @@ export const AdPage = () => {
   const [comments, setComments] = useState(true);
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
+
+  
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
@@ -50,7 +52,7 @@ export const AdPage = () => {
   };
 
   const handleButtonReview = () => {
-      setModalReview(true);
+    setModalReview(true);
   };
 
   useEffect(() => {
@@ -92,7 +94,7 @@ export const AdPage = () => {
     GetAllReview(itemId).then((data) => {
       setComments(data);
     });
-  }, []);
+  }, [itemId]);
 
   if (loading) {
     return (
@@ -112,8 +114,9 @@ export const AdPage = () => {
 
   const commentCount = comments.length;
   let commentString = "";
-
-  if (commentCount === 1) {
+  if (commentCount === undefined) {
+    commentString = "";
+  } else if (commentCount === 1) {
     commentString = `${commentCount} отзыв`;
   } else if (commentCount >= 2 && commentCount <= 4) {
     commentString = `${commentCount} отзыва`;
@@ -125,16 +128,18 @@ export const AdPage = () => {
 
   return (
     <S.Wrapper>
-      {isModalEditVisible && 
-      <EditMyAds onClose={() => setModalEditVisible(false)} 
-      titleAd={values.title}
-      descAd={values.description}
-      priceAd={values.price}
-      itemId={itemId}
-      editmap={values.images}
-      baseImagePath={baseImagePath}
-      />}
-      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)}/>}
+      {isModalEditVisible && (
+        <EditMyAds
+          onClose={() => setModalEditVisible(false)}
+          titleAd={values.title}
+          descAd={values.description}
+          priceAd={values.price}
+          itemId={itemId}
+          editmap={values.images}
+          baseImagePath={baseImagePath}
+        />
+      )}
+      {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
       {isModalReview && (
         <ReviewsComp
           onClose={() => setModalReview(false)}
