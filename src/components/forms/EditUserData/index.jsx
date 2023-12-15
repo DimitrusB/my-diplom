@@ -25,19 +25,21 @@ export const EditUserData = () => {
     e.preventDefault();
 
     const newUserData = {
-      avatar: UserData.avatar,
-      email: UserData.email,
+      // avatar: UserData.avatar,
+      // email: UserData.email,
       name,
       surname,
       phone,
       city,
+      role: "admin",
     };
 
     console.log(newUserData);
 
     try {
       await ChangeUserData(newUserData);
-      localStorage.setItem("userData", JSON.stringify(newUserData));
+      const updatedUserData = await GetUserData();
+      localStorage.setItem("userData", JSON.stringify(updatedUserData));
       window.location.reload();
       console.log("User data updated successfully");
     } catch (error) {
@@ -47,6 +49,8 @@ export const EditUserData = () => {
       );
     }
   };
+
+
 
   return (
     <S.Settings__Right>
