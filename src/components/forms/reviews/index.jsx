@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { addNewReview } from "../../../api/api";
 import * as S from "./reviews.style";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
+  const navigate = useNavigate()
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [newReview, setNewReview] = useState("");
   const [newReviewEmpty, setNewReviewEmpty] = useState("");
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    handleAddReview();
+    navigate(`/adpage/${itemId}`)
+    onClose()
+    };
+
   const handleNewReview = (event) => {
     setNewReview(event.target.value);
+
   };
 
   const handleAddReview = async () => {
@@ -55,7 +65,7 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
             </S.Modal__btn_close>
             <S.Modal__scroll>
               {userData ? (
-                <S.Modal__form_newArt>
+                <S.Modal__form_newArt onSubmit={handleFormSubmit}>
                   <S.Form__newArt__block>
                     <label htmlFor="text">Добавить отзыв</label>
                     <textarea
@@ -69,7 +79,7 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
                     ></textarea>
                     <p>{newReviewEmpty}</p>
                   </S.Form__newArt__block>
-                  <S.Form__newArt__btn_pub onClick={handleAddReview}>
+                  <S.Form__newArt__btn_pub type="submit">
                     Опубликовать
                   </S.Form__newArt__btn_pub>
                 </S.Modal__form_newArt>
