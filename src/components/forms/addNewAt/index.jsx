@@ -11,8 +11,8 @@ export const AddNewAd = ({ onClose }) => {
   const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
+  const [errorDataFile, setErrorDataFile] = useState(false);
 
-  
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -27,8 +27,10 @@ export const AddNewAd = ({ onClose }) => {
 
     if (selectedFiles.length + newFiles.length <= 5) {
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+      setErrorDataFile(false);
     } else {
       console.log("Превышено максимальное количество файлов (5).");
+      setErrorDataFile(true);
     }
   };
 
@@ -120,7 +122,7 @@ export const AddNewAd = ({ onClose }) => {
               <S.Form__NewArt_block>
                 <label htmlFor="name">Название</label>
                 <S.Form__newArt_input
-                autoFocus
+                  autoFocus
                   type="text"
                   name="name"
                   id="formName"
@@ -152,7 +154,7 @@ export const AddNewAd = ({ onClose }) => {
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                  {[0,1, 2, 3, 4].map((index) => (
+                  {[0, 1, 2, 3, 4].map((index) => (
                     <S.Form__newArt_img
                       key={index}
                       onClick={() => inputRefs[index].current.click()}
@@ -165,14 +167,22 @@ export const AddNewAd = ({ onClose }) => {
                           onChange={(event) => handleFileChange(event, index)}
                         />
                         {selectedFiles && selectedFiles[index] && (
-                          <p>{selectedFiles[index].name}</p>
+                          <img
+                            src={URL.createObjectURL(selectedFiles[index])}
+                            alt=""
+                          />
                         )}
                       </div>
-                      <img src="" alt="" />
+
                       <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     </S.Form__newArt_img>
                   ))}
                 </S.Form__newArt__bar_img>
+                <p style={{ color: "red" }}>
+                  {errorDataFile
+                    ? "Превышено максимальное количество файлов (5)"
+                    : ""}
+                </p>
               </S.Form__NewArt_block>
               <S.Form__NewArt_block_price>
                 <label htmlFor="price">Цена</label>
