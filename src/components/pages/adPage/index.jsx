@@ -55,12 +55,6 @@ export const AdPage = () => {
     setModalReview(true);
   };
 
-  useEffect(() => {
-    const tokenRefreshInterval = setInterval(() => {
-      refreshToken();
-    }, 60000);
-    return () => clearInterval(tokenRefreshInterval);
-  }, []);
 
   useEffect(() => {
     setLoading(true);

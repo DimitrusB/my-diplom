@@ -4,7 +4,6 @@ export const GetAllAds = async () => {
   try {
     const result = await fetch(`${reqUrl}/ads`);
     const data = await result.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -16,7 +15,6 @@ export const GetAllReview = async (idAd) => {
   try {
     const result = await fetch(`${reqUrl}/ads/${idAd}/comments`);
     const data = await result.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -28,7 +26,6 @@ export const GetAdsByID = async (id) => {
   try {
     const result = await fetch(`${reqUrl}/ads/${id}`);
     const data = await result.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -223,7 +220,10 @@ export const ChangeUserData = async (userData) => {
       },
       body: JSON.stringify(userData),
     });
-
+    if (response.status === 401) {
+      await refreshToken();
+      return ChangeUserData(userData);
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -248,7 +248,10 @@ export const addNewAd = async (newData) => {
       },
       body: JSON.stringify(newData),
     });
-
+    if (response.status === 401) {
+      await refreshToken();
+      return addNewAd(newData);
+    }
     if (!response.ok) {
       console.error("Add new at :", response.status);
     }
@@ -273,6 +276,11 @@ export const deleteAd = async (id) => {
       },
       body: JSON.stringify(id),
     });
+
+    if (response.status === 401) {
+      await refreshToken();
+      return deleteAd(id);
+    }
 
     if (!response.ok) {
       console.error("Add new at :", response.status);
@@ -306,7 +314,10 @@ export const addNewAdwithPhoto = async (newData) => {
       },
       body: formData,
     });
-
+    if (response.status === 401) {
+      await refreshToken();
+      return addNewAdwithPhoto(newData);
+    }
     if (!response.ok) {
       console.error("Error adding new ad:", response.status);
       return;
