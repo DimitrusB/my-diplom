@@ -6,7 +6,6 @@ import {
   FetchUserAvatar,
   GetUserAd,
   GetUserData,
-  refreshToken,
 } from "../../../api/api";
 import { EditUserData } from "../../forms/EditUserData";
 import { AddNewAd } from "../../forms/addNewAt";
@@ -78,12 +77,6 @@ export const ProfilePage = () => {
     fetchData().finally(() => setLoading(false));
   }, []);
 
-  // useEffect(() => {
-  //   const tokenRefreshInterval = setInterval(() => {
-  //     refreshToken();
-  //   }, 60000);
-  //   return () => clearInterval(tokenRefreshInterval);
-  // }, []);
 
   const handleLogOut = () => {
     localStorage.removeItem("userData");

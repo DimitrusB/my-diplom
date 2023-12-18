@@ -5,7 +5,6 @@ import {
   deleteAd,
   GetAdsByID,
   GetAllReview,
-  refreshToken,
 } from "../../../api/api";
 import { useEffect, useState } from "react";
 import { AddNewAd } from "../../forms/addNewAt";
