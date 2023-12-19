@@ -366,7 +366,17 @@ export const Article__img = styled.div`
     height: auto;
     min-height: 320px;
     margin: 0 0px;
+
+    
+  img {
+    width: 320px;
+    height: 320px;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
   }
+  }
+
 `;
 
 export const Article__imgBarMob = styled.div`
