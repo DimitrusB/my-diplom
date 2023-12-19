@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signup.style";
 import { registerUser } from "../../api/api";
+import { FooterComp } from "../../components/forms/footer";
 
 export const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,6 +36,7 @@ export const Signup = () => {
     try {
       await registerUser(userData);
       console.log("Registration successful");
+      navigate('/auth')
     } catch (error) {
       console.error(
         "Error during registration:",
@@ -104,32 +107,16 @@ export const Signup = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
-             <Link to="/auth">
-            <S.Modal__btnEnter>
-              <a>Войти</a>
-            </S.Modal__btnEnter>
+            <Link to="/auth">
+              <S.Modal__btnEnter>
+                <a>Войти</a>
+              </S.Modal__btnEnter>
             </Link>
             <S.Modal__btnSignup onClick={handleRegistration}>
               <a>Зарегистрироваться</a>
             </S.Modal__btnSignup>
           </S.Modal__formLogin>
-          <S.Footer__container>
-            <S.Footer__Img>
-              <a href="" target="_self">
-                <S.Footer__img src="img/icon_01.png" alt="home" />
-              </a>
-            </S.Footer__Img>
-            <S.Footer__Img>
-              <a href="" target="_self">
-                <S.Footer__img src="img/icon_02.png" alt="home" />
-              </a>
-            </S.Footer__Img>
-            <S.Footer__Img>
-              <a href="" target="_self">
-                <S.Footer__img src="img/icon_03.png" alt="home" />
-              </a>
-            </S.Footer__Img>
-          </S.Footer__container>
+<FooterComp/>
         </S.Modal__block>
       </S.ContainerEnter>
     </S.Wrapper>

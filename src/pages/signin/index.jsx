@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
 import { GetUserData, LoginUser } from "../../api/api";
 import { useState } from "react";
+import { FooterComp } from "../../components/forms/footer";
 
 export const Signin = () => {
   const [email, setEmail] = useState("");
@@ -71,6 +72,7 @@ export const Signin = () => {
               </S.Modal__btnSignup>
             </Link>
           </S.Modal__formLogin>
+          <FooterComp/>
         </S.Modal__block>
       </S.ContainerEnter>
     </S.Wrapper>
