@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { GetAllAds } from "../../../api/api";
-import { AddNewAd } from "../../forms/addNewAt";
+import { GetAllAds } from "../../api/api";
+import { AddNewAd } from "../../components/forms/addNewAt";
 
-import * as A from "../../assets/style";
-import * as S from "../profile/profile.style";
-import { UsersAdComp } from "../../forms/UsersAd";
-import { ReactComponent as SpinAnimation } from '../../assets/Spin-0.9s-301px.svg';
-import { FooterComp } from "../../forms/footer";
+import * as A from "../../components/assets/style";
+import * as S from "../../components/pages/profile/profile.style";
+import { UsersAdComp } from "../../components/forms/UsersAd";
+import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../components/forms/footer";
 
 export const SellersProfilePage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -27,16 +27,16 @@ export const SellersProfilePage = () => {
   const [numberUser, setNumberUser] = useState(true);
   const [loading, setLoading] = useState(true);
 
-
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
 
   const handleButtonClick = () => {
-    if(userData){
-    setModalVisible(true);
-    }else{
-    navigate('/auth')}
+    if (userData) {
+      setModalVisible(true);
+    } else {
+      navigate("/auth");
+    }
   };
 
   useEffect(() => {
@@ -62,11 +62,11 @@ export const SellersProfilePage = () => {
   }, [itemUser]);
 
   if (loading) {
-    return( 
+    return (
       <A.animSet>
-      <SpinAnimation />
-    </A.animSet>
-    )
+        <SpinAnimation />
+      </A.animSet>
+    );
   }
 
   const ClickEnterAuth = () => {
@@ -166,7 +166,7 @@ export const SellersProfilePage = () => {
             </S.Maincontainer>
           </main>
 
-<FooterComp ButtonClick={handleButtonClick} />
+          <FooterComp ButtonClick={handleButtonClick} />
         </S.Container>
       </S.Wrapper>
     </S.StyledMain>
