@@ -1,17 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./profile.style";
-import * as A from "../../assets/style";
+import * as A from "../../components/assets/style";
 import { useEffect, useRef, useState } from "react";
 import {
   FetchUserAvatar,
   GetUserAd,
   GetUserData,
-} from "../../../api/api";
-import { EditUserData } from "../../forms/EditUserData";
-import { AddNewAd } from "../../forms/addNewAt";
-import { UsersAdComp } from "../../forms/UsersAd";
-import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
-import { FooterComp } from "../../forms/footer";
+} from "../../api/api";
+import { EditUserData } from "../../components/forms/EditUserData";
+import { AddNewAd } from "../../components/forms/addNewAt";
+import { UsersAdComp } from "../../components/forms/UsersAd/";
+import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../components/forms/footer";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();

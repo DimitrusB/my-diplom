@@ -4,7 +4,7 @@ import { GetAllAds } from "../../api/api";
 import { AddNewAd } from "../../components/forms/addNewAt";
 
 import * as A from "../../components/assets/style";
-import * as S from "../../components/pages/profile/profile.style";
+import * as S from "../profile/profile.style";
 import { UsersAdComp } from "../../components/forms/UsersAd";
 import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.9s-301px.svg";
 import { FooterComp } from "../../components/forms/footer";

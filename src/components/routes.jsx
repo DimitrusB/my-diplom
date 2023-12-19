@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { ProfilePage } from "./pages/profile";
+import { ProfilePage } from "../pages/profile";
 import { AdPage } from "../pages/adPage";
 import { SellersProfilePage } from "../pages/SallersProfile";
 import { NotFoundPage } from "../pages/404Page";

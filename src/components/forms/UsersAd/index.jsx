@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import * as S from "../../pages/profile/profile.style";
+import * as S from "../../../pages/profile/profile.style";
 
 export const UsersAdComp = ({ userAdEmpty, baseImagePath, userAd }) => {
   return (

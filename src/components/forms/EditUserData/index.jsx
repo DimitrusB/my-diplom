@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as S from "../../pages/profile/profile.style";
+import * as S from "../../../pages/profile/profile.style";
 import { ChangeUserData, GetUserData } from "../../../api/api";
 
 export const EditUserData = () => {
