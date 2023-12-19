@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { Signin } from "./pages/signin";
-import { Signup } from "./pages/signup";
 import { ProfilePage } from "./pages/profile";
 import { AdPage } from "./pages/adPage";
 import { SellersProfilePage } from "./pages/SallersProfile";
 import { NotFoundPage } from "../pages/404Page";
 import { Main } from "../pages/main";
+import { Signup } from "../pages/signup";
+import { Signin } from "../pages/signin";
 
 export const AppRoutes = () => {
   return (

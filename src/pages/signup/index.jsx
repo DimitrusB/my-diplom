@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./signup.style";
-import { registerUser } from "../../../api/api";
+import { registerUser } from "../../api/api";
 
 export const Signup = () => {
   const [email, setEmail] = useState("");

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./signin.style";
-import { GetUserData, LoginUser } from "../../../api/api";
+import { GetUserData, LoginUser } from "../../api/api";
 import { useState } from "react";
 
 export const Signin = () => {
