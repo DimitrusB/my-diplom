@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { GetAllAds, refreshToken } from "../../../api/api";
+import { useNavigate } from "react-router-dom";
+import { GetAllAds, refreshToken } from "../../api/api";
 import * as S from "./main.style";
-import * as A from "../../assets/style";
-import { UsersAdComp } from "../../forms/UsersAd";
-import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
-import { FooterComp } from "../../forms/footer";
+import * as A from "../../components/assets/style";
+import { UsersAdComp } from "../../components/forms/UsersAd";
+import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../components/forms/footer";
 
 export const Main = () => {
   const navigate = useNavigate();
