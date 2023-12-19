@@ -1,17 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as S from "./adPage.style";
-import * as A from "../../assets/style";
-import {
-  deleteAd,
-  GetAdsByID,
-  GetAllReview,
-} from "../../../api/api";
+import * as A from "../../components/assets/style";
+import { deleteAd, GetAdsByID, GetAllReview } from "../../api/api";
 import { useEffect, useState } from "react";
-import { AddNewAd } from "../../forms/addNewAt";
-import { ReactComponent as SpinAnimation } from "../../assets/Spin-0.9s-301px.svg";
-import { FooterComp } from "../../forms/footer";
-import { ReviewsComp } from "../../forms/reviews";
-import { EditMyAds } from "../../forms/editMyAds";
+import { AddNewAd } from "../../components/forms/addNewAt";
+import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.9s-301px.svg";
+import { FooterComp } from "../../components/forms/footer";
+import { ReviewsComp } from "../../components/forms/reviews";
+import { EditMyAds } from "../../components/forms/editMyAds";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -29,7 +25,6 @@ export const AdPage = () => {
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
 
-  
   const handleButtonViewPhone = () => {
     setNumberUser(false);
   };
@@ -53,7 +48,6 @@ export const AdPage = () => {
   const handleButtonReview = () => {
     setModalReview(true);
   };
-
 
   useEffect(() => {
     setLoading(true);
