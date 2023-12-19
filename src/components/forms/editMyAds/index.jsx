@@ -186,16 +186,15 @@ export const EditMyAds = ({
                 <S.Form__newArt__input_price
                   type="text"
                   name="price"
-                  id="formName"
                   onChange={(e) => setPrice(e.target.value)}
                   onBlur={handleBlur}
                   value={price}
                 />
-                <S.Form__newArt__input_price_cover></S.Form__newArt__input_price_cover>
-                <p style={{ color: "red" }}>
+                <S.Form__newArt__input_price_cover>&#8381;</S.Form__newArt__input_price_cover>
+              </S.Form__NewArt_block_price>
+              <p style={{ color: "red" }}>
                   {errorPrice ? "Должно быть число" : ""}
                 </p>
-              </S.Form__NewArt_block_price>
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
                 Сохранить
               </S.Form__newArt__btn_pub>

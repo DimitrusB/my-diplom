@@ -474,19 +474,24 @@ export const Form__newArt_img_cover = styled.div`
 `;
 
 export const Form__newArt__input_price_cover = styled.div`
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  position: absolute;
+  bottom: 13px;
+  left: 165px;
+  z-index: 0;
+  background-color: #ffffff;
+
   @media screen and (max-width: 600px) {
     width: 21px;
     height: 21px;
     font-size: 14px;
     line-height: 21px;
-    bottom: 9px;
     left: auto;
     right: 18px;
-
-    &::after {
-      font-size: 14px;
-      line-height: 21px;
-    }
   }
 `;
 
@@ -497,10 +502,10 @@ export const Form__newArt__input_price = styled.input`
   border-radius: 6px;
   font-size: 16px;
   line-height: 1;
-
-  border-radius: 30px;
-  border: 1px solid #d9d9d9;
-
+  width: 200px;
+  height: 50px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   background: #fff;
 
   &::-webkit-input-placeholder {
@@ -541,6 +546,8 @@ export const Form__newArt__input_price = styled.input`
 
   @media screen and (max-width: 600px) {
     width: 100%;
+    border-radius: 30px;
+    border: 1px solid #d9d9d9;
 
     &::-webkit-input-placeholder {
       font-size: 14px;
