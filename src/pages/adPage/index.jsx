@@ -8,6 +8,8 @@ import { ReactComponent as SpinAnimation } from "../../components/assets/Spin-0.
 import { FooterComp } from "../../components/forms/footer";
 import { ReviewsComp } from "../../components/forms/reviews";
 import { EditMyAds } from "../../components/forms/editMyAds";
+import { CustomModalComponent } from "../../components/forms/modalPhoto/modal";
+import Modal from "react-modal";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -24,6 +26,20 @@ export const AdPage = () => {
   const [comments, setComments] = useState(true);
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  useEffect(() => {
+    Modal.setAppElement("#root"); // Здесь '#root' - это селектор вашего корневого элемента приложения.
+  }, []);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedImage(values.images[0].url);
+  };
 
   const handleButtonViewPhone = () => {
     setNumberUser(false);
@@ -67,6 +83,34 @@ export const AdPage = () => {
       })
       .finally(() => setLoading(false));
   }, [itemId]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleButtonClickForward = () => {
+    if (currentIndex < values.images.length - 1) {
+      const nextIndex = currentIndex + 1;
+      const nextImage = values.images[nextIndex].url;
+      setSelectedImage(nextImage);
+      setCurrentIndex(nextIndex);
+    } else {
+      setSelectedImage(values.images[0].url);
+      setCurrentIndex(0);
+    }
+  };
+
+  const handleButtonClickBack = () => {
+    if (currentIndex > 0) {
+      const nextIndex = currentIndex - 1;
+      const nextImage = values.images[nextIndex].url;
+      setSelectedImage(nextImage);
+      setCurrentIndex(nextIndex);
+    } else {
+      const nextIndex = values.images.length - 1;
+      const nextImage = values.images[nextIndex].url;
+      setSelectedImage(nextImage);
+      setCurrentIndex(nextIndex);
+    }
+  };
 
   const handleDeleteAd = () => {
     deleteAd(itemId);
@@ -186,12 +230,19 @@ export const AdPage = () => {
             <S.Artic__content>
               <S.Article__left>
                 <S.Article__fillImg>
-                  <S.Article__img>
+                  <S.Article__img onClick={openModal}>
                     <img
                       src={selectedImage ? baseImagePath + selectedImage : ""}
                       alt="Selected ad"
                     />{" "}
                   </S.Article__img>
+                  <CustomModalComponent
+                    isOpen={modalIsOpen}
+                    onClose={closeModal}
+                    imageUrl={baseImagePath + selectedImage}
+                    next={handleButtonClickForward}
+                    back={handleButtonClickBack}
+                  />
 
                   <S.Article__imgBar>
                     {values &&

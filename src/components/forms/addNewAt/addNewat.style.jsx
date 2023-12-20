@@ -15,7 +15,7 @@ export const Container__bg = styled.div`
   max-width: 100%;
   height: 100vh;
   margin: 0 auto;
-  background-color: rgb(53 56 59 / 47%);
+  background-color: rgb(225 223 223 / 75%);
 `;
 
 export const Modal__block = styled.div`
