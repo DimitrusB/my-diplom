@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+// import { Swiper, SwiperSlide } from 'swiper/react'; // Добавляем Swiper для свайпа фото
+// import 'swiper/swiper.scss'; // Подключаем стили Swiper
 
 const ModalWrapper = styled.div`
   /* Стили для модального окна */
@@ -21,6 +23,7 @@ const ModalContent = styled.div`
     max-height: 100%;
     -webkit-user-select: none;
     user-select: none;
+    justify-content: center;
 
   }
   img{
@@ -44,16 +47,17 @@ button{
       }
 }
 
+  @media screen and (max-width: 600px) {
+    img {
+      width: 100%; 
+      height: auto; 
+    }
 
+    button {
+      width: 40px; 
+      height: 50px; 
+    }
   }
-  @media screen and (max-width: 600px)
-
- img {
-    width: 320px;
-    height: 320px;
-    display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
 }
 `;
 
@@ -88,8 +92,8 @@ export const CustomModalComponent = ({
               <path
                 d="M338 419L175 256L338 93"
                 stroke="black"
-                stroke-width="24"
-                stroke-linecap="round"
+                strokeWidth="24"
+                strokeLinecap="round"
               />
             </svg>
           </button>
@@ -105,8 +109,8 @@ export const CustomModalComponent = ({
               <path
                 d="M175 419L338 256L175 93"
                 stroke="black"
-                stroke-width="24"
-                stroke-linecap="round"
+                strokeWidth="24"
+                strokeLinecap="round"
               />
             </svg>
           </button>
