@@ -10,6 +10,7 @@ import { ReviewsComp } from "../../components/forms/reviews";
 import { EditMyAds } from "../../components/forms/editMyAds";
 import { CustomModalComponent } from "../../components/forms/modalPhoto/modal";
 import Modal from "react-modal";
+import { useSwipeable } from "react-swipeable";
 
 export const AdPage = () => {
   const { itemId } = useParams();
@@ -27,6 +28,13 @@ export const AdPage = () => {
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleButtonClickForward(),
+    onSwipedRight: () => handleButtonClickBack(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true, // Если нужно, чтобы работало и на десктопе с мышью
+  });
 
   useEffect(() => {
     Modal.setAppElement("#root"); // Здесь '#root' - это селектор вашего корневого элемента приложения.
@@ -143,6 +151,18 @@ export const AdPage = () => {
     }
   };
 
+  const handleClick = (e) => {
+    const target = e.target;
+    if (
+      e.nativeEvent.offsetX >= 32 &&
+      e.nativeEvent.offsetX <= 55 &&
+      e.nativeEvent.offsetY >= 24 &&
+      e.nativeEvent.offsetY <= 47
+    ) {
+      navigate("/");
+    }
+  };
+
   const commentCount = comments.length;
   let commentString = "";
   if (commentCount === undefined) {
@@ -229,12 +249,12 @@ export const AdPage = () => {
           <S.Main__artic>
             <S.Artic__content>
               <S.Article__left>
-                <S.Article__fillImg>
-                  <S.Article__img onClick={openModal}>
+                <S.Article__fillImg onClick={handleClick}>
+                  <S.Article__img {...handlers} onClick={openModal}>
                     <img
                       src={selectedImage ? baseImagePath + selectedImage : ""}
                       alt="Selected ad"
-                    />{" "}
+                    />
                   </S.Article__img>
                   <CustomModalComponent
                     isOpen={modalIsOpen}
@@ -261,11 +281,12 @@ export const AdPage = () => {
                   </S.Article__imgBar>
 
                   <S.Article__imgBarMob>
-                    <S.imgBarMob__circle_active></S.imgBarMob__circle_active>
-                    <S.imgBarMob__circle></S.imgBarMob__circle>
-                    <S.imgBarMob__circle></S.imgBarMob__circle>
-                    <S.imgBarMob__circle></S.imgBarMob__circle>
-                    <S.imgBarMob__circle></S.imgBarMob__circle>
+                    {values.images.map((item, index) => (
+                      <S.imgBarMob__circle
+                        key={index}
+                        className={index === currentIndex ? "active" : ""}
+                      ></S.imgBarMob__circle>
+                    ))}
                   </S.Article__imgBarMob>
                 </S.Article__fillImg>
               </S.Article__left>

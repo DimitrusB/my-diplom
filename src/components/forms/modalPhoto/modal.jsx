@@ -1,8 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-// import { Swiper, SwiperSlide } from 'swiper/react'; // Добавляем Swiper для свайпа фото
-// import 'swiper/swiper.scss'; // Подключаем стили Swiper
 
 const ModalWrapper = styled.div`
   /* Стили для модального окна */

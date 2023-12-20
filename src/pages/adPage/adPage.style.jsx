@@ -361,14 +361,6 @@ export const Article__img = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    width: 100%;
-    min-width: 320px;
-    height: auto;
-    min-height: 320px;
-    margin: 0 0px;
-
-    
-  img {
     display: flex;
     width: 100%;
     min-width: 320px;
@@ -376,9 +368,13 @@ export const Article__img = styled.div`
     min-height: 320px;
     margin: 0 0px;
     justify-content: center;
-  }
-  }
 
+    img {
+      width: 320px;
+      height: 320px;
+      margin: 0 0px;
+    }
+  }
 `;
 
 export const Article__imgBarMob = styled.div`
@@ -396,7 +392,7 @@ export const Article__imgBarMob = styled.div`
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 `;
 
@@ -602,7 +598,10 @@ export const imgBarMob__circle = styled.div`
     height: 8px;
     border-radius: 8px;
     border: 1px solid #fff;
-    background-color: #f0f0f0;
+
+    &.active {
+      background: #fff;
+    }
   }
 `;
 
