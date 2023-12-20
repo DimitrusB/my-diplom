@@ -369,11 +369,13 @@ export const Article__img = styled.div`
 
     
   img {
-    width: 320px;
-    height: 320px;
-    display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    display: flex;
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    min-height: 320px;
+    margin: 0 0px;
+    justify-content: center;
   }
   }
 
