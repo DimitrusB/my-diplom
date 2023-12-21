@@ -20,7 +20,7 @@ export const Container = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 100%;
     min-width: 320px;
     padding: 0 0px;
@@ -30,7 +30,7 @@ export const Container = styled.div`
 export const Header = styled.header`
   background-color: #009ee4;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     padding: 0 20px;
     width: 100%;
     height: 55px;
@@ -59,7 +59,7 @@ export const Header__nav = styled.nav`
   -ms-flex-pack: end;
   justify-content: end;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     height: 55px;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
@@ -71,7 +71,7 @@ export const Header__nav = styled.nav`
 export const Header__Logo = styled.div`
   display: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: block;
   }
 `;
@@ -92,7 +92,7 @@ export const Header__BtnLk = styled.button`
     border: 1px solid #ffffff;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
@@ -112,13 +112,13 @@ export const Header__BtnputAd = styled.button`
     border: 1px solid #ffffff;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
 
 export const Logo__MobLink = styled.div`
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: block;
     width: 32px;
     height: 32px;
@@ -126,7 +126,7 @@ export const Logo__MobLink = styled.div`
 `;
 
 export const Logo__MobImg = styled.img`
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 32px;
     height: auto;
     display: block;
@@ -140,7 +140,7 @@ export const Maincontainer = styled.div`
   margin: 0 auto;
   padding: 0px 10px 79px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     padding: 0 20px 0;
   }
 `;
@@ -160,7 +160,7 @@ export const Main__Menu = styled.div`
   width: 100%;
   padding: 31px 10px 64px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
@@ -201,7 +201,7 @@ export const Main__artic = styled.div`
   margin: 0 auto;
   padding: 0 5px 70px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     max-width: 1178px;
     width: 100%;
     padding: 55px 0 0px;
@@ -217,7 +217,7 @@ export const Main__title = styled.h3`
   font-weight: 500;
   color: #000000;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     margin-bottom: 14px;
     padding: 0;
   }
@@ -228,7 +228,7 @@ export const Main__content = styled.div`
   width: 100%;
   padding: 0 5px 117px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 100%;
     margin: 0 auto;
     padding: 0 0 84px;
@@ -252,7 +252,7 @@ export const Artic__content = styled.div`
   -ms-flex-pack: center;
   justify-content: start;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -282,7 +282,7 @@ export const Article__fillImg = styled.div`
   -ms-flex-align: center;
   align-items: center;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     max-width: 100%;
     width: 100%;
     overflow: hidden;
@@ -327,7 +327,7 @@ export const Article__left = styled.div`
     margin-right: 20px;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     max-width: 100%;
     width: 100%;
     min-width: 320px;
@@ -360,7 +360,7 @@ export const Article__img = styled.div`
     object-fit: cover;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: flex;
     width: 100%;
     min-width: 320px;
@@ -380,7 +380,7 @@ export const Article__img = styled.div`
 export const Article__imgBarMob = styled.div`
   display: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: block;
     width: 68px;
     height: 8px;
@@ -415,7 +415,7 @@ export const Article__imgBar = styled.div`
   overflow: hidden;
   margin-left: -5px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;
@@ -440,7 +440,7 @@ export const Article__imgBarDiv = styled.div`
 export const Article__right = styled.div`
   max-width: 621px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     max-width: 100%;
     width: 100%;
     padding: 0 20px;
@@ -460,7 +460,7 @@ export const Article__block = styled.div`
 export const Article__title = styled.h3`
   margin-bottom: 10px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     margin-bottom: 10px;
   }
 `;
@@ -468,7 +468,7 @@ export const Article__title = styled.h3`
 export const Article__info = styled.div`
   margin-bottom: 34px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     margin-bottom: 20px;
   }
 `;
@@ -479,7 +479,7 @@ export const Article__date = styled.p`
   color: #5f5f5f;
   margin-bottom: 4px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 14px;
     line-height: 17px;
     color: #5f5f5f;
@@ -493,7 +493,7 @@ export const Article__city = styled.p`
   color: #5f5f5f;
   margin-bottom: 4px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 14px;
     line-height: 17px;
     color: #5f5f5f;
@@ -506,7 +506,7 @@ export const Article__link = styled.a`
   line-height: 21px;
   color: #009ee4;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 14px;
     line-height: 19px;
     color: #009ee4;
@@ -519,7 +519,7 @@ export const Article__price = styled.p`
   font-weight: 700;
   margin-bottom: 20px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 18px;
     line-height: 25px;
     font-weight: 700;
@@ -530,7 +530,7 @@ export const Article__btnDiv = styled.div`
   display: flex;
   gap: 10px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     flex-direction: column;
   }
 `;
@@ -559,7 +559,7 @@ export const Article__btn = styled.button`
     line-height: 150%; /* 24px */
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 100%;
     height: 57px;
     font-size: 14px;
@@ -586,14 +586,14 @@ export const Article__author = styled.div`
   -ms-flex-align: start;
   align-items: flex-start;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     margin-top: 30px;
     margin-bottom: 30px;
   }
 `;
 
 export const imgBarMob__circle = styled.div`
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 8px;
     height: 8px;
     border-radius: 8px;
@@ -606,7 +606,7 @@ export const imgBarMob__circle = styled.div`
 `;
 
 export const imgBarMob__circle_active = styled.div`
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     width: 8px;
     height: 8px;
     border-radius: 8px;
@@ -641,7 +641,7 @@ export const Author__name = styled.p`
   font-weight: 600;
   color: #009ee4;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 18px;
     line-height: 23px;
     font-weight: 600;
@@ -653,7 +653,7 @@ export const Author__about = styled.p`
   line-height: 32px;
   color: #5f5f5f;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     font-size: 14px;
     line-height: 28px;
   }
