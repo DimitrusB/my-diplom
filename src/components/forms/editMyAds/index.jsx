@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { deleteImages, editAds } from "../../../api/api";
+import { addNewImage, deleteImages, editAds } from "../../../api/api";
 import * as S from "./editMyAds.style";
 
 export const EditMyAds = ({
@@ -15,7 +15,7 @@ export const EditMyAds = ({
   const [title, setTitle] = useState(titleAd);
   const [description, setDescription] = useState(descAd);
   const [price, setPrice] = useState(priceAd);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState();
   const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
@@ -27,15 +27,10 @@ export const EditMyAds = ({
     useRef(null),
     useRef(null),
   ];
-
   const handleFileChange = (event, buttonIndex) => {
-    const files = event.target.files;
-    const newFiles = Array.from(files).slice(0, 5);
-
-    if (selectedFiles.length + newFiles.length <= 5) {
-      setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    } else {
-      console.log("Превышено максимальное количество файлов (5).");
+    const newFile = event.target.files[0];
+    if (newFile) {
+      setSelectedFiles([newFile]);
     }
   };
 
@@ -86,9 +81,32 @@ export const EditMyAds = ({
     }
   };
 
-const handleDeletePhoto =(index , imageid) =>{
-  deleteImages(itemId, imageid )
-}
+  const handleDeletePhoto = (index, imageid) => {
+    try {
+      deleteImages(itemId, imageid);
+      console.log("saccesful");
+    } catch (error) {
+      console.error(
+        "Error updating user data:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  const handleAddPhoto = async () => {
+    if (selectedFiles) {
+      try {
+        await addNewImage(itemId, selectedFiles[0]);
+        console.log(selectedFiles);
+        console.log("Successful");
+      } catch (error) {
+        console.error(
+          "Error updating user data:",
+          error.response?.data || error.message
+        );
+      }
+    }
+  };
 
   const handleBlur = () => {
     setErrorPrice(false);
@@ -166,10 +184,11 @@ const handleDeletePhoto =(index , imageid) =>{
                   {editmap.map((ads, index) => (
                     <S.Form__newArt_img
                       key={index}
-                      // onClick={() => inputRefs[index].current.click()}
+                      onClick={() => inputRefs[index].current.click()}
                     >
                       <div>
                         <input
+                          multiple
                           type="file"
                           ref={inputRefs[index]}
                           style={{ display: "none" }}
@@ -181,7 +200,7 @@ const handleDeletePhoto =(index , imageid) =>{
                       </div>
                       <S.div__img_but>
                         <img src={baseImagePath + ads.url} alt="" />
-                        <div onClick={() =>handleDeletePhoto(index, ads.url)}>
+                        <div onClick={() => handleDeletePhoto(index, ads.url)}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
@@ -223,6 +242,7 @@ const handleDeletePhoto =(index , imageid) =>{
               <p style={{ color: "red" }}>
                 {errorPrice ? "Должно быть число" : ""}
               </p>
+              <button onClick={handleAddPhoto}>добавить</button>
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
                 Сохранить
               </S.Form__newArt__btn_pub>
