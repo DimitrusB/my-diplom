@@ -330,6 +330,35 @@ export const addNewAdwithPhoto = async (newData) => {
   }
 };
 
+export const deleteImages = async (idAd, file_url) => {
+  const url = `${reqUrl}/ads/${idAd}/image?file_url=${file_url}`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (response.status === 401) {
+      await refreshToken();
+      return deleteImages(idAd, file_url);
+    }
+
+    if (!response.ok) {
+      console.error("Error adding new review:", response.status);
+      return null;
+    }
+    return console.log("Delete image successfully");
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+};
+
 export const addNewReview = async (idReview, newReview) => {
   const url = `${reqUrl}/ads/${idReview}/comments`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
@@ -354,6 +383,8 @@ export const addNewReview = async (idReview, newReview) => {
       console.error("Error adding new review:", response.status);
       return null;
     }
+    const data = await response.json();
+    console.log("Response from server:", data);
   } catch (error) {
     console.error("Error during adding new review:", error.message);
     throw error;
@@ -371,7 +402,7 @@ export const editAds = async (newData, itemID) => {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title: title,

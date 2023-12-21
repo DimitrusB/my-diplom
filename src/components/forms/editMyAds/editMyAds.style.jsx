@@ -615,3 +615,13 @@ export const Form__NewArt_block_price = styled.div`
     color: #000000;
   }
 `;
+
+export const div__img_but = styled.div`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+align-items: center;
+position: fixed;
+align-content: center;
+gap: 10px;
+`

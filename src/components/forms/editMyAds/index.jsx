@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { editAds } from "../../../api/api";
+import { deleteImages, editAds } from "../../../api/api";
 import * as S from "./editMyAds.style";
 
 export const EditMyAds = ({
@@ -86,6 +86,10 @@ export const EditMyAds = ({
     }
   };
 
+const handleDeletePhoto =(index , imageid) =>{
+  deleteImages(itemId, imageid )
+}
+
   const handleBlur = () => {
     setErrorPrice(false);
     setErrorData(false);
@@ -162,7 +166,7 @@ export const EditMyAds = ({
                   {editmap.map((ads, index) => (
                     <S.Form__newArt_img
                       key={index}
-                      onClick={() => inputRefs[index].current.click()}
+                      // onClick={() => inputRefs[index].current.click()}
                     >
                       <div>
                         <input
@@ -175,7 +179,29 @@ export const EditMyAds = ({
                           <p>{selectedFiles[index].name}</p>
                         )}
                       </div>
-                      <img src={baseImagePath + ads.url} alt="" />
+                      <S.div__img_but>
+                        <img src={baseImagePath + ads.url} alt="" />
+                        <div onClick={() =>handleDeletePhoto(index, ads.url)}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 43 43"
+                            fill="none"
+                          >
+                            <path
+                              d="M31.8193 10.6066L10.6061 31.8198"
+                              stroke="#6e6b6b"
+                              strokeWidth="2"
+                            />
+                            <path
+                              d="M31.8193 31.8198L10.6061 10.6066"
+                              stroke="#6e6b6b"
+                              strokeWidth="2"
+                            />
+                          </svg>
+                        </div>
+                      </S.div__img_but>
                       <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     </S.Form__newArt_img>
                   ))}
@@ -190,11 +216,13 @@ export const EditMyAds = ({
                   onBlur={handleBlur}
                   value={price}
                 />
-                <S.Form__newArt__input_price_cover>&#8381;</S.Form__newArt__input_price_cover>
+                <S.Form__newArt__input_price_cover>
+                  &#8381;
+                </S.Form__newArt__input_price_cover>
               </S.Form__NewArt_block_price>
               <p style={{ color: "red" }}>
-                  {errorPrice ? "Должно быть число" : ""}
-                </p>
+                {errorPrice ? "Должно быть число" : ""}
+              </p>
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
                 Сохранить
               </S.Form__newArt__btn_pub>
