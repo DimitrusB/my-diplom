@@ -33,7 +33,7 @@ export const AdPage = () => {
     onSwipedLeft: () => handleButtonClickForward(),
     onSwipedRight: () => handleButtonClickBack(),
     preventDefaultTouchmoveEvent: true,
-    trackMouse: false, 
+    trackMouse: false,
   });
 
   useEffect(() => {
@@ -41,8 +41,8 @@ export const AdPage = () => {
   }, []);
 
   const openModal = () => {
-    if (window.innerWidth > 600 ){
-    setModalIsOpen(true);
+    if (window.innerWidth > 600) {
+      setModalIsOpen(true);
     }
   };
 
@@ -155,12 +155,14 @@ export const AdPage = () => {
 
   const handleClick = (e) => {
     const target = e.target;
-    if (window.innerWidth < 600 &&
+    if (
+      window.innerWidth < 600 &&
       e.nativeEvent.offsetX >= 32 &&
       e.nativeEvent.offsetX <= 55 &&
       e.nativeEvent.offsetY >= 24 &&
       e.nativeEvent.offsetY <= 47
-    ) {console.log('сработал');
+    ) {
+      console.log("сработал");
       navigate("/");
     }
   };
