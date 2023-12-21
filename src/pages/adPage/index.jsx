@@ -41,10 +41,11 @@ export const AdPage = () => {
   }, []);
 
   const openModal = () => {
-    if (window.innerWidth > 600) {
+    if (window.innerWidth > 600 && values.images.length !== 0) {
       setModalIsOpen(true);
     }
   };
+
 
   const closeModal = () => {
     setModalIsOpen(false);
@@ -162,7 +163,6 @@ export const AdPage = () => {
       e.nativeEvent.offsetY >= 24 &&
       e.nativeEvent.offsetY <= 47
     ) {
-      console.log("сработал");
       navigate("/");
     }
   };
