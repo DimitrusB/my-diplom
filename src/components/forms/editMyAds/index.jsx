@@ -11,7 +11,6 @@ export const EditMyAds = ({
   editmap,
   baseImagePath,
 }) => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
   const [title, setTitle] = useState(titleAd);
   const [description, setDescription] = useState(descAd);
   const [price, setPrice] = useState(priceAd);
@@ -20,11 +19,8 @@ export const EditMyAds = ({
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
   const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
+  const [previewImage, setPreviewImage] = useState(null);
 
-  useEffect(() => {
-    setImages(editmap?.map((ad) => ad.url) || []);
-  }, [editmap]);
-  
   console.log(images);
   const inputRefs = [
     useRef(null),
@@ -33,12 +29,36 @@ export const EditMyAds = ({
     useRef(null),
     useRef(null),
   ];
-  const handleFileChange = (event, buttonIndex) => {
+  const handleFileChange = async (event, buttonIndex) => {
     const newFile = event.target.files[0];
     if (newFile) {
-      setSelectedFiles([newFile]);
+      const updatedFiles = [newFile]; // Обновляем список файлов
+      setSelectedFiles(updatedFiles); // Обновляем состояние
+      try {
+        setPreviewImage(URL.createObjectURL(newFile));
+
+        const response = await addNewImage(itemId, updatedFiles[0]);
+        const imageUrl = response.imageUrl;
+        console.log(updatedFiles); // Выводим обновлённый список
+        console.log("Successful");
+
+        setImages((prevImages) => [...prevImages, imageUrl]);
+      } catch (error) {
+        console.error(
+          "Error updating user data:",
+          error.response?.data || error.message
+        );
+      }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
 
   const handleAddNewAd = async (e) => {
     e.preventDefault();
@@ -187,10 +207,10 @@ export const EditMyAds = ({
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                  {images.map((ads, index) => (
+                {[0,1,2,3,4].map((index) => (
                     <S.Form__newArt_img
                       key={index}
-                      onClick={() => inputRefs[index].current.click()}
+                      onClick={() => inputRefs[index]?.current?.click()}
                     >
                       <div>
                         <input
@@ -200,13 +220,23 @@ export const EditMyAds = ({
                           style={{ display: "none" }}
                           onChange={(event) => handleFileChange(event, index)}
                         />
-                        {selectedFiles && selectedFiles[index] && (
+                        {/* {selectedFiles && selectedFiles[index] && (
                           <p>{selectedFiles[index].name}</p>
-                        )}
+                        )} */}
                       </div>
                       <S.div__img_but>
                         <div>
-                        <img src={baseImagePath + images[index]} alt="" />
+          {(images && images[index]) ? (
+            <img
+              src={baseImagePath + images[index]}
+              alt={`Image ${index}`}
+            />
+          ) : (
+            <img
+              src={previewImage}
+              alt={`Image ${index}`}
+            />
+          )}
                         </div>
                         <div
                           onClick={() =>
@@ -254,7 +284,7 @@ export const EditMyAds = ({
               <p style={{ color: "red" }}>
                 {errorPrice ? "Должно быть число" : ""}
               </p>
-              <button onClick={handleAddPhoto}>добавить</button>
+              {/* <button onClick={handleAddPhoto}>добавить</button> */}
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
                 Сохранить
               </S.Form__newArt__btn_pub>

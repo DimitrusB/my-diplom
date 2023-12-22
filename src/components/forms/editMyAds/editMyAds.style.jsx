@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 
   @media screen and (max-width: 600px) {
     display: contents;
+    position: fixed;
   }
 `;
 
