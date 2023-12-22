@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   width: 100%;
   min-height: 100%;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
 
   @media screen and (max-width: 600px) {
     display: contents;
@@ -15,7 +15,7 @@ export const Container__bg = styled.div`
   max-width: 100%;
   height: 100vh;
   margin: 0 auto;
-  background-color: rgb(53 56 59 / 47%);
+  background-color: rgb(225 223 223 / 75%);
 `;
 
 export const Modal__block = styled.div`
@@ -617,11 +617,11 @@ export const Form__NewArt_block_price = styled.div`
 `;
 
 export const div__img_but = styled.div`
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-align-items: center;
-position: fixed;
-align-content: center;
-gap: 10px;
-`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  position: fixed;
+  align-content: center;
+  gap: 10px;
+`;

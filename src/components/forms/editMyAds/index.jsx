@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addNewImage, deleteImages, editAds } from "../../../api/api";
 import * as S from "./editMyAds.style";
 
@@ -15,11 +15,17 @@ export const EditMyAds = ({
   const [title, setTitle] = useState(titleAd);
   const [description, setDescription] = useState(descAd);
   const [price, setPrice] = useState(priceAd);
-  const [selectedFiles, setSelectedFiles] = useState();
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
+  const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
 
+  useEffect(() => {
+    setImages(editmap?.map((ad) => ad.url) || []);
+  }, [editmap]);
+  
+  console.log(images);
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -30,7 +36,7 @@ export const EditMyAds = ({
   const handleFileChange = (event, buttonIndex) => {
     const newFile = event.target.files[0];
     if (newFile) {
-      setSelectedFiles([newFile]); 
+      setSelectedFiles([newFile]);
     }
   };
 
@@ -81,35 +87,34 @@ export const EditMyAds = ({
     }
   };
 
-const handleDeletePhoto =(index , imageid) =>{
-  try {
-  deleteImages(itemId, imageid )
-  console.log('saccesful');
-  }
-  catch (error) {
-    console.error(
-      "Error updating user data:",
-      error.response?.data || error.message
-    );
-  }
-}
-
-const handleAddPhoto = async () => {
-  if (selectedFiles) {
+  const handleDeletePhoto = (index, imageid) => {
     try {
-      await addNewImage(itemId, selectedFiles[0]);
-      console.log(selectedFiles);
-      console.log('Successful');
+      deleteImages(itemId, imageid);
+      console.log("saccesful");
     } catch (error) {
       console.error(
         "Error updating user data:",
         error.response?.data || error.message
       );
     }
-  }
-};
+  };
 
-const handleBlur = () => {
+  const handleAddPhoto = async () => {
+    if (selectedFiles) {
+      try {
+        await addNewImage(itemId, selectedFiles[0]);
+        console.log(selectedFiles);
+        console.log("Successful");
+      } catch (error) {
+        console.error(
+          "Error updating user data:",
+          error.response?.data || error.message
+        );
+      }
+    }
+  };
+
+  const handleBlur = () => {
     setErrorPrice(false);
     setErrorData(false);
     setErrorDataDesk(false);
@@ -182,14 +187,14 @@ const handleBlur = () => {
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                  {editmap.map((ads, index) => (
+                  {images.map((ads, index) => (
                     <S.Form__newArt_img
                       key={index}
                       onClick={() => inputRefs[index].current.click()}
                     >
                       <div>
                         <input
-                        multiple
+                          multiple
                           type="file"
                           ref={inputRefs[index]}
                           style={{ display: "none" }}
@@ -200,8 +205,14 @@ const handleBlur = () => {
                         )}
                       </div>
                       <S.div__img_but>
-                        <img src={baseImagePath + ads.url} alt="" />
-                        <div onClick={() =>handleDeletePhoto(index, ads.url)}>
+                        <div>
+                        <img src={baseImagePath + images[index]} alt="" />
+                        </div>
+                        <div
+                          onClick={() =>
+                            handleDeletePhoto(index, images[index])
+                          }
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
