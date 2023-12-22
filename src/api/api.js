@@ -262,6 +262,41 @@ export const addNewAd = async (newData) => {
   }
 };
 
+export const addNewImage = async (idItem, file) => {
+  const url = `${reqUrl}/ads/${idItem}/image`;
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData, 
+    });
+
+    if (response.status === 401) {
+      await refreshToken();
+      return addNewImage(idItem, file);
+    }
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error("Error response body:", errorBody);
+      throw new Error(`Error from server: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Image upload response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error during image upload:", error);
+    throw error; 
+  }
+};
+
 export const deleteAd = async (id) => {
   const url = `${reqUrl}/ads/${id}`;
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));

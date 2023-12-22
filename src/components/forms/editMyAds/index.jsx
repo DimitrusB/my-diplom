@@ -30,7 +30,7 @@ export const EditMyAds = ({
   const handleFileChange = (event, buttonIndex) => {
     const newFile = event.target.files[0];
     if (newFile) {
-      setSelectedFiles([newFile]);
+      setSelectedFiles([newFile]); 
     }
   };
 
@@ -81,34 +81,35 @@ export const EditMyAds = ({
     }
   };
 
-  const handleDeletePhoto = (index, imageid) => {
+const handleDeletePhoto =(index , imageid) =>{
+  try {
+  deleteImages(itemId, imageid )
+  console.log('saccesful');
+  }
+  catch (error) {
+    console.error(
+      "Error updating user data:",
+      error.response?.data || error.message
+    );
+  }
+}
+
+const handleAddPhoto = async () => {
+  if (selectedFiles) {
     try {
-      deleteImages(itemId, imageid);
-      console.log("saccesful");
+      await addNewImage(itemId, selectedFiles[0]);
+      console.log(selectedFiles);
+      console.log('Successful');
     } catch (error) {
       console.error(
         "Error updating user data:",
         error.response?.data || error.message
       );
     }
-  };
+  }
+};
 
-  const handleAddPhoto = async () => {
-    if (selectedFiles) {
-      try {
-        await addNewImage(itemId, selectedFiles[0]);
-        console.log(selectedFiles);
-        console.log("Successful");
-      } catch (error) {
-        console.error(
-          "Error updating user data:",
-          error.response?.data || error.message
-        );
-      }
-    }
-  };
-
-  const handleBlur = () => {
+const handleBlur = () => {
     setErrorPrice(false);
     setErrorData(false);
     setErrorDataDesk(false);
@@ -188,7 +189,7 @@ export const EditMyAds = ({
                     >
                       <div>
                         <input
-                          multiple
+                        multiple
                           type="file"
                           ref={inputRefs[index]}
                           style={{ display: "none" }}
@@ -200,7 +201,7 @@ export const EditMyAds = ({
                       </div>
                       <S.div__img_but>
                         <img src={baseImagePath + ads.url} alt="" />
-                        <div onClick={() => handleDeletePhoto(index, ads.url)}>
+                        <div onClick={() =>handleDeletePhoto(index, ads.url)}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
