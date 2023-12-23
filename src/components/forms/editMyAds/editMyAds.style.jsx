@@ -371,6 +371,7 @@ export const Form__newArt_p = styled.p`
 
 export const Form__newArt__bar_img = styled.div`
   width: 500px;
+  height: 160px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -622,7 +623,7 @@ export const div__img_but = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  position: fixed;
+  position: relative;
   align-content: center;
   gap: 10px;
 `;

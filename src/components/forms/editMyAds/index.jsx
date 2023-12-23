@@ -19,7 +19,7 @@ export const EditMyAds = ({
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
   const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState([]);
 
   console.log(images);
   const inputRefs = [
@@ -29,19 +29,26 @@ export const EditMyAds = ({
     useRef(null),
     useRef(null),
   ];
-  const handleFileChange = async (event, buttonIndex) => {
+  const handleFileChange = async (event, index) => {
     const newFile = event.target.files[0];
     if (newFile) {
-      const updatedFiles = [newFile]; // Обновляем список файлов
-      setSelectedFiles(updatedFiles); // Обновляем состояние
       try {
-        setPreviewImage(URL.createObjectURL(newFile));
 
-        const response = await addNewImage(itemId, updatedFiles[0]);
+        const newPreviewImages = [...previewImage];
+        newPreviewImages[index] = URL.createObjectURL(newFile);
+
+        setSelectedFiles((prevSelectedFiles) => {
+          const updatedSelectedFiles = [...prevSelectedFiles];
+          updatedSelectedFiles[index] = newFile;
+          return updatedSelectedFiles;
+        });
+
+        const response = await addNewImage(itemId, newFile); 
         const imageUrl = response.imageUrl;
-        console.log(updatedFiles); // Выводим обновлённый список
+        console.log(newFile);
         console.log("Successful");
 
+        setPreviewImage(newPreviewImages);
         setImages((prevImages) => [...prevImages, imageUrl]);
       } catch (error) {
         console.error(
@@ -54,11 +61,15 @@ export const EditMyAds = ({
 
   useEffect(() => {
     return () => {
-      if (previewImage) {
-        URL.revokeObjectURL(previewImage);
-      }
+      previewImage.forEach((previewImage) => {
+        if (previewImage) {
+          URL.revokeObjectURL(previewImage);
+        }
+      });
     };
   }, [previewImage]);
+
+  console.log(previewImage);
 
   const handleAddNewAd = async (e) => {
     e.preventDefault();
@@ -207,7 +218,7 @@ export const EditMyAds = ({
                   Фотографии товара<span>не более 5 фотографий</span>
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
-                {[0,1,2,3,4].map((index) => (
+                  {[0, 1, 2, 3, 4].map((index) => (
                     <S.Form__newArt_img
                       key={index}
                       onClick={() => inputRefs[index]?.current?.click()}
@@ -226,42 +237,80 @@ export const EditMyAds = ({
                       </div>
                       <S.div__img_but>
                         <div>
-          {(images && images[index]) ? (
-            <img
-              src={baseImagePath + images[index]}
-              alt={`Image ${index}`}
-            />
-          ) : (
-            <img
-              src={previewImage}
-              alt={`Image ${index}`}
-            />
-          )}
+                          {previewImage[index] ? (
+                            <>
+                              <img
+                                src={previewImage[index]}
+                                alt={`Preview ${index}`}
+                              />{" "}
+                              <div
+                                style={{ position: "relative", textAlign: "center" }}
+                                onClick={() =>
+                                  handleDeletePhoto(index, images[index])
+                                }
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  viewBox="0 0 43 43"
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M31.8193 10.6066L10.6061 31.8198"
+                                    stroke="#6e6b6b"
+                                    strokeWidth="2"
+                                  />
+                                  <path
+                                    d="M31.8193 31.8198L10.6061 10.6066"
+                                    stroke="#6e6b6b"
+                                    strokeWidth="2"
+                                  />
+                                </svg>
+                              </div>
+                            </>
+                          ) : images[index] ? (
+                            <>
+                              <img
+                                src={baseImagePath + images[index]}
+                                alt={`Image ${index}`}
+                              />
+                              <div
+                                style={{ position: "relative", textAlign: "center" }}
+                                onClick={() =>
+                                  handleDeletePhoto(index, images[index])
+                                }
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  viewBox="0 0 43 43"
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M31.8193 10.6066L10.6061 31.8198"
+                                    stroke="#6e6b6b"
+                                    strokeWidth="2"
+                                  />
+                                  <path
+                                    d="M31.8193 31.8198L10.6061 10.6066"
+                                    stroke="#6e6b6b"
+                                    strokeWidth="2"
+                                  />
+                                </svg>
+                              </div>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <div
+                          style={{ position: "relative" }}
                           onClick={() =>
                             handleDeletePhoto(index, images[index])
                           }
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 43 43"
-                            fill="none"
-                          >
-                            <path
-                              d="M31.8193 10.6066L10.6061 31.8198"
-                              stroke="#6e6b6b"
-                              strokeWidth="2"
-                            />
-                            <path
-                              d="M31.8193 31.8198L10.6061 10.6066"
-                              stroke="#6e6b6b"
-                              strokeWidth="2"
-                            />
-                          </svg>
-                        </div>
+                        ></div>
                       </S.div__img_but>
                       <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     </S.Form__newArt_img>
