@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { addNewImage, deleteImages, editAds } from "../../../api/api";
 import * as S from "./editMyAds.style";
+import { ReactComponent as DelButton } from "../../assets/delButton.svg";
+import { ReactComponent as CloseButton } from "../../assets/closeButton.svg";
 
 export const EditMyAds = ({
   onClose,
@@ -34,7 +36,6 @@ export const EditMyAds = ({
     const newFile = event.target.files[0];
     if (newFile) {
       try {
-
         const newPreviewImages = [...previewImage];
         newPreviewImages[index] = URL.createObjectURL(newFile);
 
@@ -44,7 +45,7 @@ export const EditMyAds = ({
           return updatedSelectedFiles;
         });
 
-        const response = await addNewImage(itemId, newFile); 
+        const response = await addNewImage(itemId, newFile);
         const imageUrl = response.imageUrl;
         console.log(newFile);
         console.log("Successful");
@@ -69,6 +70,14 @@ export const EditMyAds = ({
       });
     };
   }, [previewImage]);
+
+  const delPreviewImages = (event, index) => {
+    event.stopPropagation();
+    const newPreviewImages = [...previewImage]; 
+    URL.revokeObjectURL(newPreviewImages[index]); 
+    newPreviewImages.splice(index, 1); 
+    setPreviewImage(newPreviewImages); 
+  };
 
   console.log(previewImage);
 
@@ -109,7 +118,7 @@ export const EditMyAds = ({
     console.log(newAd);
     try {
       await editAds(newAd, itemId);
-      setShouldUpdateAds(true)
+      setShouldUpdateAds(true);
       onClose();
       console.log("User data updated successfully");
     } catch (error) {
@@ -120,19 +129,24 @@ export const EditMyAds = ({
     }
   };
 
-  const handleDeletePhoto = (index, imageid) => {
+  const handleDeletePhoto = async (event, index, imageId) => {
+    event.stopPropagation();
     try {
-      deleteImages(itemId, imageid);
-      console.log("saccesful");
+      await deleteImages(itemId, imageId);
+      console.log("successful");
+
+      setImages((currentImages) => currentImages.filter((_, i) => i !== index));
+
+      setPreviewImage((currentPreviewImages) =>
+        currentPreviewImages.filter((_, i) => i !== index)
+      );
     } catch (error) {
       console.error(
-        "Error updating user data:",
+        "Error deleting user image:",
         error.response?.data || error.message
       );
     }
   };
-
-
 
   const handleBlur = () => {
     setErrorPrice(false);
@@ -150,24 +164,7 @@ export const EditMyAds = ({
             </S.Modal__title>
             <S.Modal__btn_close>
               <S.Modal__btn_close_line onClick={onClose}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="43"
-                  height="43"
-                  viewBox="0 0 43 43"
-                  fill="none"
-                >
-                  <path
-                    d="M31.8193 10.6066L10.6061 31.8198"
-                    stroke="#D9D9D9"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M31.8193 31.8198L10.6061 10.6066"
-                    stroke="#D9D9D9"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <CloseButton />
               </S.Modal__btn_close_line>
             </S.Modal__btn_close>
             <S.Modal__form_newArt action="#">
@@ -233,29 +230,15 @@ export const EditMyAds = ({
                                 alt={`Preview ${index}`}
                               />{" "}
                               <div
-                                style={{ position: "relative", textAlign: "center" }}
-                                onClick={() =>
-                                  handleDeletePhoto(index, images[index])
+                                style={{
+                                  position: "relative",
+                                  textAlign: "center",
+                                }}
+                                onClick={(event) =>
+                                  delPreviewImages(event, index)
                                 }
                               >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 43 43"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M31.8193 10.6066L10.6061 31.8198"
-                                    stroke="#6e6b6b"
-                                    strokeWidth="2"
-                                  />
-                                  <path
-                                    d="M31.8193 31.8198L10.6061 10.6066"
-                                    stroke="#6e6b6b"
-                                    strokeWidth="2"
-                                  />
-                                </svg>
+                                <DelButton />
                               </div>
                             </>
                           ) : images[index] ? (
@@ -265,41 +248,21 @@ export const EditMyAds = ({
                                 alt={`Image ${index}`}
                               />
                               <div
-                                style={{ position: "relative", textAlign: "center" }}
-                                onClick={() =>
-                                  handleDeletePhoto(index, images[index])
+                                style={{
+                                  position: "relative",
+                                  textAlign: "center",
+                                }}
+                                onClick={(event) =>
+                                  handleDeletePhoto(event, index, images[index])
                                 }
                               >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 43 43"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M31.8193 10.6066L10.6061 31.8198"
-                                    stroke="#6e6b6b"
-                                    strokeWidth="2"
-                                  />
-                                  <path
-                                    d="M31.8193 31.8198L10.6061 10.6066"
-                                    stroke="#6e6b6b"
-                                    strokeWidth="2"
-                                  />
-                                </svg>
+                                <DelButton />
                               </div>
                             </>
                           ) : (
                             ""
                           )}
                         </div>
-                        <div
-                          style={{ position: "relative" }}
-                          onClick={() =>
-                            handleDeletePhoto(index, images[index])
-                          }
-                        ></div>
                       </S.div__img_but>
                       <S.Form__newArt_img_cover></S.Form__newArt_img_cover>
                     </S.Form__newArt_img>
@@ -322,7 +285,6 @@ export const EditMyAds = ({
               <p style={{ color: "red" }}>
                 {errorPrice ? "Должно быть число" : ""}
               </p>
-              {/* <button onClick={handleAddPhoto}>добавить</button> */}
               <S.Form__newArt__btn_pub onClick={handleAddNewAd}>
                 Сохранить
               </S.Form__newArt__btn_pub>
