@@ -132,20 +132,7 @@ export const EditMyAds = ({
     }
   };
 
-  const handleAddPhoto = async () => {
-    if (selectedFiles) {
-      try {
-        await addNewImage(itemId, selectedFiles[0]);
-        console.log(selectedFiles);
-        console.log("Successful");
-      } catch (error) {
-        console.error(
-          "Error updating user data:",
-          error.response?.data || error.message
-        );
-      }
-    }
-  };
+
 
   const handleBlur = () => {
     setErrorPrice(false);
