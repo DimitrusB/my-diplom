@@ -136,7 +136,7 @@ export const AdPage = () => {
     GetAllReview(itemId).then((data) => {
       setComments(data);
     });
-  }, [itemId]);
+  }, [itemId, comments]);
 
   if (loading) {
     return (
