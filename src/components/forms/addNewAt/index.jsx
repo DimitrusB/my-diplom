@@ -193,7 +193,9 @@ export const AddNewAd = ({ onClose }) => {
                   onChange={(e) => setPrice(e.target.value)}
                   onBlur={handleBlur}
                 />
-                <S.Form__newArt__input_price_cover>&#8381;</S.Form__newArt__input_price_cover>
+                <S.Form__newArt__input_price_cover>
+                  &#8381;
+                </S.Form__newArt__input_price_cover>
                 <p style={{ color: "red" }}>
                   {errorPrice ? "Должно быть число" : ""}
                 </p>

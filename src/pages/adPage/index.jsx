@@ -47,7 +47,6 @@ export const AdPage = () => {
     }
   };
 
-
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedImage(values.images[0].url);
@@ -94,7 +93,7 @@ export const AdPage = () => {
         console.error("Ошибка при получении данных:", error);
       })
       .finally(() => setLoading(false));
-      setShouldUpdate(false); // Сброс флага после обновления
+    setShouldUpdate(false); // Сброс флага после обновления
   }, [itemId, shouldUpdate]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -134,7 +133,6 @@ export const AdPage = () => {
     setSelectedImage(url);
   };
 
-
   const commentCount = comments.length;
   let commentString = "";
   if (commentCount === undefined) {
@@ -154,7 +152,7 @@ export const AdPage = () => {
       setComments(data);
       setShouldUpdate(false); // Сброс флага после обновления
     });
-  }, [itemId, shouldUpdate]); 
+  }, [itemId, shouldUpdate]);
 
   if (loading) {
     return (
@@ -184,8 +182,6 @@ export const AdPage = () => {
       navigate("/");
     }
   };
-
-
 
   return (
     <S.Wrapper>
