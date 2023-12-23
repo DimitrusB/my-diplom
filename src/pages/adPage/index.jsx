@@ -28,6 +28,7 @@ export const AdPage = () => {
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [shouldUpdateComments, setShouldUpdateComments] = useState(false);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleButtonClickForward(),
@@ -37,7 +38,7 @@ export const AdPage = () => {
   });
 
   useEffect(() => {
-    Modal.setAppElement("#root"); // Здесь '#root' - это селектор вашего корневого элемента приложения.
+    Modal.setAppElement("#root"); // Здесь '#root' - это селектор корневого элемента приложения.
   }, []);
 
   const openModal = () => {
@@ -132,11 +133,27 @@ export const AdPage = () => {
     setSelectedImage(url);
   };
 
+
+  const commentCount = comments.length;
+  let commentString = "";
+  if (commentCount === undefined) {
+    commentString = "";
+  } else if (commentCount === 1) {
+    commentString = `${commentCount} отзыв`;
+  } else if (commentCount >= 2 && commentCount <= 4) {
+    commentString = `${commentCount} отзыва`;
+  } else if (commentCount === 0) {
+    commentString = "Нет отзывов";
+  } else {
+    commentString = `${commentCount} отзывов`;
+  }
+
   useEffect(() => {
     GetAllReview(itemId).then((data) => {
       setComments(data);
+      setShouldUpdateComments(false); // Сброс флага после обновления
     });
-  }, [itemId, comments]);
+  }, [itemId, shouldUpdateComments]); 
 
   if (loading) {
     return (
@@ -167,19 +184,7 @@ export const AdPage = () => {
     }
   };
 
-  const commentCount = comments.length;
-  let commentString = "";
-  if (commentCount === undefined) {
-    commentString = "";
-  } else if (commentCount === 1) {
-    commentString = `${commentCount} отзыв`;
-  } else if (commentCount >= 2 && commentCount <= 4) {
-    commentString = `${commentCount} отзыва`;
-  } else if (commentCount === 0) {
-    commentString = "Нет отзывов";
-  } else {
-    commentString = `${commentCount} отзывов`;
-  }
+
 
   return (
     <S.Wrapper>
@@ -210,6 +215,7 @@ export const AdPage = () => {
           }
           baseImagePath={baseImagePath}
           itemId={itemId}
+          setShouldUpdateComments={setShouldUpdateComments}
         />
       )}
       <S.Container>

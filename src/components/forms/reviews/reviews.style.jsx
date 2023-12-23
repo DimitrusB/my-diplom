@@ -195,6 +195,7 @@ export const Modal__review = styled.div`
   height: 495px;
   flex-direction: column;
   gap: 30px;
+  overflow: auto;
 `;
 
 export const Form__newArt__block = styled.div`

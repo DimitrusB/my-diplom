@@ -3,7 +3,7 @@ import { addNewReview } from "../../../api/api";
 import * as S from "./reviews.style";
 import { useNavigate } from "react-router-dom";
 
-export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
+export const ReviewsComp = ({ onClose, reviews, setShouldUpdateComments, baseImagePath, itemId }) => {
   const navigate = useNavigate()
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [newReview, setNewReview] = useState("");
@@ -26,6 +26,7 @@ export const ReviewsComp = ({ onClose, reviews, baseImagePath, itemId }) => {
       try {
         await addNewReview(itemId, newReview);
         setNewReview("");
+        setShouldUpdateComments(true)
       } catch (error) {
         console.error("Ошибка при добавлении отзыва:", error);
       }
