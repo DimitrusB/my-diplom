@@ -28,7 +28,7 @@ export const AdPage = () => {
   const [isModalReview, setModalReview] = useState(false);
   const [isModalEditVisible, setModalEditVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [shouldUpdateComments, setShouldUpdateComments] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleButtonClickForward(),
@@ -94,7 +94,8 @@ export const AdPage = () => {
         console.error("Ошибка при получении данных:", error);
       })
       .finally(() => setLoading(false));
-  }, [itemId]);
+      setShouldUpdate(false); // Сброс флага после обновления
+  }, [itemId, shouldUpdate]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -151,9 +152,9 @@ export const AdPage = () => {
   useEffect(() => {
     GetAllReview(itemId).then((data) => {
       setComments(data);
-      setShouldUpdateComments(false); // Сброс флага после обновления
+      setShouldUpdate(false); // Сброс флага после обновления
     });
-  }, [itemId, shouldUpdateComments]); 
+  }, [itemId, shouldUpdate]); 
 
   if (loading) {
     return (
@@ -197,6 +198,7 @@ export const AdPage = () => {
           itemId={itemId}
           editmap={values.images}
           baseImagePath={baseImagePath}
+          setShouldUpdateAds={setShouldUpdate}
         />
       )}
       {isModalVisible && <AddNewAd onClose={() => setModalVisible(false)} />}
@@ -215,7 +217,7 @@ export const AdPage = () => {
           }
           baseImagePath={baseImagePath}
           itemId={itemId}
-          setShouldUpdateComments={setShouldUpdateComments}
+          setShouldUpdateComments={setShouldUpdate}
         />
       )}
       <S.Container>

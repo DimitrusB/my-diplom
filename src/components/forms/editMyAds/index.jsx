@@ -10,6 +10,7 @@ export const EditMyAds = ({
   itemId,
   editmap,
   baseImagePath,
+  setShouldUpdateAds,
 }) => {
   const [title, setTitle] = useState(titleAd);
   const [description, setDescription] = useState(descAd);
@@ -108,6 +109,7 @@ export const EditMyAds = ({
     console.log(newAd);
     try {
       await editAds(newAd, itemId);
+      setShouldUpdateAds(true)
       onClose();
       console.log("User data updated successfully");
     } catch (error) {
