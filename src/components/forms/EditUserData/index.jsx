@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as S from "../../../pages/profile/profile.style";
 import { ChangeUserData, GetUserData } from "../../../api/api";
 
-export const EditUserData = () => {
+export const EditUserData = ({setShouldUpdate}) => {
   const UserData = JSON.parse(localStorage.getItem("userData"));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -25,8 +25,6 @@ export const EditUserData = () => {
     e.preventDefault();
 
     const newUserData = {
-      // avatar: UserData.avatar,
-      // email: UserData.email,
       name,
       surname,
       phone,
@@ -40,7 +38,7 @@ export const EditUserData = () => {
       await ChangeUserData(newUserData);
       const updatedUserData = await GetUserData();
       localStorage.setItem("userData", JSON.stringify(updatedUserData));
-      window.location.reload();
+      setShouldUpdate(true);
       console.log("User data updated successfully");
     } catch (error) {
       console.error(

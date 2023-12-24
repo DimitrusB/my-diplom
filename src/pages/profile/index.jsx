@@ -25,6 +25,8 @@ export const ProfilePage = () => {
   const [userAdEmpty, setUserAdEmpty] = useState();
   const [avatarUrl, setAvatarUrl] = useState(savedUserData.avatar);
   const [loading, setLoading] = useState(true);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -75,7 +77,8 @@ export const ProfilePage = () => {
     };
 
     fetchData().finally(() => setLoading(false));
-  }, []);
+    setShouldUpdate(false);
+  }, [shouldUpdate]);
 
 
   const handleLogOut = () => {
@@ -169,7 +172,8 @@ export const ProfilePage = () => {
                           Заменить
                         </S.Settings__ChangePhoto>
                       </S.Settings__Left>
-                      <EditUserData />
+                      <EditUserData 
+                      setShouldUpdate={setShouldUpdate}/>
                     </S.Profile__Settings>
                   </S.Profile__Content>
                 </S.Main__Profile>

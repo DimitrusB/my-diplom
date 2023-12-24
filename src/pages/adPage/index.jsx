@@ -221,10 +221,12 @@ export const AdPage = () => {
           <S.Header__nav>
             <S.Header__Logo>
               <S.Logo__MobLink href="" target="_blank">
+              <Link to="/">
                 <S.Logo__MobImg
                   src={`${process.env.PUBLIC_URL}/img/logo-mob.png`}
                   alt="logo"
                 />
+                </Link>
               </S.Logo__MobLink>
             </S.Header__Logo>
             <S.Header__BtnputAd onClick={handleButtonClick}>
