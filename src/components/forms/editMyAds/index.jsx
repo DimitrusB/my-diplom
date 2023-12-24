@@ -17,12 +17,10 @@ export const EditMyAds = ({
   const [title, setTitle] = useState(titleAd);
   const [description, setDescription] = useState(descAd);
   const [price, setPrice] = useState(priceAd);
-  const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorPrice, setErrorPrice] = useState(false);
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
   const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
-  const [previewImage, setPreviewImage] = useState([]);
 
   console.log(images);
   const inputRefs = [
@@ -36,22 +34,9 @@ export const EditMyAds = ({
     const newFile = event.target.files[0];
     if (newFile) {
       try {
-        const newPreviewImages = [...previewImage];
-        newPreviewImages[index] = URL.createObjectURL(newFile);
-
-        setSelectedFiles((prevSelectedFiles) => {
-          const updatedSelectedFiles = [...prevSelectedFiles];
-          updatedSelectedFiles[index] = newFile;
-          return updatedSelectedFiles;
-        });
-
         const response = await addNewImage(itemId, newFile);
-        const imageUrl = response.imageUrl;
-        console.log(newFile);
+        setShouldUpdateAds(true);
         console.log("Successful");
-
-        setPreviewImage(newPreviewImages);
-        setImages((prevImages) => [...prevImages, imageUrl]);
       } catch (error) {
         console.error(
           "Error updating user data:",
@@ -60,26 +45,6 @@ export const EditMyAds = ({
       }
     }
   };
-
-  useEffect(() => {
-    return () => {
-      previewImage.forEach((previewImage) => {
-        if (previewImage) {
-          URL.revokeObjectURL(previewImage);
-        }
-      });
-    };
-  }, [previewImage]);
-
-  const delPreviewImages = (event, index) => {
-    event.stopPropagation();
-    const newPreviewImages = [...previewImage]; 
-    URL.revokeObjectURL(newPreviewImages[index]); 
-    newPreviewImages.splice(index, 1); 
-    setPreviewImage(newPreviewImages); 
-  };
-
-  console.log(previewImage);
 
   const handleAddNewAd = async (e) => {
     e.preventDefault();
@@ -112,8 +77,6 @@ export const EditMyAds = ({
       title,
       description,
       price,
-
-      files: selectedFiles,
     };
     console.log(newAd);
     try {
@@ -136,10 +99,6 @@ export const EditMyAds = ({
       console.log("successful");
 
       setImages((currentImages) => currentImages.filter((_, i) => i !== index));
-
-      setPreviewImage((currentPreviewImages) =>
-        currentPreviewImages.filter((_, i) => i !== index)
-      );
     } catch (error) {
       console.error(
         "Error deleting user image:",
@@ -217,31 +176,10 @@ export const EditMyAds = ({
                           style={{ display: "none" }}
                           onChange={(event) => handleFileChange(event, index)}
                         />
-                        {/* {selectedFiles && selectedFiles[index] && (
-                          <p>{selectedFiles[index].name}</p>
-                        )} */}
                       </div>
                       <S.div__img_but>
                         <div>
-                          {previewImage[index] ? (
-                            <>
-                              <img
-                                src={previewImage[index]}
-                                alt={`Preview ${index}`}
-                              />{" "}
-                              <div
-                                style={{
-                                  position: "relative",
-                                  textAlign: "center",
-                                }}
-                                onClick={(event) =>
-                                  delPreviewImages(event, index)
-                                }
-                              >
-                                <DelButton />
-                              </div>
-                            </>
-                          ) : images[index] ? (
+                          {images[index] ? (
                             <>
                               <img
                                 src={baseImagePath + images[index]}
