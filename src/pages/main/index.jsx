@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GetAllAds, refreshToken } from "../../api/api";
 import * as S from "./main.style";
 import * as A from "../../components/assets/style";
@@ -79,12 +79,14 @@ export const Main = () => {
           </S.Header>
           <main>
             <S.Main_search>
-              <S.Search__logoLink href="#" target="_blank">
+              <Link to="/">
+              <S.Search__logoLink title="На главную">
                 <S.Search__logoImg src="img/logo.png" alt="logo" />
               </S.Search__logoLink>
-              <S.Search__logoMobLink href="#" target="_blank">
+              <S.Search__logoMobLink>
                 <S.Search__logoMobImg src="img/logo-mob.png" alt="logo" />
               </S.Search__logoMobLink>
+              </Link>
               <S.Search__form onSubmit={handleSearchSubmit}>
                 <S.Search__text
                   type="search"

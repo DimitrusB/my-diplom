@@ -171,7 +171,7 @@ export const Maincontent = styled.div`
   }
 `;
 
-export const Search__logoMobLink = styled.a`
+export const Search__logoMobLink = styled.div`
   display: none;
 
   @media screen and (max-width: 590px) {
@@ -181,7 +181,7 @@ export const Search__logoMobLink = styled.a`
   }
 `;
 
-export const Search__logoLink = styled.a`
+export const Search__logoLink = styled.div`
   @media screen and (max-width: 590px) {
     display: none;
   }
