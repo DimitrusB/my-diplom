@@ -179,7 +179,7 @@ export const AdPage = () => {
       e.nativeEvent.offsetY >= 24 &&
       e.nativeEvent.offsetY <= 47
     ) {
-      navigate("/");
+      navigate(`/profileSellers/${values.user?.id}`);
     }
   };
 

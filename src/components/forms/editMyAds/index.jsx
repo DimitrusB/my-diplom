@@ -22,7 +22,6 @@ export const EditMyAds = ({
   const [errorDataDesk, setErrorDataDesk] = useState(false);
   const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
 
-  console.log(images);
   const inputRefs = [
     useRef(null),
     useRef(null),
