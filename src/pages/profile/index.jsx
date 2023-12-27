@@ -83,6 +83,7 @@ export const ProfilePage = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("userData");
+    localStorage.removeItem("accessToken");
     navigate("/");
   };
 

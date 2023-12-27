@@ -12,12 +12,20 @@ export const Signup = () => {
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [city, setCity] = useState("");
+  const [errorPassword, setErrorPassword] = useState(false);
+
+  const sanitizeInput = (input) => {
+    return input
+      .replace(/<script.*?>.*?<\/script>/gi, "")
+      .replace(/[^\w.@-А-Яа-яёЁ]/gi, "");
+  };
 
   const handleRegistration = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       console.error("Passwords do not match");
+      setErrorPassword(true);
       return;
     }
 
@@ -31,12 +39,10 @@ export const Signup = () => {
       city,
     };
 
-    console.log(userData);
-
     try {
       await registerUser(userData);
       console.log("Registration successful");
-      navigate('/auth')
+      navigate("/auth");
     } catch (error) {
       console.error(
         "Error during registration:",
@@ -68,55 +74,63 @@ export const Signup = () => {
             <S.Modal__input
               type="text"
               name="login"
-              placeholder="email"
+              placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(sanitizeInput(e.target.value))}
             />
             <S.Modal__input
               type="password"
               name="password"
               placeholder="Пароль"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(sanitizeInput(e.target.value))}
+              onBlur={() => setErrorPassword(false)}
             />
             <S.Modal__input
               type="password"
               name="confirm password"
               placeholder="Повторите пароль"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) =>
+                setConfirmPassword(sanitizeInput(e.target.value))
+              }
+              onBlur={() => setErrorPassword(false)}
             />
             <S.Modal__input
               type="text"
               name="name"
               placeholder="Имя (необязательно)"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(sanitizeInput(e.target.value))}
             />
             <S.Modal__input
               type="text"
               name="lastname"
               placeholder="Фамилия (необязательно)"
               value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              onChange={(e) => setLastname(sanitizeInput(e.target.value))}
             />
             <S.Modal__input
               type="text"
               name="city"
               placeholder="Город (необязательно)"
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => setCity(sanitizeInput(e.target.value))}
             />
-            <Link to="/auth">
-              <S.Modal__btnEnter>
-                <a>Войти</a>
-              </S.Modal__btnEnter>
-            </Link>
+            <p style={{ color: "red" }}>
+              <br></br>
+              {errorPassword ? "Пароли не совпадают" : ""}
+            </p>
+            <S.Modal__btnEnter>
+              <Link to="/auth">
+                <p>Войти</p>
+              </Link>
+            </S.Modal__btnEnter>
             <S.Modal__btnSignup onClick={handleRegistration}>
               <a>Зарегистрироваться</a>
             </S.Modal__btnSignup>
           </S.Modal__formLogin>
-<FooterComp/>
+          <FooterComp />
         </S.Modal__block>
       </S.ContainerEnter>
     </S.Wrapper>

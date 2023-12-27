@@ -10,6 +10,11 @@ export const Signin = () => {
   const navigate = useNavigate();
   const [errorData, setErrorData] = useState(false);
 
+  const sanitizeInput = (input) => {
+    return input.replace(/<script.*?>.*?<\/script>/gi, '')
+                .replace(/[^\w.@-]/gi, '');
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -49,14 +54,15 @@ export const Signin = () => {
               name="login"
               placeholder="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(sanitizeInput(e.target.value))}
+
             />
             <S.Modal__input
               type="password"
               name="password"
               placeholder="Пароль"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(sanitizeInput(e.target.value))}
             />
             {errorData ? (
               <p style={{ color: "red" }}>Не верный логин или пароль</p>
