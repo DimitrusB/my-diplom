@@ -21,6 +21,7 @@ export const EditMyAds = ({
   const [errorData, setErrorData] = useState(false);
   const [errorDataDesk, setErrorDataDesk] = useState(false);
   const [images, setImages] = useState(editmap?.map((ad) => ad.url) || []);
+  const [maxImages, setMaxImages] = useState(false);
 
   const inputRefs = [
     useRef(null),
@@ -29,7 +30,9 @@ export const EditMyAds = ({
     useRef(null),
     useRef(null),
   ];
+
   const handleFileChange = async (event, index) => {
+    if (images.length <5) {
     const newFile = event.target.files[0];
     if (newFile) {
       try {
@@ -43,6 +46,10 @@ export const EditMyAds = ({
         );
       }
     }
+  }else{
+    console.log("You can only add up to 5 images");
+    setMaxImages(true)
+  }
   };
 
   const handleAddNewAd = async (e) => {
@@ -159,7 +166,9 @@ export const EditMyAds = ({
               </S.Form__NewArt_block>
               <S.Form__NewArt_block>
                 <S.Form__newArt_p>
-                  Фотографии товара<span>не более 5 фотографий</span>
+                  Фотографии товара {!maxImages ? 
+                  <span>не более 5 фотографий</span> :
+                  <span style={{ color: "red" }}>не более 5 фотографий</span>}
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
                   {[0, 1, 2, 3, 4].map((index) => (
