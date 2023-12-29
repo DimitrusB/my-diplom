@@ -51,12 +51,8 @@ export const Main = () => {
   }, []);
 
   const ClickEnterAuth = () => {
-    if (!userData) {
-      navigate("/auth");
-    } else {
       navigate("/profile");
-    }
-  };
+ };
 
   if (loading) {
     return (
