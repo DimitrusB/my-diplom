@@ -21,6 +21,7 @@ React Scripts
 React Router Dom
 React-modal
 React-styled
+React-Swipeable
 Styled-components
 ///////////////////////////////////////////////
 Назначение папок и файлов проекта
