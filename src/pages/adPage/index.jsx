@@ -163,11 +163,7 @@ export const AdPage = () => {
   }
 
   const ClickEnterAuth = () => {
-    if (!userData) {
-      navigate("/auth");
-    } else {
       navigate("/profile");
-    }
   };
 
   const handleClick = (e) => {
