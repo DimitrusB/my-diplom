@@ -32,24 +32,24 @@ export const EditMyAds = ({
   ];
 
   const handleFileChange = async (event, index) => {
-    if (images.length <5) {
-    const newFile = event.target.files[0];
-    if (newFile) {
-      try {
-        const response = await addNewImage(itemId, newFile);
-        setShouldUpdateAds(true);
-        console.log("Successful");
-      } catch (error) {
-        console.error(
-          "Error updating user data:",
-          error.response?.data || error.message
-        );
+    if (images.length < 5) {
+      const newFile = event.target.files[0];
+      if (newFile) {
+        try {
+          const response = await addNewImage(itemId, newFile);
+          setShouldUpdateAds(true);
+          console.log("Successful");
+        } catch (error) {
+          console.error(
+            "Error updating user data:",
+            error.response?.data || error.message
+          );
+        }
       }
+    } else {
+      console.log("You can only add up to 5 images");
+      setMaxImages(true);
     }
-  }else{
-    console.log("You can only add up to 5 images");
-    setMaxImages(true)
-  }
   };
 
   const handleAddNewAd = async (e) => {
@@ -166,9 +166,12 @@ export const EditMyAds = ({
               </S.Form__NewArt_block>
               <S.Form__NewArt_block>
                 <S.Form__newArt_p>
-                  Фотографии товара {!maxImages ? 
-                  <span>не более 5 фотографий</span> :
-                  <span style={{ color: "red" }}>не более 5 фотографий</span>}
+                  Фотографии товара{" "}
+                  {!maxImages ? (
+                    <span>не более 5 фотографий</span>
+                  ) : (
+                    <span style={{ color: "red" }}>не более 5 фотографий</span>
+                  )}
                 </S.Form__newArt_p>
                 <S.Form__newArt__bar_img>
                   {[0, 1, 2, 3, 4].map((index) => (
@@ -202,7 +205,11 @@ export const EditMyAds = ({
                                   handleDeletePhoto(event, index, images[index])
                                 }
                               >
-                                <DelButton />
+                                <DelButton
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                />
                               </div>
                             </>
                           ) : (
